@@ -15,27 +15,10 @@
     grid-template-columns: 2fr 10fr;
 
     /*расст между элеме*/
-    /*grid-gap: 10px;*/
+    grid-gap: 10px;
 
 }
 
-.header {
-    /*дали псевдонимы */
-    grid-area: h;
-    background-color: #557d08
-}
-.header img {
-    width: 50px;
-}
 
-.nav {
-    /*дали псевдонимы */
-    grid-area: n;
-    background-color: antiquewhite;
-}
 
-.content {
-    /*дали псевдонимы */
-    grid-area: c;
-    background-color: #a6579a
-}
+

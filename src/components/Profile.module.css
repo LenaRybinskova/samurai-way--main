@@ -1,0 +1,16 @@
+.content {
+    /*дали псевдонимы */
+    grid-area: c;
+    background-color: #a6579a
+}
+
+.content img {
+    height: 500px;
+}
+
+.item {
+color: lightgreen;
+}
+.active {
+    font-style: italic;
+}
