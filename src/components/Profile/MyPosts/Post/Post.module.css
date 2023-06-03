@@ -1,0 +1,14 @@
+
+.item {
+color: lightgreen;
+}
+
+.active {
+    font-style: italic;
+}
+
+.item img{
+    height: 50px;
+    width: 50px;
+    border-radius: 30px;
+}
