@@ -1,0 +1,5 @@
+.content {
+    /*дали псевдонимы */
+    grid-area: c;
+    background-color: #a6579a
+}

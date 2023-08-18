@@ -16,9 +16,13 @@
 
     /*расст между элеме*/
     grid-gap: 10px;
-
 }
 
+.app-wrapper-content {
+    /*дали псевдонимы */
+    grid-area: c;
+    background-color: #a6579a
+}
 
 
 
