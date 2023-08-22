@@ -1,5 +1,30 @@
-.content {
-    /*дали псевдонимы */
+/*.content {
+    !*дали псевдонимы *!
     grid-area: c;
     background-color: #a6579a
+}*/
+
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogsItems {
+    padding: 10px;
+}
+
+.dialogsItems .active {
+    color: white;
+}
+
+.dialog {
+
+}
+
+.messages {
+    padding: 10px;
+}
+
+.message {
+
 }

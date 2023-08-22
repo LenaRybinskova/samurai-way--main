@@ -1,5 +1,5 @@
-.content {
-    /*дали псевдонимы */
+/*.content {
+    !*дали псевдонимы *!
     grid-area: c;
     background-color: #a6579a
 }
@@ -17,4 +17,12 @@ color: lightgreen;
 
 .item img{
     height: 50px;
+}*/
+
+.postsBlock {
+    padding: 10px;
+}
+
+.posts{
+    margin-top: 10px;
 }

@@ -15,13 +15,14 @@
     grid-template-columns: 2fr 10fr;
 
     /*расст между элеме*/
-    grid-gap: 10px;
+    /*    grid-gap: 10px;*/
 }
 
-.app-wrapper-content {
+.appWrapperContent {
     /*дали псевдонимы */
     grid-area: c;
-    background-color: #a6579a
+    background-color: #a6579a;
+
 }
 
 
