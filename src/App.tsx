@@ -5,31 +5,25 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-import state, {StateType} from './redux/state';
+import state, {RootStateType} from './redux/state';
 
-export type AppType={
-    state:StateType
+export type AppType = {
+    state: RootStateType
+    addPost:(text:string)=>void
 }
-
-/*// делала сама, Димыч делал все через render={()=>{}}
-const RenderComponentDialogs =(dialogs:DialogsType[],messages:MessageType[] )=>{
-    return <Dialogs dialogs={dialogs} messages={messages}/>
-}*/
 
 
 function App(props:AppType) {
-
+//импортируем РутСтейт без пропсов
     return (
-        <BrowserRouter>
-            <div className="app-wrapper">
-                <Header/>
-                <Navbar/>
-                <div className="app-wrapper-content">
-                    <Route exact path={'/dialogs'} render={()=><Dialogs state={props.state.dialogsPage}/>}/>
-                    <Route exact path={'/profile'} render={()=><Profile state={props.state.profilePage}/>}/>
-                </div>
+        <div className="app-wrapper">
+            <Header/>
+            <Navbar state={props.state.sideBar}/>
+            <div className="appWrapperContent">
+                <Route exact path={'/dialogs'} render={() => <Dialogs state={props.state.dialogsPage}/>}/>
+                <Route exact path={'/profile'} render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>}/>
             </div>
-        </BrowserRouter>
+        </div>
     );
 }
 
@@ -40,4 +34,11 @@ export default App;
                     <Route exact path={'/dialogs'} component={Dialogs}/>
                     <Route path={'/profile'} component={Profile}/>
 
-{/*                    <Route exact path={'/dialogs'} component={RenderComponentDialogs}/>*/}
+{/*                    <Route exact path={'/dialogs'} component={RenderComponentDialogs}/>*/
+}
+
+
+/*// делала сама, Димыч делал все через render={()=>{}}
+const RenderComponentDialogs =(dialogs:DialogsType[],messages:MessageType[] )=>{
+    return <Dialogs dialogs={dialogs} messages={messages}/>
+}*/

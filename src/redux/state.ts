@@ -1,11 +1,15 @@
-export type StateType = {
+import {rerenderEntireTree} from '../render';
+
+export type RootStateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
+    sideBar: SideBarType
 }
 
 export type DialogType = {
     id: number
     name: string
+    avatar: string
 }
 export type MessageType = {
     id: number
@@ -16,7 +20,6 @@ export type PostType = {
     message: string
     likesCount: number
 }
-
 export type DialogsPageType = {
     dialogs: DialogType[]
     messages: MessageType[]
@@ -25,15 +28,22 @@ export type DialogsPageType = {
 export type ProfilePageType = {
     posts: PostType[]
 }
+export type SideBarType = {
+    friendsOnLine: DialogType[]
+}
 
 
-let state: StateType = {
+let state: RootStateType = {
     dialogsPage: {
         dialogs: [
-            {id: 1, name: 'Sasha'},
-            {id: 2, name: 'Dima'},
-            {id: 3, name: 'Vera'},
-            {id: 4, name: 'Anna'}
+            {
+                id: 1,
+                name: 'Sasha',
+                avatar: 'https://abrakadabra.fun/uploads/posts/2022-02/1644511634_1-abrakadabra-fun-p-smailiki-na-avatarku-prikolnie-2.jpg'
+            },
+            {id: 2, name: 'Dima', avatar: 'https://klike.net/uploads/posts/2022-08/1659592293_1.jpg'},
+            {id: 3, name: 'Vera', avatar: 'https://klike.net/uploads/posts/2022-08/1659592369_3.jpg'},
+            {id: 4, name: 'Anna', avatar: 'https://klike.net/uploads/posts/2022-08/1659592333_21.jpg'}
         ],
         messages: [
             {id: 1, message: 'Hi'},
@@ -46,8 +56,31 @@ let state: StateType = {
         posts: [
             {id: 1, message: 'Hi, how are you?', likesCount: 12},
             {id: 2, message: 'Its my first post', likesCount: 0}
+
+        ]
+    },
+    sideBar: {
+        friendsOnLine: [
+            {
+                id: 1,
+                name: 'Sasha',
+                avatar: 'https://abrakadabra.fun/uploads/posts/2022-02/1644511634_1-abrakadabra-fun-p-smailiki-na-avatarku-prikolnie-2.jpg'
+            },
+            {id: 2, name: 'Dima', avatar: 'https://klike.net/uploads/posts/2022-08/1659592293_1.jpg'},
+            {id: 3, name: 'Vera', avatar: 'https://klike.net/uploads/posts/2022-08/1659592369_3.jpg'},
         ]
     }
+}
+
+
+export const addPost = (postMessage: string) => {
+    let newPost = {
+        id: 5,
+        message: postMessage,
+        likesCount: 0
+    }
+    state.profilePage.posts.push(newPost)
+    rerenderEntireTree(state)
 }
 
 export default state;
