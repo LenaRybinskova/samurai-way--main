@@ -1,4 +1,17 @@
-import {rerenderEntireTree} from '../render';
+// локальная заглушка rerenderEntireTree, чтобы можно было в subscribe написать так: rerenderEntireTree = callBack
+let rerenderEntireTree = (state:RootStateType) => {
+    console.log('state changed')
+}
+
+
+//функция-посредник-НАБЛЮДАТЕЛЬ: туда передаем коллбек(внутринности др функции) и она их переприсваивает функции rerenderEntireTree
+export const subscribe = (observer: (state:RootStateType)=>void) => {
+    rerenderEntireTree = observer
+    console.log("rerenderEntireTree уже переопределилась")
+}
+
+
+
 
 export type RootStateType = {
     dialogsPage: DialogsPageType
@@ -32,7 +45,6 @@ export type ProfilePageType = {
 export type SideBarType = {
     friendsOnLine: DialogType[]
 }
-
 
 let state: RootStateType = {
     dialogsPage: {
@@ -77,18 +89,17 @@ let state: RootStateType = {
 export const addPost = () => {
     let newPost = {
         id: 5,
-        message:  state.profilePage.newPostText,
+        message: state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
-    state.profilePage.newPostText=""
+    state.profilePage.newPostText = ''
     rerenderEntireTree(state)
 }
 
 export const updateNewPostText = (newText: string) => {
-    state.profilePage.newPostText=newText
+    state.profilePage.newPostText = newText
     rerenderEntireTree(state)
 }
-
 
 export default state;
