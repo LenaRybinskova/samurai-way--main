@@ -1,11 +1,14 @@
-import React, {LegacyRef} from 'react';
+import React, {ChangeEvent, LegacyRef, MouseEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
+import {updateNewPostText} from '../../../redux/state';
 
 
 export type MyPostsType = {
     posts: PostsDataType[]
-    addPost:(text:string)=>void
+    newPostText: string
+    addPost: () => void
+    updateNewPostText: (text: string) => void
 }
 export type PostsDataType = {
     id: number
@@ -18,24 +21,19 @@ export const MyPosts = (props: MyPostsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
+    /*    const newPostElement = React.createRef<HTMLTextAreaElement>()*/
 
-    const addPost = () => {
-        if (newPostElement.current) {
-            props.addPost(newPostElement.current.value)
-            newPostElement.current.value=""
-        }
+    const addPost = () => props.addPost()
 
+    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        updateNewPostText(e.currentTarget.value)
     }
-
-
-
 
     return (
         <div className={s.postsBlock}><h3>My posts</h3>
             <div>
                 <div>
-                    <textarea ref={newPostElement}></textarea>
+                    <textarea value={props.newPostText} onChange={onPostChange}></textarea>
                 </div>
                 <div>
                     <button onClick={addPost}>Add post</button>

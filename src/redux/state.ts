@@ -27,6 +27,7 @@ export type DialogsPageType = {
 }
 export type ProfilePageType = {
     posts: PostType[]
+    newPostText: string
 }
 export type SideBarType = {
     friendsOnLine: DialogType[]
@@ -56,8 +57,8 @@ let state: RootStateType = {
         posts: [
             {id: 1, message: 'Hi, how are you?', likesCount: 12},
             {id: 2, message: 'Its my first post', likesCount: 0}
-
-        ]
+        ],
+        newPostText: 'IT-kamasutra'
     },
     sideBar: {
         friendsOnLine: [
@@ -73,14 +74,21 @@ let state: RootStateType = {
 }
 
 
-export const addPost = (postMessage: string) => {
+export const addPost = () => {
     let newPost = {
         id: 5,
-        message: postMessage,
+        message:  state.profilePage.newPostText,
         likesCount: 0
     }
     state.profilePage.posts.push(newPost)
+    state.profilePage.newPostText=""
     rerenderEntireTree(state)
 }
+
+export const updateNewPostText = (newText: string) => {
+    state.profilePage.newPostText=newText
+    rerenderEntireTree(state)
+}
+
 
 export default state;

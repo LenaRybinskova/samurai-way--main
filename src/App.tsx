@@ -5,23 +5,24 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
-import state, {RootStateType} from './redux/state';
+import state, {RootStateType, updateNewPostText} from './redux/state';
 
 export type AppType = {
     state: RootStateType
-    addPost:(text:string)=>void
+    addPost:()=>void
+    updateNewPostText:(text:string)=>void
 }
 
 
 function App(props:AppType) {
-//импортируем РутСтейт без пропсов
+
     return (
         <div className="app-wrapper">
             <Header/>
             <Navbar state={props.state.sideBar}/>
             <div className="appWrapperContent">
                 <Route exact path={'/dialogs'} render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                <Route exact path={'/profile'} render={() => <Profile state={props.state.profilePage} addPost={props.addPost}/>}/>
+                <Route exact path={'/profile'} render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
             </div>
         </div>
     );

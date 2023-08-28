@@ -21,6 +21,11 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
         }
     }
 
+    const onChangeHandler=()=>{
+        if(newPostElement.current){console.log(newPostElement.current.value)}
+
+    }
+
     return (
         <div className={s.dialogs}>
             <div className={s.dialogsItems}>
@@ -30,8 +35,8 @@ const Dialogs: React.FC<DialogsPropsType> = (props) => {
                 {messagesElements}
             </div>
             <div>
-                <textarea ref={newPostElement}></textarea>
-                <button onClick={newMessageHandler}>new message</button>
+                <textarea ref={newPostElement} onChange={onChangeHandler}></textarea>
+                <button onClick={newMessageHandler} >new message</button>
             </div>
         </div>
     );
