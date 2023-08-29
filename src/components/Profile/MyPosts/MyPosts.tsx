@@ -1,7 +1,7 @@
 import React, {ChangeEvent, LegacyRef, MouseEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {updateNewPostText} from '../../../redux/state';
+/*import {updateNewPostText} from '../../../redux/state';*/
 
 
 export type MyPostsType = {
@@ -21,12 +21,12 @@ export const MyPosts = (props: MyPostsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    /*    const newPostElement = React.createRef<HTMLTextAreaElement>()*/
 
     const addPost = () => props.addPost()
 
+
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        updateNewPostText(e.currentTarget.value)
+        props.updateNewPostText(e.currentTarget.value)
     }
 
     return (
@@ -64,3 +64,6 @@ export const MyPosts = (props: MyPostsType) => {
     const addPost3 = () => {
             alert(newPostElement.current && newPostElement.current.value)
     }*/
+
+
+/*    const newPostElement = React.createRef<HTMLTextAreaElement>()*/ // теперь через евент проще сделать, чем вещать хук реф

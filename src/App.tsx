@@ -4,25 +4,29 @@ import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
-import {BrowserRouter, Route} from 'react-router-dom';
-import state, {RootStateType, updateNewPostText} from './redux/state';
+import { Route} from 'react-router-dom';
+import state, { StoreType} from './redux/state';
+import store from './redux/state';
 
 export type AppType = {
-    state: RootStateType
+    store: StoreType
     addPost:()=>void
     updateNewPostText:(text:string)=>void
 }
 
 
+
 function App(props:AppType) {
+
+const state=props.store.getState() // весь стейт вытащили
 
     return (
         <div className="app-wrapper">
             <Header/>
-            <Navbar state={props.state.sideBar}/>
+            <Navbar state={state.sideBar}/>
             <div className="appWrapperContent">
-                <Route exact path={'/dialogs'} render={() => <Dialogs state={props.state.dialogsPage}/>}/>
-                <Route exact path={'/profile'} render={() => <Profile profilePage={props.state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
+                <Route exact path={'/dialogs'} render={() => <Dialogs state={state.dialogsPage}/>}/>
+                <Route exact path={'/profile'} render={() => <Profile profilePage={state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
             </div>
         </div>
     );
