@@ -1,25 +1,18 @@
 // _rerenderEntireTree стал  _callSubscriber
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+
+export type AddPostActionType = ReturnType<typeof addPostAС>
+export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAС>
+export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
 
 export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
-    /*    addPost: () => void
-        updateNewPostText: (newText: string) => void*/
     _callSubscriber: () => void
-    /*    _callSubscriber: (state: RootStateType) => void*/
     subscribe: (callback: () => void) => void
     dispatch: (action: ActionsTypes) => void
 }
-
-export type AddPostActionType = {
-    type: 'ADD-POST'
-}
-export type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
-
 export type RootStateType = {
     dialogsPage: DialogsPageType
     profilePage: ProfilePageType
@@ -95,7 +88,6 @@ let store: StoreType = {
     getState() {
         return this._state
     },
-
     _callSubscriber() {
         console.log('state changed')
     },
@@ -103,26 +95,8 @@ let store: StoreType = {
         this._callSubscriber = observer // переопределили функ callSubscriber на "внутренности" rerenderEntireTree, теперь функ _callSubscriber занимается перерисовкой App
         console.log('rerenderEntireTree переопределилась')
     },
-
-    /*    addPost() {
-            /!*let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            /!*        this._callSubscriber(this._state)*!/
-            this._callSubscriber() // перерисовали стейт*!/
-        },
-        updateNewPostText(newText) {
-            /!*this._state.profilePage.newPostText = newText
-            this._callSubscriber() // перерисовали стейт
-            /!*        this._callSubscriber(this._state)*!/!*!/
-
-        },*/
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -132,13 +106,29 @@ let store: StoreType = {
             this._state.profilePage.newPostText = ''
             /*        this._callSubscriber(this._state)*/
             this._callSubscriber() // перерисовали стейт
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber() // перерисовали стейт
             /*        this._callSubscriber(this._state)*/
         }
     }
 }
+
+
+// вспомогательная функция для создания объекта action
+export const addPostAС = () => {
+    return {
+        type: ADD_POST
+    } as const
+}
+
+export const updateNewPostTextAС = (text: string) => {
+    return {
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text
+    } as const
+}
+
 
 export default store;
 

@@ -1,7 +1,11 @@
 import React, {ChangeEvent, LegacyRef, MouseEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {ActionsTypes, AddPostActionType, UpdateNewPostTextActionType} from '../../../redux/state';
+import {
+    ActionsTypes,
+    addPostAС,
+    updateNewPostTextAС,
+} from '../../../redux/state';
 
 
 export type MyPostsType = {
@@ -16,16 +20,20 @@ export type PostsDataType = {
 }
 
 
+
+
 export const MyPosts = (props: MyPostsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
 
-    const addPost = () => props.dispatch({type: 'ADD-POST'})
+    const addPost = () => props.dispatch(addPostAС())
 
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value})
+        const text = e.currentTarget.value
+        const action = updateNewPostTextAС(text)
+        props.dispatch(action)
     }
 
     return (
