@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store, {RootStateType, StoreType} from './redux/state'
+import store from './redux/state'
 import {BrowserRouter} from 'react-router-dom';
 
 
@@ -10,7 +10,7 @@ import {BrowserRouter} from 'react-router-dom';
 const rerenderEntireTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store} addPost={store.addPost.bind(store)} updateNewPostText={store.updateNewPostText.bind(store)}/>
+            <App store={store} dispatch={store.dispatch.bind(store)}/>
         </BrowserRouter>,
         document.getElementById('root')
     );

@@ -5,13 +5,12 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import { Route} from 'react-router-dom';
-import state, { StoreType} from './redux/state';
+import state, {ActionsTypes, AddPostActionType, StoreType, UpdateNewPostTextActionType} from './redux/state';
 import store from './redux/state';
 
 export type AppType = {
     store: StoreType
-    addPost:()=>void
-    updateNewPostText:(text:string)=>void
+    dispatch: (action: ActionsTypes) => void
 }
 
 
@@ -26,7 +25,7 @@ const state=props.store.getState() // весь стейт вытащили
             <Navbar state={state.sideBar}/>
             <div className="appWrapperContent">
                 <Route exact path={'/dialogs'} render={() => <Dialogs state={state.dialogsPage}/>}/>
-                <Route exact path={'/profile'} render={() => <Profile profilePage={state.profilePage} addPost={props.addPost} updateNewPostText={props.updateNewPostText}/>}/>
+                <Route exact path={'/profile'} render={() => <Profile profilePage={state.profilePage} dispatch={props.dispatch} />}/>
             </div>
         </div>
     );
