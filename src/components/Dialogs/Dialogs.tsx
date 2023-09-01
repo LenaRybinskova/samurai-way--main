@@ -1,45 +1,55 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogsItem';
-import {DialogsPageType, DialogType, MessageType} from '../../redux/state';
+import {
+    ActionsTypes,
+    DialogsPageType,
+    DialogType,
+    MessageType,
+    sendMessageAC, StoreType,
+    updateNewMessageBodyAC
+} from '../../redux/state';
 
 export type DialogsPropsType = {
-    state: DialogsPageType
+    store: StoreType
 }
 
 const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
-    let dialogsElements = props.state.dialogs.map(d => <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>)
-    let messagesElements = props.state.messages.map(m => <Message message={m.message}/>)
+        let state = props.store.getState().dialogsPage
 
-    const newPostElement = React.createRef<HTMLTextAreaElement>()
+        let dialogsElements = state.dialogs.map(d => <DialogItem name={d.name} id={d.id} avatar={d.avatar}/>)
+        let messagesElements = state.messages.map(m => <Message message={m.message}/>)
+        let newMessageBody = state.newMessageBody
 
-    const newMessageHandler = () => {
-        if (newPostElement.current) {
-            alert(newPostElement.current.value)
+        const onSendMessageClick = () => {
+            props.store.dispatch(sendMessageAC())
         }
+
+        const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+            let body = e.currentTarget.value
+            props.store.dispatch(updateNewMessageBodyAC(body))
+        }
+
+        return (
+            <div className={s.dialogs}>
+                <div className={s.dialogsItems}>
+                    {dialogsElements}
+                </div>
+                <div className={s.messages}>
+                    <div>{messagesElements}</div>
+                </div>
+                <div>
+                    <div><textarea onChange={onNewMessageChange} placeholder={'Enter your message'}
+                                   value={newMessageBody}></textarea></div>
+                    <div>
+                        <button onClick={onSendMessageClick}>send</button>
+                    </div>
+                </div>
+            </div>
+        );
     }
-
-    const onChangeHandler=()=>{
-        if(newPostElement.current){console.log(newPostElement.current.value)}
-
-    }
-
-    return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {dialogsElements}
-            </div>
-            <div className={s.messages}>
-                {messagesElements}
-            </div>
-            <div>
-                <textarea ref={newPostElement} onChange={onChangeHandler}></textarea>
-                <button onClick={newMessageHandler} >new message</button>
-            </div>
-        </div>
-    );
-};
+;
 
 export default Dialogs;

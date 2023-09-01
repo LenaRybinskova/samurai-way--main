@@ -17,7 +17,6 @@ export type ProfileType = {
 }
 export const Profile = (props: ProfileType) => {
 
-
     return (
         <div>Main content
             <ProfileInfo/>

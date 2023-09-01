@@ -20,15 +20,11 @@ export type PostsDataType = {
 }
 
 
-
-
 export const MyPosts = (props: MyPostsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-
     const addPost = () => props.dispatch(addPostAС())
-
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
