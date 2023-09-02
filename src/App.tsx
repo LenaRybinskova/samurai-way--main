@@ -5,12 +5,13 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import {Route} from 'react-router-dom';
-import state, {ActionsTypes, AddPostActionType, StoreType, UpdateNewPostTextActionType} from './redux/state';
-import store from './redux/state';
+import {AllActionTypes, StoreType} from './redux/state';
+
+
 
 export type AppType = {
     store: StoreType
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: AllActionTypes) => void
 }
 
 

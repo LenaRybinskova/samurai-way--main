@@ -5,7 +5,11 @@
 Лучше передать отдельно state и dispatch, тк чем меньше лишнего в компоненту передаем, тем лучше.
 
 
+# 41: Reducer (почти redux)
 
+Тиизация для всех action для всех reducer должны быть одна (AllActionTypes), иначе ошибка. Не надо было отделять экшентайпы для диалогов и профайла отдельно.
+
+export type AllActionTypes = UpdateNewMessageBodyACType | SendMessageAC | AddPostActionType | UpdateNewPostTextActionType
 
 
 # Hello, Самурай! 

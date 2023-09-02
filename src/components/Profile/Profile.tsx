@@ -1,19 +1,14 @@
 import React from 'react';
 import {MyPosts} from './MyPosts/MyPosts';
-import s from './Profile.module.css';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {
-    ActionsTypes,
-    AddPostActionType,
-    PostType,
-    ProfilePageType,
-    UpdateNewPostTextActionType
-} from '../../redux/state';
+import {AllActionTypes, DialogsPageType, ProfilePageType} from '../../redux/state';
+import {DialogsReducerAcTypes} from '../../redux/DialogsReducer';
+import {ProfileReducerAcTypes} from '../../redux/ProfileReducer';
 
 
 export type ProfileType = {
     profilePage: ProfilePageType
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: AllActionTypes) => void
 }
 export const Profile = (props: ProfileType) => {
 

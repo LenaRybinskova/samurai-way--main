@@ -1,17 +1,14 @@
-import React, {ChangeEvent, LegacyRef, MouseEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {
-    ActionsTypes,
-    addPostAС,
-    updateNewPostTextAС,
-} from '../../../redux/state';
+import {addPostAC,  updateNewPostTextAC} from '../../../redux/ProfileReducer';
+import {AllActionTypes} from '../../../redux/state';
 
 
 export type MyPostsType = {
     posts: PostsDataType[]
     newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: AllActionTypes) => void
 }
 export type PostsDataType = {
     id: number
@@ -24,11 +21,11 @@ export const MyPosts = (props: MyPostsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    const addPost = () => props.dispatch(addPostAС())
+    const addPost = () => props.dispatch(addPostAC())
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
-        const action = updateNewPostTextAС(text)
+        const action = updateNewPostTextAC(text)
         props.dispatch(action)
     }
 

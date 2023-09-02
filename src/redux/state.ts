@@ -1,22 +1,15 @@
-// _rerenderEntireTree стал  _callSubscriber
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
-const SEND_MESSAGE = 'SEND-MESSAGE'
+import ProfileReducer, {AddPostActionType, ProfileReducerAcTypes, UpdateNewPostTextActionType} from './ProfileReducer';
+import DialogsReducer, {DialogsReducerAcTypes, SendMessageAC, UpdateNewMessageBodyACType} from './DialogsReducer';
 
-
-export type AddPostActionType = ReturnType<typeof addPostAС>
-export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAС>
-export type UpdateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
-export type SendMessageAC = ReturnType<typeof sendMessageAC>
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType | UpdateNewMessageBodyACType | SendMessageAC
+export type AllActionTypes = UpdateNewMessageBodyACType | SendMessageAC | AddPostActionType | UpdateNewPostTextActionType
 
 export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: () => void
     subscribe: (callback: () => void) => void
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: AllActionTypes ) => void
+
 }
 export type RootStateType = {
     dialogsPage: DialogsPageType
@@ -99,61 +92,41 @@ let store: StoreType = {
         console.log('state changed')
     },
     subscribe(observer) {
-        this._callSubscriber = observer // переопределили функ callSubscriber на "внутренности" rerenderEntireTree, теперь функ _callSubscriber занимается перерисовкой App
+        this._callSubscriber = observer
         console.log('rerenderEntireTree переопределилась')
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber() // перерисовали стейт /*        this._callSubscriber(this._state)*/
-
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.newText
-            this._callSubscriber() // перерисовали стейт /*        this._callSubscriber(this._state)*/
-
-
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) { //добавили поступившию строк в тело Message
-            this._state.dialogsPage.newMessageBody = action.body
-            this._callSubscriber()
-        } else if (action.type === SEND_MESSAGE) {
-            let body = this._state.dialogsPage.newMessageBody
-            this._state.dialogsPage.newMessageBody = ''
-            this._state.dialogsPage.messages.push({id:6,message:body})
-            this._callSubscriber()
-        }
+        console.log("action", action)
+        this._state.profilePage = ProfileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = DialogsReducer(this._state.dialogsPage, action)
+        this._callSubscriber()
     }
 }
 
 
-// ActionCreators
-export const addPostAС = () => {
-    return {
-        type: ADD_POST
-    } as const
-}
-export const updateNewPostTextAС = (text: string) => {
-    return {
-        type: UPDATE_NEW_POST_TEXT,
-        newText: text
-    } as const
-}
-export const updateNewMessageBodyAC = (newMessage: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        body: newMessage
-    } as const
-}
-export const sendMessageAC = () => {
-    return {
-        type: SEND_MESSAGE
-    } as const
-}
-
 export default store;
 
+/*if (action.type === ADD_POST) {
+    let newPost = {
+        id: 5,
+        message: this._state.profilePage.newPostText,
+        likesCount: 0
+    }
+    this._state.profilePage.posts.push(newPost)
+    this._state.profilePage.newPostText = ''
+    this._callSubscriber() // перерисовали стейт /!*        this._callSubscriber(this._state)*!/
+
+} else if (action.type === UPDATE_NEW_POST_TEXT) {
+    this._state.profilePage.newPostText = action.newText
+    this._callSubscriber() // перерисовали стейт /!*        this._callSubscriber(this._state)*!/
+
+
+} else if (action.type === UPDATE_NEW_MESSAGE_BODY) { //добавили поступившию строк в тело Message
+    this._state.dialogsPage.newMessageBody = action.body
+    this._callSubscriber()
+} else if (action.type === SEND_MESSAGE) {
+    let body = this._state.dialogsPage.newMessageBody
+    this._state.dialogsPage.newMessageBody = ''
+    this._state.dialogsPage.messages.push({id:6,message:body})
+    this._callSubscriber()
+}*/
