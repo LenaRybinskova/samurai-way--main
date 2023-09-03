@@ -5,15 +5,14 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import Dialogs from './components/Dialogs/Dialogs';
 import {Route} from 'react-router-dom';
-import {AllActionTypes, StoreType} from './redux/state';
-
+import {StoreType} from './redux/reduxStore';
+import {AllActionTypes} from './redux/store';
 
 
 export type AppType = {
     store: StoreType
     dispatch: (action: AllActionTypes) => void
 }
-
 
 function App(props: AppType) {
 
@@ -24,7 +23,7 @@ function App(props: AppType) {
             <Header/>
             <Navbar state={state.sideBar}/>
             <div className="appWrapperContent">
-                <Route exact path={'/dialogs'} render={() => <Dialogs store={props.store} />}/>
+                <Route exact path={'/dialogs'} render={() => <Dialogs store={props.store}/>}/>
                 <Route exact path={'/profile'}
                        render={() => <Profile profilePage={state.profilePage} dispatch={props.dispatch}/>}/>
             </div>
@@ -34,16 +33,3 @@ function App(props: AppType) {
 
 export default App;
 
-{/*                    // тк тут в компоненту нельзя добавить атрибуты и передать пропсы, используем для Route атрибут
-                    render
-                    <Route exact path={'/dialogs'} component={Dialogs}/>
-                    <Route path={'/profile'} component={Profile}/>
-
-{/*                    <Route exact path={'/dialogs'} component={RenderComponentDialogs}/>*/
-}
-
-
-/*// делала сама, Димыч делал все через render={()=>{}}
-const RenderComponentDialogs =(dialogs:DialogsType[],messages:MessageType[] )=>{
-    return <Dialogs dialogs={dialogs} messages={messages}/>
-}*/

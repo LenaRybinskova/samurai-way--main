@@ -1,13 +1,12 @@
 import React from 'react';
 import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
-import {AllActionTypes, DialogsPageType, ProfilePageType} from '../../redux/state';
-import {DialogsReducerAcTypes} from '../../redux/DialogsReducer';
-import {ProfileReducerAcTypes} from '../../redux/ProfileReducer';
+import {AllActionTypes} from '../../redux/store';
+import {ProfilePageType} from '../../redux/profileReducer';
 
 
 export type ProfileType = {
-    profilePage: ProfilePageType
+    profilePage: ProfilePageType //аналог initialStateType из profileReducer.ts
     dispatch: (action: AllActionTypes) => void
 }
 export const Profile = (props: ProfileType) => {
