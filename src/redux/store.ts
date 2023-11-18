@@ -28,7 +28,7 @@ type RootStateType = {
 }
 
 
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: DialogType[]
     messages: MessageType[]
     newMessageBody: string

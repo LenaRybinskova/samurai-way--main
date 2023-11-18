@@ -3,21 +3,20 @@ import {MyPosts} from './MyPosts/MyPosts';
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {AllActionTypes} from '../../redux/store';
 import {ProfilePageType} from '../../redux/profileReducer';
+import {MyPostsContainer} from './MyPosts/MyPostsContainer';
+import {StoreType} from '../../redux/reduxStore';
 
 
 export type ProfileType = {
-    profilePage: ProfilePageType //аналог initialStateType из profileReducer.ts
-    dispatch: (action: AllActionTypes) => void
+    store: StoreType //аналог initialStateType из profileReducer.ts
+
 }
 export const Profile = (props: ProfileType) => {
 
     return (
         <div>Main content
             <ProfileInfo/>
-            <MyPosts
-                posts={props.profilePage.posts}
-                newPostText={props.profilePage.newPostText}
-                dispatch={props.dispatch}
+            <MyPostsContainer store={props.store}
             />
         </div>
     )

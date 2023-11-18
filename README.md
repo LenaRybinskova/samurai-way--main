@@ -1,15 +1,8 @@
-# 40: добавление нового сообщения в Диалоге
+# 43: контейнерная компонента MyPostsContainer и презетационная компонента MyPosts
 
-Как лучше передать в компоненту Dialogs пропсы: весь store или отдельно state и dispatch ?
-
-Лучше передать отдельно state и dispatch, тк чем меньше лишнего в компоненту передаем, тем лучше.
-
-
-# 41: Reducer (почти redux)
-
-Тиизация для всех action для всех reducer должны быть одна (AllActionTypes), иначе ошибка. Не надо было отделять экшентайпы для диалогов и профайла отдельно.
-
-export type AllActionTypes = UpdateNewMessageBodyACType | SendMessageAC | AddPostActionType | UpdateNewPostTextActionType
+Задача контейнерной компоненты быть оберткой и работать с Стор и в презетационную(дочернюю) передавать нужные данные Пропсами( значения и коллбеки)
+Контейнерной MyPostsContainer передали Стор, она в себе разобрала на части и передала презентационной MyPosts. 
+В контейнерную компонену кладем функции с диспатчем, а в контейнерную передаем эти функ как коллбеки
 
 
 # 42: redux
@@ -30,6 +23,22 @@ export const store = createStore(rootReducer);
 export type AppRootSTateType = ReturnType<typeof rootReducer> // типизация склеенных стейтов из редьюсеров
 export type StoreType = typeof store // типизация всего Стора: тут и стейт и функции:диспач, сабскрайб и тд
 export default store
+
+
+
+# 41: Reducer (почти redux)
+
+Тиизация для всех action для всех reducer должны быть одна (AllActionTypes), иначе ошибка. Не надо было отделять экшентайпы для диалогов и профайла отдельно.
+
+export type AllActionTypes = UpdateNewMessageBodyACType | SendMessageAC | AddPostActionType | UpdateNewPostTextActionType
+
+
+# 40: добавление нового сообщения в Диалоге
+
+Как лучше передать в компоненту Dialogs пропсы: весь store или отдельно state и dispatch ?
+
+Лучше передать отдельно state и dispatch, тк чем меньше лишнего в компоненту передаем, тем лучше.
+
 
 
 # Hello, Самурай! 

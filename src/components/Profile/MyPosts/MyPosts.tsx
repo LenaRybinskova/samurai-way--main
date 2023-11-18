@@ -8,7 +8,8 @@ import {AllActionTypes} from '../../../redux/store';
 export type MyPostsType = {
     posts: PostsDataType[]
     newPostText: string
-    dispatch: (action: AllActionTypes) => void
+    updateNewPostText: (text:string) => void
+    addPost:()=>void
 }
 export type PostsDataType = {
     id: number
@@ -21,12 +22,14 @@ export const MyPosts = (props: MyPostsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    const addPost = () => props.dispatch(addPostAC())
+    const onAddPost = () =>{
+        props.addPost()
+    }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
-        const action = updateNewPostTextAC(text)
-        props.dispatch(action)
+        props.updateNewPostText(text)
+
     }
 
     return (
@@ -36,7 +39,7 @@ export const MyPosts = (props: MyPostsType) => {
                     <textarea value={props.newPostText} onChange={onPostChange}></textarea>
                 </div>
                 <div>
-                    <button onClick={addPost}>Add post</button>
+                    <button onClick={onAddPost}>Add post</button>
                 </div>
 
             </div>
