@@ -1,3 +1,39 @@
+# 44: Context API
+
+Кентекст это как бы глобальная обл видимости. Этот контекст можно объявить и положить туда какие то данные и все дочерние компоненты будут иметь доступ к этому контексту.
+
+Объявляем контекст через StoreContext = React.createContext({} as StoreType)
+
+Оборачиваем "родительскую" компоненту StoreContext.Provider value={store}><App/></StoreContext.Provider>*/}
+
+Контейнерную компоненту делаем Потребителем Контекста <
+```
+export const MyPostsContainer = (props: MyPostsType) => {
+    return (
+        <StoreContext.Consumer>{
+            (store:StoreType)=> {
+                let state = store.getState()
+
+                const addPost = () => {
+                    store.dispatch(addPostAC())
+                }
+
+                const onPostChange = (text: string) => {
+                    const action = updateNewPostTextAC(text)
+                   store.dispatch(action)
+                }
+                return <MyPosts
+                    updateNewPostText={onPostChange}
+                    addPost={addPost}
+                    posts={state.profilePage.posts}
+                    newPostText={state.profilePage.newPostText}/>
+            }
+        }
+        </StoreContext.Consumer>
+    )
+}
+```
+
 # 43: контейнерная компонента MyPostsContainer и презетационная компонента MyPosts
 
 Задача контейнерной компоненты быть оберткой и работать с Стор и в презетационную(дочернюю) передавать нужные данные Пропсами( значения и коллбеки)

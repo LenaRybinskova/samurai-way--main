@@ -1,39 +1,38 @@
-import React, {ChangeEvent} from 'react';
-import s from './MyPosts.module.css'
-import {Post} from './Post/Post';
+import React from 'react';
 import {addPostAC, updateNewPostTextAC} from '../../../redux/profileReducer';
-import {AllActionTypes} from '../../../redux/store';
-import {MyPosts, PostsDataType} from './MyPosts';
-import {StoreType} from '../../../redux/reduxStore';
+import {MyPosts} from './MyPosts';
+import { StoreType} from '../../../redux/reduxStore';
+import {StoreContext} from '../../../storeContext';
+
 
 
 export type MyPostsType = {
-    store:StoreType
+    /*    store:StoreType*/
 }
 
-
 export const MyPostsContainer = (props: MyPostsType) => {
-
-    let state=props.store.getState()
-
-    const addPost = () => {
-        props.store.dispatch(addPostAC())
-    }
-
-    const onPostChange = (text: string) => {
-        const action = updateNewPostTextAC(text)
-        props.store.dispatch(action)
-    }
-
     return (
-        <MyPosts
-            updateNewPostText={onPostChange} addPost={addPost}
-            posts={state.profilePage.posts}
-            newPostText={state.profilePage.newPostText}
-            />
+        <StoreContext.Consumer>{
+            (store:StoreType)=> {
+                let state = store.getState()
+
+                const addPost = () => {
+                    store.dispatch(addPostAC())
+                }
+
+                const onPostChange = (text: string) => {
+                    const action = updateNewPostTextAC(text)
+                   store.dispatch(action)
+                }
+                return <MyPosts
+                    updateNewPostText={onPostChange}
+                    addPost={addPost}
+                    posts={state.profilePage.posts}
+                    newPostText={state.profilePage.newPostText}/>
+            }
+        }
+        </StoreContext.Consumer>
     )
-
-
 }
 
 
@@ -54,4 +53,4 @@ export const MyPostsContainer = (props: MyPostsType) => {
     }*/
 
 
-/*    const newPostElement = React.createRef<HTMLTextAreaElement>()*/ // теперь через евент проще сделать, чем вещать хук реф
+/*    const newPostElement = React.createRef<HTMLTextAreaElement>()*/ // теперь через евент проще сделать, чем вещать хук реф*/}

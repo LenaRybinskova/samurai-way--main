@@ -2,15 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import store, {AppRootSTateType} from './redux/reduxStore'
+import store, { StoreType} from './redux/reduxStore'
 import {BrowserRouter} from 'react-router-dom';
+import {Provider} from './storeContext';
 
-
-// этой функ нужен глоб стейт чтобы отрисовать приложение
-const rerenderEntireTree = (state: AppRootSTateType) => {
+const rerenderEntireTree = (state: StoreType) => {
     ReactDOM.render(
         <BrowserRouter>
-            <App store={store} dispatch={store.dispatch.bind(store)}/>
+{/*            <StoreContext.Provider value={store}>
+                <App/>
+                                <App store={store} dispatch={store.dispatch.bind(store)}/>
+            </StoreContext.Provider>*/}
+            <Provider store={store}>
+                <App/>
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );
@@ -18,7 +23,9 @@ const rerenderEntireTree = (state: AppRootSTateType) => {
 
 
 store.subscribe(() => {
-    let state = store.getState() //чтобы вызвал обновленный стейт
-    rerenderEntireTree(state)
+/*    let state = store.getState() //чтобы вызвал обновленный стейт*/
+    rerenderEntireTree(store)
+/*    rerenderEntireTree(state)*/
 })
-rerenderEntireTree(store.getState()); // функ из стейта, которой отдали коллбеком rerenderEntireTree. Мы ее создали, чтобы в store.ts не было ни одного импорта(соответственно, чтоб не было зацикленности)
+rerenderEntireTree(store); // функ из стейта, которой отдали коллбеком rerenderEntireTree. Мы ее создали, чтобы в store.ts не было ни одного импорта(соответственно, чтоб не было зацикленности)
+/*rerenderEntireTree(store.getState()); // функ из стейта, которой отдали коллбеком rerenderEntireTree. Мы ее создали, чтобы в store.ts не было ни одного импорта(соответственно, чтоб не было зацикленности)*/
