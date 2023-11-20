@@ -1,4 +1,9 @@
-import {AllActionTypes, SideBarType} from './store';
+import {AllActionTypes} from './store';
+import {DialogType} from './dialogsReducer';
+
+export type SideBarType = {
+    friendsOnLine: DialogType[]
+}
 
 let initialState: SideBarType = {
     friendsOnLine: [

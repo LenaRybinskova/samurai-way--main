@@ -1,11 +1,12 @@
 import React from 'react';
-import {StoreType} from '../../redux/reduxStore';
-import {sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
+import {DialogsType, DialogType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
-import {StoreContext} from '../../storeContext';
+import {connect} from 'react-redux';
+import {AppRootSTateType} from '../../redux/reduxStore';
+import {Dispatch} from 'redux';
 
-export type DialogsPropsType = {
-/*    store: StoreType*/
+/*export type DialogsPropsType = {
+    /!*    store: StoreType*!/
 }
 
 const DialogsContainer: React.FC<DialogsPropsType> = (props: DialogsPropsType) => {
@@ -28,9 +29,34 @@ const DialogsContainer: React.FC<DialogsPropsType> = (props: DialogsPropsType) =
         }
         </StoreContext.Consumer>
     )
+}*/
+
+type mapStateToPropsType={
+    dialogsPage: DialogsType
 }
+type mapDispatchToPropsType={
+    updateNewMessageBody:(body: string) =>void,
+    sendMessage:() =>void
+}
+export type DialogsContainerType= mapStateToPropsType & mapDispatchToPropsType
 
 
-export default DialogsContainer;
+// СВОЙСТВА
+let mapStateToProps = (state: AppRootSTateType):mapStateToPropsType => {
+    return {
+        dialogsPage: state.dialogsPage
+    }
+}
+// КОЛЛЛБЕКИ
+let mapDispatchToProps = (dispatch: Dispatch):mapDispatchToPropsType => {
+    return {
+        updateNewMessageBody: (body: string) => {dispatch(updateNewMessageBodyAC(body))},
+        sendMessage: () => {dispatch(sendMessageAC())}
+    }
+}
+//этими функциями(через функцию коннект) дали числой компон Dialogs все что нужно. По сути создали контейнерную компоненту
+export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+
+
 
 

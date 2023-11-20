@@ -1,16 +1,16 @@
 import React from 'react';
-import {addPostAC, updateNewPostTextAC} from '../../../redux/profileReducer';
+import {addPostAC, PostType, updateNewPostTextAC} from '../../../redux/profileReducer';
 import {MyPosts} from './MyPosts';
-import { StoreType} from '../../../redux/reduxStore';
-import {StoreContext} from '../../../storeContext';
-
+import {AppRootSTateType} from '../../../redux/reduxStore';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
 
 export type MyPostsType = {
     /*    store:StoreType*/
 }
 
-export const MyPostsContainer = (props: MyPostsType) => {
+/*export const MyPostsContainer = (props: MyPostsType) => {
     return (
         <StoreContext.Consumer>{
             (store:StoreType)=> {
@@ -33,24 +33,40 @@ export const MyPostsContainer = (props: MyPostsType) => {
         }
         </StoreContext.Consumer>
     )
+}*/
+
+type MapStateToPropsType = {
+    posts: PostType[],
+    newPostText: string
+}
+type MapDispatchToPropsType={
+    updateNewPostText: (text: string)=>void,
+    addPost:()=>void
+}
+export type MyPostsContainerPropsType =MapStateToPropsType & MapDispatchToPropsType
+
+// функция которая всего принимает СТЕЙТ всего приложения
+const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
+    return {
+        posts: state.profilePage.posts,
+        newPostText: state.profilePage.newPostText
+    }
 }
 
-
-/*   //1 вариант
-    const addPost = () => {
-            alert(newPostElement.current?.value) // если вдруг такой ссылки на ТексЭрия не будет и Реакт вернет null undefined и не будет брать value
+const mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
+    return {
+        updateNewPostText: (text: string) => {
+            dispatch(updateNewPostTextAC(text))
+        },
+        addPost: () => {
+            dispatch(addPostAC())
+        }
     }
-
-    //2 вариант
-    const addPost2 = () => {
-        if(newPostElement.current)
-        alert(newPostElement.current.value)
-    }
-
-    //3 вариант
-    const addPost3 = () => {
-            alert(newPostElement.current && newPostElement.current.value)
-    }*/
+}
+// используем connect
+export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
 
 
-/*    const newPostElement = React.createRef<HTMLTextAreaElement>()*/ // теперь через евент проще сделать, чем вещать хук реф*/}
+
+
+

@@ -3,22 +3,23 @@ import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {addPostAC,  updateNewPostTextAC} from '../../../redux/profileReducer';
 import {AllActionTypes} from '../../../redux/store';
+import {MyPostsContainerPropsType} from './MyPostsContainer';
 
 
-export type MyPostsType = {
+/*export type MyPostsType = {
     posts: PostsDataType[]
     newPostText: string
     updateNewPostText: (text:string) => void
     addPost:()=>void
-}
-export type PostsDataType = {
+}*/
+/*export type PostsDataType = {
     id: number
     message: string
     likesCount: number
-}
+}*/
 
 
-export const MyPosts = (props: MyPostsType) => {
+export const MyPosts = (props: MyPostsContainerPropsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 

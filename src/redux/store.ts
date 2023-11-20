@@ -1,19 +1,9 @@
-import ProfileReducer, {
-    AddPostActionType,
-    PostType,
-    ProfileReducerAcTypes,
-    UpdateNewPostTextActionType
-} from './profileReducer';
-import DialogsReducer, {
-    DialogsReducerAcTypes,
-    DialogType, MessageType,
-    SendMessageAC,
-    UpdateNewMessageBodyACType
-} from './dialogsReducer';
+import {AddPostActionType, UpdateNewPostTextActionType} from './profileReducer';
+import  {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
 
 export type AllActionTypes = UpdateNewMessageBodyACType | SendMessageAC | AddPostActionType | UpdateNewPostTextActionType
 
-type StoreType = {
+/*type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: () => void
@@ -27,18 +17,19 @@ type RootStateType = {
     sideBar: SideBarType
 }
 
-
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: DialogType[]
     messages: MessageType[]
     newMessageBody: string
 
 }
+
 type ProfilePageType = {
     posts: PostType[]
     newPostText: string
 }
-export type SideBarType = {
+
+type SideBarType = {
     friendsOnLine: DialogType[]
 }
 
@@ -102,5 +93,5 @@ let store: StoreType = {
 }
 
 
-export default store;
+export default store;*/
 

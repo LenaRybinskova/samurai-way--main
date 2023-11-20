@@ -7,8 +7,8 @@ export type ProviderType={
     children:React.ReactNode
 }
 /*export const StoreContext = React.createContext <StoreType | null>( null)*/
-export const StoreContext = React.createContext({} as StoreType) // СОЗДАЛИ КОНТЕКСТ
+ const StoreContext = React.createContext({} as StoreType) // СОЗДАЛИ КОНТЕКСТ
 
-export const Provider = (props:ProviderType) => {
+ const Provider = (props:ProviderType) => {
     return <StoreContext.Provider value = {props.store}>{props.children}</StoreContext.Provider> // СОЗДАЛИ ОБЕРТКУ ДЛЯ ПРОПИХИВАНИЯ КОНТЕКСТА
 }
