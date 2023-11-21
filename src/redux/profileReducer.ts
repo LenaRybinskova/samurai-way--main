@@ -16,7 +16,7 @@ export type ProfilePageType = {
 }
 
 // стартовый стейт
-let initialState= {
+let initialState: ProfilePageType = {
     posts: [
         {id: 1, message: 'Hi, how are you?', likesCount: 12},
         {id: 2, message: 'Its my first post', likesCount: 0}
@@ -24,24 +24,16 @@ let initialState= {
     newPostText: 'IT-kamasutra'
 }
 
-export type initialStateType= typeof initialState
+export type initialStateType = typeof initialState
 
 
 export const profileReducer = (state: initialStateType = initialState, action: AllActionTypes): initialStateType => {
-
     switch (action.type) {
         case ADD_POST:
-            let newPost = {
-                id: 5,
-                message: state.newPostText,
-                likesCount: 0
-            }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
+            let newPost = {id: 5, message: state.newPostText, likesCount: 0}
+            return {...state, posts: [...state.posts, newPost], newPostText:""}
         case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText
-            return state
+            return {...state, newPostText:action.newText}
         default:
             return state
     }

@@ -20,3 +20,4 @@ export type AppRootSTateType = ReturnType<typeof rootReducer> // типизац�
 export type StoreType = typeof store // типизация всего Стора: тут и стейт и функции:диспач, сабскрайб и тд
 export default store
 
+

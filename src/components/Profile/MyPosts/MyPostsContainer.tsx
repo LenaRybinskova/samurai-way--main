@@ -6,34 +6,7 @@ import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
 
 
-export type MyPostsType = {
-    /*    store:StoreType*/
-}
 
-/*export const MyPostsContainer = (props: MyPostsType) => {
-    return (
-        <StoreContext.Consumer>{
-            (store:StoreType)=> {
-                let state = store.getState()
-
-                const addPost = () => {
-                    store.dispatch(addPostAC())
-                }
-
-                const onPostChange = (text: string) => {
-                    const action = updateNewPostTextAC(text)
-                   store.dispatch(action)
-                }
-                return <MyPosts
-                    updateNewPostText={onPostChange}
-                    addPost={addPost}
-                    posts={state.profilePage.posts}
-                    newPostText={state.profilePage.newPostText}/>
-            }
-        }
-        </StoreContext.Consumer>
-    )
-}*/
 
 type MapStateToPropsType = {
     posts: PostType[],
@@ -45,7 +18,11 @@ type MapDispatchToPropsType={
 }
 export type MyPostsContainerPropsType =MapStateToPropsType & MapDispatchToPropsType
 
-// функция которая всего принимает СТЕЙТ всего приложения
+// функция которая всего принимает СТЕЙТ всего приложения.
+// Запускается каждый раз когда меняется Стейт и формирует новый объект,
+// который сравнивается с старым объектом( сравниваются внутренности объектов)
+// поэт чтобы был ререндер компоненты надо чтобы редьюсор возвращал копию
+
 const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
