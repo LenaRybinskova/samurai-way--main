@@ -6,17 +6,7 @@ import {StoreType} from '../../redux/reduxStore';
 import {DialogType, MessageType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
 import {DialogsContainerType} from './DialogsContainer';
 
-/*import {DialogsPageType} from '../../redux/store';*/
 
-/*export type DialogsPropsType = {
-    sendMessage: () => void
-    updateNewMessageBody: (body: string) => void
-    dialogsPage: {
-        dialogs: DialogType[],
-        messages: MessageType[],
-        newMessageBody: string
-    }
-}*/
 
 /*const Dialogs: React.FC<DialogsType> = (props) => {*/
     const Dialogs = (props:DialogsContainerType) => {

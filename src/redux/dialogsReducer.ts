@@ -3,11 +3,6 @@ import {AllActionTypes} from './store';
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
-export type DialogsType = {
-    dialogs: DialogType[],
-    messages: MessageType[],
-    newMessageBody: string
-}
 export type DialogType = {
     id: number
     name: string
@@ -18,7 +13,7 @@ export type MessageType = {
     message: string
 }
 
-let initialState: DialogsType = {
+let initialState = {
     dialogs: [
         {
             id: 1,

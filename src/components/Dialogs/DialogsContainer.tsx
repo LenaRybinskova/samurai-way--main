@@ -1,5 +1,5 @@
 import React from 'react';
-import {DialogsType, DialogType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
+import {DialogType, InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
@@ -31,24 +31,24 @@ const DialogsContainer: React.FC<DialogsPropsType> = (props: DialogsPropsType) =
     )
 }*/
 
-type mapStateToPropsType={
-    dialogsPage: DialogsType
+type MapStateToPropsType ={
+    dialogsPage: InitialStateType
 }
-type mapDispatchToPropsType={
+type MapDispatchToPropsType ={
     updateNewMessageBody:(body: string) =>void,
     sendMessage:() =>void
 }
-export type DialogsContainerType= mapStateToPropsType & mapDispatchToPropsType
+export type DialogsContainerType= MapStateToPropsType & MapDispatchToPropsType
 
 
 // СВОЙСТВА
-let mapStateToProps = (state: AppRootSTateType):mapStateToPropsType => {
+let mapStateToProps = (state: AppRootSTateType):MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage
     }
 }
 // КОЛЛЛБЕКИ
-let mapDispatchToProps = (dispatch: Dispatch):mapDispatchToPropsType => {
+let mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
     return {
         updateNewMessageBody: (body: string) => {dispatch(updateNewMessageBodyAC(body))},
         sendMessage: () => {dispatch(sendMessageAC())}

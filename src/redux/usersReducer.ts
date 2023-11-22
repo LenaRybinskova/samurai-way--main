@@ -17,15 +17,13 @@ export type locationUserType = {
     country: string
 }
 
+// ЗНАЧЕНИЕ стартовый стейт
+const initialState: initialStateType = {
+    users: [] as UserType[]
+}
 
 export type initialStateType = {
     users: UserType[]
-}
-
-
-// ЗНАЧЕНИЕ стартовый стейт
-let initialState = {
-    users: [] as UserType[]
 }
 
 export const usersReducer = (state: initialStateType = initialState, action: AllActionTypes): initialStateType => {
