@@ -1,7 +1,15 @@
 import {AddPostActionType, UpdateNewPostTextActionType} from './profileReducer';
-import  {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
+import {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
+import {followACType, setUsersACType, unfollowACType} from './usersReducer';
 
-export type AllActionTypes = UpdateNewMessageBodyACType | SendMessageAC | AddPostActionType | UpdateNewPostTextActionType
+export type AllActionTypes =
+    UpdateNewMessageBodyACType
+    | SendMessageAC
+    | AddPostActionType
+    | UpdateNewPostTextActionType
+    | followACType
+    | unfollowACType
+    | setUsersACType
 
 /*type StoreType = {
     _state: RootStateType

@@ -5,13 +5,10 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Profile} from './components/Profile/Profile';
 import {Route} from 'react-router-dom';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
+import {UsersContainer} from './components/Users/UsersContainer';
 
 
-
-export type AppType = {
-}
-
-function App(props: AppType) {
+function App() {
 
     return (
         <div className="app-wrapper">
@@ -20,6 +17,8 @@ function App(props: AppType) {
             <div className="appWrapperContent">
                 <Route exact path={'/dialogs'} render={() => <DialogsContainer/>}/>
                 <Route exact path={'/profile'} render={() => <Profile/>}/>
+                <Route exact path={'/users'} render={() => <UsersContainer/>}/>
+
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import {combineReducers, createStore} from 'redux'
 import profileReducer from './profileReducer';
 import dialogsReducer from './dialogsReducer';
 import sideBarReducer from './sideBarReducer';
+import usersReducer from './usersReducer';
 
 // наши все редьюсеры нужно склеить в кучу(в объект). Этот объект надо вопринимать как наш Стейт, архитект похожа на наш старый store._state
 // сейчас все стейты расписахы по иниц стейтам в редьюсорах
@@ -9,7 +10,8 @@ export const rootReducer = combineReducers(
     {
         profilePage: profileReducer,
         dialogsPage: dialogsReducer,
-        sideBar: sideBarReducer
+        sideBar: sideBarReducer,
+        usersPage:usersReducer
     }
 )
 
