@@ -1,6 +1,7 @@
 import React from 'react';
 import s from "./Navbar.module.css"
 import {NavLink} from 'react-router-dom';
+import UsersClassComponent from '../Users/UsersClassComponent';
 
 export type NavbarType={
 /*    state: SideBarType*/
@@ -25,7 +26,7 @@ export const Navbar = (props:NavbarType) => {
                 <NavLink to={"/settings"} activeClassName={s.activeLink}>Settings</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to={"/users"} activeClassName={s.activeLink}>Users</NavLink>
+                <NavLink to={"/users"} activeClassName={s.activeLink}>UsersClassComponent</NavLink>
             </div>
 
             <div>

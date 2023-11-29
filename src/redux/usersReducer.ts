@@ -9,13 +9,13 @@ export type UserType = {
     photos: UserPhotoType,
     followed: boolean,
     name: string,
-    status: string,
+    status: string | null,
     location: locationUserType
 }
 
-export type UserPhotoType={
-    small:string,
-    large:string
+export type UserPhotoType = {
+    small: string | null,
+    large: string | null
 }
 export type locationUserType = {
     city: string,
