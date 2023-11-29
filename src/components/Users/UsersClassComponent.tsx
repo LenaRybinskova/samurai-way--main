@@ -6,22 +6,26 @@ import usersPhoto from '../../assets/images/user1.png'
 
 
 export class UsersClassComponent extends React.Component<UsersContainerType> {
-    constructor(props:UsersContainerType) {
-        alert("создался новый объект, а потом будет JSX")
+    // если с конструктором никаким операций не производим, можно его вообще не писать
+/*    constructor(props: UsersContainerType) {
         super(props)
-            axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
-                this.props.setUsers(response.data.items)
+    }*/
+    componentDidMount() {
+        // все сайд эффекты делаем в этой функ
+        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+            this.props.setUsers(response.data.items)
         })
     }
 
-    render():React.ReactNode {
+    render(): React.ReactNode {
         // тут можно объект пропс деструктуризировать const {user, follow,unfollow,setUsers} = this.props
-
+        console.log('React.Component', React.Component)
         return (
             <div>
                 {this.props.users.map(u => <div key={u.id} className={styles.userContainer}>
                 <span>
-                    <div><img src={u.photos.small != null ? u.photos.small : usersPhoto} className={styles.userPhoto} alt="user"/></div>
+                    <div><img src={u.photos.small != null ? u.photos.small : usersPhoto} className={styles.userPhoto}
+                              alt="user"/></div>
                     {u.followed ?
                         <button onClick={() => {
                             this.props.unfollow(u.id)
