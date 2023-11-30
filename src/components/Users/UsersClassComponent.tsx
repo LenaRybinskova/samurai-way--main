@@ -7,21 +7,42 @@ import usersPhoto from '../../assets/images/user1.png'
 
 export class UsersClassComponent extends React.Component<UsersContainerType> {
     // если с конструктором никаким операций не производим, можно его вообще не писать
-/*    constructor(props: UsersContainerType) {
-        super(props)
-    }*/
+    /*    constructor(props: UsersContainerType) {
+            super(props)
+        }*/
     componentDidMount() {
         // все сайд эффекты делаем в этой функ
-        axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
+        // со старта приложения, запрос идет этот
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+            this.props.setTotalCount(response.data.totalCount)
+        })
+    }
+
+    onPageChanged(pageNumber:number){
+        this.props.setCurrenPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items)
         })
     }
 
     render(): React.ReactNode {
         // тут можно объект пропс деструктуризировать const {user, follow,unfollow,setUsers} = this.props
-        console.log('React.Component', React.Component)
+
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
         return (
             <div>
+                <div>
+                    {pages.map(p =>
+                        <span className={this.props.currentPage === p ? styles.selectedPage : ''}
+                              onClick={(event)=>this.onPageChanged(p)}>{p}</span>)}
+                </div>
+
                 {this.props.users.map(u => <div key={u.id} className={styles.userContainer}>
                 <span>
                     <div><img src={u.photos.small != null ? u.photos.small : usersPhoto} className={styles.userPhoto}

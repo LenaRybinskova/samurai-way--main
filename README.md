@@ -1,3 +1,5 @@
+# 55: pagination, постраничный вывод пользователей
+
 # 54: life cycle methods, componentDidMount
 
 side effects делаем в функции componentDidMount()
