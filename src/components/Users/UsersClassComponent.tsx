@@ -2,7 +2,7 @@ import React from 'react';
 import {UsersContainerType} from './UsersContainer';
 import styles from './users.module.css'
 import axios from 'axios';
-import usersPhoto from '../../assets/images/user1.png'
+import UserPhotoNull from "../../assets/images/usersNull.png"
 
 
 export class UsersClassComponent extends React.Component<UsersContainerType> {
@@ -12,7 +12,7 @@ export class UsersClassComponent extends React.Component<UsersContainerType> {
         }*/
     componentDidMount() {
         // все сайд эффекты делаем в этой функ
-        // со старта приложения, запрос идет этот
+        // со старта приложения, запрос идет этот и подгружает пользователей и totalCount пользователей
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items)
             this.props.setTotalCount(response.data.totalCount)
@@ -45,7 +45,7 @@ export class UsersClassComponent extends React.Component<UsersContainerType> {
 
                 {this.props.users.map(u => <div key={u.id} className={styles.userContainer}>
                 <span>
-                    <div><img src={u.photos.small != null ? u.photos.small : usersPhoto} className={styles.userPhoto}
+                    <div><img src={u.photos.small != null ? u.photos.small :UserPhotoNull } className={styles.userPhoto}
                               alt="user"/></div>
                     {u.followed ?
                         <button onClick={() => {

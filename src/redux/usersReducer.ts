@@ -26,8 +26,8 @@ export type locationUserType = {
 // ЗНАЧЕНИЕ стартовый стейт
 const initialState: initialStateType = {
     users: [] as UserType[],
-    pageSize: 2,
-    totalUsersCount: 0,
+    pageSize: 5,
+    totalUsersCount: 20,
     currentPage: 1
 }
 

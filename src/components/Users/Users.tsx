@@ -2,7 +2,7 @@ import React from 'react';
 import {UsersContainerType} from './UsersContainer';
 import styles from './users.module.css'
 import axios from 'axios';
-import usersPhoto from "../../assets/images/user1.png"
+import UserPhotoNull from "../../assets/images/usersNull.png"
 
 
 const Users = (props: UsersContainerType) => {
@@ -20,7 +20,7 @@ const Users = (props: UsersContainerType) => {
             <button onClick={getUsers}>get Users</button>
             {props.users.map(u => <div key={u.id} className={styles.userContainer}>
                 <span>
-                    <div><img src={u.photos.small != null? u.photos.small: usersPhoto } className={styles.userPhoto} alt="user"/></div>
+                    <div><img src={u.photos.small != null? u.photos.small: UserPhotoNull } className={styles.userPhoto} alt="user"/></div>
                     {u.followed ?
                         <button onClick={() => {
                             props.unfollow(u.id)
