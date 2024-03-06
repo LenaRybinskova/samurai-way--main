@@ -1,6 +1,5 @@
-import React, {ReactChildren} from 'react';
-import store, {StoreType} from './redux/reduxStore';
-import App from './App';
+import React from 'react';
+import {StoreType} from './redux/reduxStore';
 
 export type ProviderType={
     store:StoreType
