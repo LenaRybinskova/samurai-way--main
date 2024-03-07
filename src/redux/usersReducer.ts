@@ -56,51 +56,50 @@ export const usersReducer = (state: initialStateType = initialState, action: All
             return {...state, totalUsersCount: action.totalUsersCount}
         case TOGGLE_IS_FETCHING:
             return {...state, isFetching:action.isFetching}
-
         default:
             return state
     }
 }
-export type followACType = ReturnType<typeof followAC>
-export type unfollowACType = ReturnType<typeof unfollowAC>
-export type setUsersACType = ReturnType<typeof setUsersAC>
-export type setCurrentPageACType = ReturnType<typeof setCurrentPageAC>
-export type setTotalCountACType = ReturnType<typeof setTotalCountAC>
-export type setIsFetchingType = ReturnType<typeof toggleIsFetchingAC>
+export type followACType = ReturnType<typeof follow>
+export type unfollowACType = ReturnType<typeof unfollow>
+export type setUsersACType = ReturnType<typeof setUsers>
+export type setCurrentPageACType = ReturnType<typeof setCurrentPage>
+export type setTotalCountACType = ReturnType<typeof setTotalCount>
+export type setIsFetchingType = ReturnType<typeof toggleIsFetching>
 
 
 // ActionCreators
-export const followAC = (userId: number) => {
+export const follow = (userId: number) => {
     return {
         type: FOLLOW,
         id: userId
     } as const
 }
-export const unfollowAC = (userId: number) => {
+export const unfollow = (userId: number) => {
     return {
         type: UNFOLLOW,
         id: userId
     } as const
 }
-export const setUsersAC = (users: UserType[]) => {
+export const setUsers = (users: UserType[]) => {
     return {
         type: SET_USERS,
         users
     } as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
+export const setCurrentPage = (currentPage: number) => {
     return {
         type: SET_CURRENT_PAGE,
         pageNumber: currentPage
     } as const
 }
-export const setTotalCountAC = (totalUsersCount: number) => {
+export const setTotalCount = (totalUsersCount: number) => {
     return {
         type: SET_TOTAL_COUNT,
         totalUsersCount: totalUsersCount
     } as const
 }
-export const toggleIsFetchingAC = (isFetching:boolean) => {
+export const toggleIsFetching = (isFetching:boolean) => {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching

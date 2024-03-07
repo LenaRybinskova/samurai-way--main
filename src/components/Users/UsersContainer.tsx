@@ -3,17 +3,16 @@ import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
 import {
-    followAC,
-    setCurrentPageAC,
-    toggleIsFetchingAC,
-    setTotalCountAC,
-    setUsersAC,
-    unfollowAC,
+    follow,
+    setCurrentPage,
+    toggleIsFetching,
+    setTotalCount,
+    setUsers,
+    unfollow,
     UserType
 } from '../../redux/usersReducer';
 import axios from 'axios';
 import Users from './Users';
-import preloader from '../../assets/images/loader.svg'
 import Preloader from '../common/preloader/Preloader';
 
 // 2я контейнерная компонента, которая обращ к АПИ
@@ -30,7 +29,7 @@ class UsersContainerClass extends React.Component<UsersContainerType> {
     }
 
     onPageChanged(pageNumber: number) {
-        this.props.setCurrenPage(pageNumber)
+        this.props.setCurrentPage(pageNumber)
         this.props.toggleIsFetching(true)  //крутилка вкл
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
             this.props.toggleIsFetching(false)  //крутилка выкл
@@ -39,16 +38,13 @@ class UsersContainerClass extends React.Component<UsersContainerType> {
     }
 
     render(): React.ReactNode {
-        // тут можно объект пропс деструктуризировать const {user, follow,unfollow,setUsers} = this.props
-
         return (
-            <>
-                {this.props.isFetching ? <Preloader/> : null}
+            <>{this.props.isFetching ? <Preloader/> : null}
                 <Users totalUsersCount={this.props.totalUsersCount}
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}
                        users={this.props.users}
-                       //обернула в стрел чтобы не потерялся контекст
+                    //обернула в стрел чтобы не потерялся контекст
                        onPageChanged={(p) => this.onPageChanged(p)}
                        unfollow={this.props.unfollow}
                        follow={this.props.follow}
@@ -72,7 +68,7 @@ type mapDispatchToProsType = {
     follow: (id: number) => void
     unfollow: (id: number) => void
     setUsers: (users: UserType[]) => void
-    setCurrenPage: (pageNumber: number) => void
+    setCurrentPage: (pageNumber: number) => void
     setTotalCount: (totalCount: number) => void
     toggleIsFetching: (isFetching: boolean) => void
 }
@@ -88,7 +84,7 @@ const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {
+/*const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {
     return {
         follow: (id: number) => {
             dispatch(followAC(id))
@@ -109,9 +105,10 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {
             dispatch(toggleIsFetchingAC(isFetching))
         }
     }
-}
+}*/
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainerClass)
+//
+export default connect(mapStateToProps, {follow, unfollow, setUsers, setCurrentPage, setTotalCount, toggleIsFetching})
+(UsersContainerClass)
 
 
