@@ -2,28 +2,38 @@ import React from 'react';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import {followAC, setCurrentPageAC, setTotalCountAC, setUsersAC, unfollowAC, UserType} from '../../redux/usersReducer';
+import {
+    followAC,
+    setCurrentPageAC,
+    toggleIsFetchingAC,
+    setTotalCountAC,
+    setUsersAC,
+    unfollowAC,
+    UserType
+} from '../../redux/usersReducer';
 import axios from 'axios';
 import Users from './Users';
+import preloader from '../../assets/images/loader.svg'
+import Preloader from '../common/preloader/Preloader';
 
 // 2я контейнерная компонента, которая обращ к АПИ
- class UsersContainerClass extends React.Component<UsersContainerType> {
-    // если с конструктором никаким операций не производим, можно его вообще не писать
-    /*    constructor(props: UsersContainerType) {
-            super(props)
-        }*/
+class UsersContainerClass extends React.Component<UsersContainerType> {
+
     componentDidMount() {
-        // все сайд эффекты делаем в этой функ
         // со старта приложения, запрос идет этот и подгружает пользователей и totalCount пользователей
+        this.props.toggleIsFetching(true)//крутилка вкл
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
             this.props.setUsers(response.data.items)
             this.props.setTotalCount(response.data.totalCount)
+            this.props.toggleIsFetching(false) //крутилка выкл
         })
     }
 
-    onPageChanged(pageNumber:number){
+    onPageChanged(pageNumber: number) {
         this.props.setCurrenPage(pageNumber)
+        this.props.toggleIsFetching(true)  //крутилка вкл
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.toggleIsFetching(false)  //крутилка выкл
             this.props.setUsers(response.data.items)
         })
     }
@@ -32,15 +42,20 @@ import Users from './Users';
         // тут можно объект пропс деструктуризировать const {user, follow,unfollow,setUsers} = this.props
 
         return (
-            <Users totalUsersCount={this.props.totalUsersCount}
-                   pageSize={this.props.pageSize}
-                   currentPage={this.props.currentPage}
-                   users={this.props.users}
-                //обернула в стрел чтобы не потерялся контекст
-                   onPageChanged={(p)=>this.onPageChanged(p)}
-                   unfollow={this.props.unfollow}
-                   follow={this.props.follow}
-            />
+            <>
+                {this.props.isFetching ? <Preloader/> : null}
+                <Users totalUsersCount={this.props.totalUsersCount}
+                       pageSize={this.props.pageSize}
+                       currentPage={this.props.currentPage}
+                       users={this.props.users}
+                       //обернула в стрел чтобы не потерялся контекст
+                       onPageChanged={(p) => this.onPageChanged(p)}
+                       unfollow={this.props.unfollow}
+                       follow={this.props.follow}
+                />
+
+            </>
+
         );
     }
 }
@@ -50,14 +65,16 @@ type mapStateToPropsType = {
     users: UserType[],
     pageSize: number,
     totalUsersCount: number,
-    currentPage: number
+    currentPage: number,
+    isFetching: boolean
 }
 type mapDispatchToProsType = {
     follow: (id: number) => void
     unfollow: (id: number) => void
     setUsers: (users: UserType[]) => void
     setCurrenPage: (pageNumber: number) => void
-    setTotalCount:(totalCount: number)=>void
+    setTotalCount: (totalCount: number) => void
+    toggleIsFetching: (isFetching: boolean) => void
 }
 export type UsersContainerType = mapStateToPropsType & mapDispatchToProsType
 
@@ -66,7 +83,8 @@ const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage
+        currentPage: state.usersPage.currentPage,
+        isFetching: state.usersPage.isFetching
     }
 }
 
@@ -84,8 +102,11 @@ const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {
         setCurrenPage: (pageNumber: number) => {
             dispatch(setCurrentPageAC(pageNumber))
         },
-        setTotalCount:(totalUsersCount: number)=>{
+        setTotalCount: (totalUsersCount: number) => {
             dispatch(setTotalCountAC(totalUsersCount))
+        },
+        toggleIsFetching: (isFetching: boolean) => {
+            dispatch(toggleIsFetchingAC(isFetching))
         }
     }
 }

@@ -1,6 +1,13 @@
 import {AddPostActionType, UpdateNewPostTextActionType} from './profileReducer';
 import {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
-import {followACType, setCurrentPageACType, setTotalCountACType, setUsersACType, unfollowACType} from './usersReducer';
+import {
+    followACType,
+    setCurrentPageACType,
+    setTotalCountACType,
+    setUsersACType,
+    setIsFetchingType,
+    unfollowACType
+} from './usersReducer';
 
 export type AllActionTypes =
     UpdateNewMessageBodyACType
@@ -11,7 +18,8 @@ export type AllActionTypes =
     | unfollowACType
     | setUsersACType
     | setCurrentPageACType
-| setTotalCountACType
+    | setTotalCountACType
+    | setIsFetchingType
 
 
 /*type StoreType = {
