@@ -5,41 +5,46 @@ import {AppRootSTateType} from '../../redux/reduxStore';
 import {ResponseAPIProfileType, setUserProfile} from '../../redux/profileReducer';
 import {toggleIsFetching} from '../../redux/usersReducer';
 import {Profile} from './Profile';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
-//ProfineContainet контейнерная компонента
-// класс компонента это объект, который получаем за счет extends React.Component, котрый получает метод рендер и методы жизн цикла с помощью которых Реакт взаимодействует с этим объектом(Монтирование, апдейт, удаление компоненты и тд)
 //2
-class ProfileContainer extends React.Component<ProfileContainerType> {
+class ProfileContainer extends React.Component<OwnPropsType> {
 
     componentDidMount() {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`).then(response => {
+// вытаскивает ИД из текущего УРЛ и диспатчит в редакс стор
+        let userId=this.props.match.params.userId
+        if(!userId){userId="2"}
+        // делаем запрос на сервер за профилем по этому ИД
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
+            // диспатчим данные в стейт и mstp потом увидит изм стейта и Профайл перерисуется.
             this.props.setUserProfile(response.data)
         })
     }
 
     render() {
-        return (
-            //Profile чистая презентационная компонента
-            //{...this.props} через Профайл пробросим все пропсы для дочерних в Profile их можно не типизировать, они чисто транзитные
-            // profile={this.props.profile} а это чисто для профайла пропс
-            <Profile {...this.props} profile={this.props.profile}/>
-        )
+        console.log("попали в метод рендер ProfileContainer")
+        return <Profile {...this.props} profile={this.props.profile}/>
     }
 }
-
 
 //1
 type MapDispatchToProsType = {
     setUserProfile: (profile: ResponseAPIProfileType | null) => void
     toggleIsFetching: (isFetching: boolean) => void
 }
-type MapStateToPropsType = {
-    profile: ResponseAPIProfileType | null
-}
+type MapStateToPropsType = { profile: ResponseAPIProfileType | null }
 type ProfileContainerType = MapDispatchToProsType & MapStateToPropsType
+type PathParamsType={
+    userId:string
+}
+// вытащили типы из RouteComponentProps и свои типы для контейнерной компоненты добавили
+type OwnPropsType=RouteComponentProps<PathParamsType> & ProfileContainerType
 
 const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
     return {profile: state.profilePage.profile}
 }
 
-export default connect(mapStateToProps, {setUserProfile, toggleIsFetching})(ProfileContainer)
+//3 контейнерная компонента для отслеж УРЛ
+const withURLDataContainerComponent = withRouter(ProfileContainer)
+
+export default connect(mapStateToProps, {setUserProfile, toggleIsFetching})(withURLDataContainerComponent)

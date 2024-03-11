@@ -8,9 +8,6 @@ import UsersContainer from './components/Users/UsersContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 
 
-
-
-
 function App() {
 
     return (
@@ -19,7 +16,7 @@ function App() {
             <Navbar/>
             <div className="appWrapperContent">
                 <Route exact path={'/dialogs'} render={() => <DialogsContainer/>}/>
-                <Route exact path={'/profile'} render={() => <ProfileContainer/>}/>
+                <Route exact path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
                 <Route exact path={'/users'} render={() => <UsersContainer/>}/>
 
             </div>

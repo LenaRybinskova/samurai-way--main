@@ -1,3 +1,7 @@
+# 60: withRouter, props.match.params
+
+на UI щекл на аву => в текущий УРЛ добавился Ид юзера => на измен текущий УРЛ сработал  <Route exact path={'/profile/:userId?'} render={() => <ProfileContainer/>}/> => начала рендериться компонента ProfileContainer => вернулся базовый JSX => вызов componentDidMount(), в нем вытащили из текущего УРЛ Ид юзера => get запрос по этому Ид на сервер=> диспач с Стор Редакс новых данных профиля => mstp срабатывает на обновление стейта => передает в компоненту Профайл новые пропсы и Профайл ререндериться.
+
 # 59: profile page, ajax, api
 
 <Profile {...this.props} profile={this.props.profile}/>

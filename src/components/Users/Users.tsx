@@ -24,7 +24,6 @@ const Users = (props: UsersPropsType) => {
         pages.push(i)
     }
 
-
     return (
         <div>
             <div>
@@ -44,6 +43,7 @@ const Users = (props: UsersPropsType) => {
                                         className={styles.userPhoto}
                                         alt="user"/>
                                </NavLink>
+
                            </div>
                            {u.followed ?
                                <button onClick={() => {
