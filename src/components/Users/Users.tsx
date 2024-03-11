@@ -2,16 +2,17 @@ import React from 'react';
 import styles from './users.module.css'
 import UserPhotoNull from '../../assets/images/usersNull.png'
 import {UserType} from '../../redux/usersReducer';
+import {NavLink} from 'react-router-dom';
 
 
 type UsersPropsType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    users:UserType[]
+    users: UserType[]
     onPageChanged: (pageNumber: number) => void
-    unfollow:(id: number) =>void
-    follow:(id: number) =>void
+    unfollow: (id: number) => void
+    follow: (id: number) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -33,12 +34,17 @@ const Users = (props: UsersPropsType) => {
                           onClick={(event) => props.onPageChanged(p)}>{p}</span>)}
             </div>
 
+
             {/* юзеров отрисовываем*/}
             {props.users.map(u => <div key={u.id} className={styles.userContainer}>
                        <span>
-                           <div><img src={u.photos.small != null ? u.photos.small : UserPhotoNull}
-                                     className={styles.userPhoto}
-                                     alt="user"/></div>
+                           <div>
+                               <NavLink to={'/profile/'+u.id}>
+                                   <img src={u.photos.small != null ? u.photos.small : UserPhotoNull}
+                                        className={styles.userPhoto}
+                                        alt="user"/>
+                               </NavLink>
+                           </div>
                            {u.followed ?
                                <button onClick={() => {
                                    props.unfollow(u.id)

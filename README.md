@@ -1,3 +1,11 @@
+# 59: profile page, ajax, api
+
+<Profile {...this.props} profile={this.props.profile}/>
+
+{...this.props} - это транзитные пропсы, они пойдут дальше дочерним компонентам, в Profile они неиспользуются и типиз их не надо
+profile={this.props.profile - это явные пропсы для Profile, они там и используются, поэтому обязательно типизируем.
+
+
 # 58: mstd
 
 раньше передавали в функ connect(ХОК) две функции и компоненту.

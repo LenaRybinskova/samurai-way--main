@@ -1,18 +1,20 @@
 import React from 'react'
 import {ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
+import {ResponseAPIProfileType} from '../../redux/profileReducer';
+
 
 
 
 export type ProfileType = {
-/*    store: StoreType //аналог initialStateType из profileReducer.ts*/
+    //setUserProfile и toggleIsFetching считаются "транзитными" их не надо типизировать, тк непосредственно в Profile они не используются
+    profile:ResponseAPIProfileType  | null
 
 }
 export const Profile = (props: ProfileType) => {
-
     return (
         <div>Main content
-            <ProfileInfo/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer/>
         </div>
     )
