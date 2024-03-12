@@ -12,8 +12,6 @@ export type ProfileType = {
 
 }
 export const Profile = (props: ProfileType) => {
-    console.log("зашли вProfile")
-    debugger
     return (
         <div>Main content
             <ProfileInfo profile={props.profile}/>

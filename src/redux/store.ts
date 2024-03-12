@@ -13,6 +13,7 @@ import {
     setIsFetchingType,
     unfollowACType
 } from './usersReducer';
+import {SetAuthUserDataACType} from './auth-reducer';
 
 export type AllActionTypes =
     UpdateNewMessageBodyACType
@@ -26,6 +27,7 @@ export type AllActionTypes =
     | setTotalCountACType
     | setIsFetchingType
     | ProfileReducerAcTypes
+    | SetAuthUserDataACType
 
 
 /*type StoreType = {
