@@ -68,7 +68,7 @@ export type setTotalCountACType = ReturnType<typeof setTotalCount>
 export type setIsFetchingType = ReturnType<typeof toggleIsFetching>
 
 
-// ActionCreators
+// AC
 export const follow = (userId: number) => {
     return {
         type: FOLLOW,
@@ -105,6 +105,8 @@ export const toggleIsFetching = (isFetching:boolean) => {
         isFetching
     } as const
 }
+
+
 
 export default usersReducer;
 
