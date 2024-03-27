@@ -5,7 +5,8 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
-const TOGGLE_IS_FETCHING="TOGGLE_IS_FETCHING"
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type UserType = {
     id: number,
@@ -30,7 +31,9 @@ const initialState: initialStateType = {
     pageSize: 5,
     totalUsersCount: 20,
     currentPage: 1,
-    isFetching:false
+    isFetching: false,
+    followingProgress: [] //массив с ИД юзеров фоловеров(временный, для того чтобы понимать, что то происх с юз или нет)
+
 }
 
 export type initialStateType = {
@@ -38,7 +41,8 @@ export type initialStateType = {
     pageSize: number
     totalUsersCount: number
     currentPage: number
-    isFetching:boolean
+    isFetching: boolean,
+    followingProgress: Number[]
 }
 
 export const usersReducer = (state: initialStateType = initialState, action: AllActionTypes): initialStateType => {
@@ -55,7 +59,13 @@ export const usersReducer = (state: initialStateType = initialState, action: All
         case SET_TOTAL_COUNT:
             return {...state, totalUsersCount: action.totalUsersCount}
         case TOGGLE_IS_FETCHING:
-            return {...state, isFetching:action.isFetching}
+            return {...state, isFetching: action.isFetching}
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state, followingProgress: action.isFetching // если ТРУ ИД добавится, если фолс - верн новый массив без этого ИД
+                    ? [...state.followingProgress, action.userId]
+                    : state.followingProgress.filter(id => id !== action.userId)
+            }
         default:
             return state
     }
@@ -66,6 +76,7 @@ export type setUsersACType = ReturnType<typeof setUsers>
 export type setCurrentPageACType = ReturnType<typeof setCurrentPage>
 export type setTotalCountACType = ReturnType<typeof setTotalCount>
 export type setIsFetchingType = ReturnType<typeof toggleIsFetching>
+export type ToggleIsFollowingProgressType = ReturnType<typeof toggleIsFollowingProgress>
 
 
 // AC
@@ -99,13 +110,19 @@ export const setTotalCount = (totalUsersCount: number) => {
         totalUsersCount: totalUsersCount
     } as const
 }
-export const toggleIsFetching = (isFetching:boolean) => {
+export const toggleIsFetching = (isFetching: boolean) => {
     return {
         type: TOGGLE_IS_FETCHING,
         isFetching
     } as const
 }
-
+export const toggleIsFollowingProgress = (userId: number, isFetching: boolean) => {
+    return {
+        type: TOGGLE_IS_FOLLOWING_PROGRESS,
+        userId,
+        isFetching
+    } as const
+}
 
 
 export default usersReducer;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './users.module.css'
 import UserPhotoNull from '../../assets/images/usersNull.png'
-import {UserType} from '../../redux/usersReducer';
+import {toggleIsFollowingProgress, UserType} from '../../redux/usersReducer';
 import {NavLink} from 'react-router-dom';
 import axios from 'axios';
 import {userAPI} from '../../api/api';
@@ -12,9 +12,11 @@ type UsersPropsType = {
     pageSize: number
     currentPage: number
     users: UserType[]
+    followingProgress:Number[]
     onPageChanged: (pageNumber: number) => void
     unfollow: (id: number) => void
     follow: (id: number) => void
+    toggleIsFollowingProgress:(userId:number,isFetching:boolean) => void
 }
 
 const Users = (props: UsersPropsType) => {
@@ -26,7 +28,7 @@ const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-
+console.log("isFollowingProgress", props.followingProgress)
     return (
         <div>
             <div>
@@ -46,24 +48,27 @@ const Users = (props: UsersPropsType) => {
                                         className={styles.userPhoto}
                                         alt="user"/>
                                </NavLink>
-                               {console.log("u.followed",u.followed)}
                            </div>
                            {u.followed
-                               ? <button onClick={() => {
+                               //если текущ ИД совпадает с каким то из списка followingProgress, то значит с юзером что то происх - ТРУ дизебл
+                               ? <button disabled={props.followingProgress.some(id=>id === u.id)} onClick={() => {
+                                   props.toggleIsFollowingProgress(u.id,true) // если изФетчнг-тру значит будем добавля ид в followingProgress
                                    userAPI.unfollow(u.id).then(res => {
                                        if (res.data.resultCode === 0) {
                                            props.unfollow(u.id) //это диспач в Редакс
                                        }
+                                       props.toggleIsFollowingProgress(u.id,false)  // если изФетчнг-фолс значит будем удалять ид в followingProgress
                                    })
                                }
                                }>unfollow</button>
-                               : <button onClick={() => {
+                               : <button disabled={props.followingProgress.some(id=>id ===u.id)} onClick={() => {
+                                   props.toggleIsFollowingProgress(u.id,true)
                                    userAPI.follow(u.id).then(res => {
                                        if (res.data.resultCode === 0) {
                                            props.follow(u.id) //это диспач в Редакс
                                        }
+                                       props.toggleIsFollowingProgress(u.id,false)
                                    })
-
                                }}>follow</button>}
                        </span>
                 <span>

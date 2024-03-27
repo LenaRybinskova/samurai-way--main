@@ -11,7 +11,7 @@ import {
     setTotalCountACType,
     setUsersACType,
     setIsFetchingType,
-    unfollowACType
+    unfollowACType, ToggleIsFollowingProgressType
 } from './usersReducer';
 import {SetAuthUserDataACType} from './auth-reducer';
 
@@ -28,6 +28,7 @@ export type AllActionTypes =
     | setIsFetchingType
     | ProfileReducerAcTypes
     | SetAuthUserDataACType
+    | ToggleIsFollowingProgressType
 
 
 /*type StoreType = {
