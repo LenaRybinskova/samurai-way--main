@@ -9,10 +9,6 @@ class HeaderContainer extends React.Component<CommonType> {
 
     componentDidMount() {
         this.props.getAuthUserDataTC()
-/*        axios.get('https://social-network.samuraijs.com/api/1.1/auth/me', {withCredentials: true}).then(res => {
-                if (res.data.resultCode === 0) {
-                    let {id, login, email} = res.data.data
-                    this.props.setAuthUserData(id, email, login)}})*/
     }
 
     render() {
@@ -26,7 +22,6 @@ type MapStateToPropsType = {
     login: string | null
 }
 type mapDispatchToPropsType = {
-/*    setAuthUserData: (userId: string, email: string, login: string) => void*/
     getAuthUserDataTC:()=>void
 }
 const mapStateToProps = (state: AppRootSTateType) => {
@@ -36,4 +31,4 @@ const mapStateToProps = (state: AppRootSTateType) => {
     }
 }
 
-export default connect(mapStateToProps, {/*setAuthUserData,*/getAuthUserDataTC})(HeaderContainer)
+export default connect(mapStateToProps, {getAuthUserDataTC})(HeaderContainer)

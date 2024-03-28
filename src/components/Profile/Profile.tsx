@@ -10,11 +10,12 @@ export type ProfileType = {
     //setUserProfile и toggleIsFetching считаются "транзитными" их не надо типизировать, тк непосредственно в Profile они не используются
     profile:ResponseAPIProfileType  | null
 
+
 }
 export const Profile = (props: ProfileType) => {
     return (
         <div>Main content
-            <ProfileInfo profile={props.profile}/>
+            <ProfileInfo profile={props.profile} />
             <MyPostsContainer/>
         </div>
     )

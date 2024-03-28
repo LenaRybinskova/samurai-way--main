@@ -2,9 +2,8 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogsItem';
-import {StoreType} from '../../redux/reduxStore';
-import {DialogType, MessageType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
 import {DialogsContainerType} from './DialogsContainer';
+import {Redirect} from 'react-router-dom';
 
 
 
@@ -15,7 +14,6 @@ import {DialogsContainerType} from './DialogsContainer';
         let messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}/>)
         let newMessageBody = props.dialogsPage.newMessageBody
 
-
         const onSendMessageClick = () => {
             props.sendMessage()
         }
@@ -23,6 +21,10 @@ import {DialogsContainerType} from './DialogsContainer';
         const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
             let body = e.currentTarget.value
             props.updateNewMessageBody(body)
+        }
+
+        if(!props.isAuth){
+            return <Redirect to={"/login"}/>
         }
 
         return (

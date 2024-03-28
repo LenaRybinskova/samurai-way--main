@@ -4,12 +4,16 @@ import {ResponseAPIProfileType} from '../../../redux/profileReducer';
 import Preloader from '../../common/preloader/Preloader';
 import UserPhotoNull from '../../../assets/images/usersNull.png'
 
+
 export type ProfileInfoType = {
     profile: ResponseAPIProfileType | null
+
 }
 
 export const ProfileInfo = (props: ProfileInfoType) => {
     if (!props.profile) {return <Preloader/>}
+
+
 
     return (
         <div>
