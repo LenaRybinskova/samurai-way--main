@@ -6,8 +6,8 @@ const instance = axios.create({
 });
 
 export const userAPI = {
-    authMe() {
-        return instance.get(`auth/me`)
+    getProfile(userId:number) {
+        return instance.get(`/profile/${userId}`)
     },
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
@@ -17,5 +17,11 @@ export const userAPI = {
     },
     follow(id:number){
         return instance.post(`/follow/${id}`)
+    }
+}
+
+export const authAPI = {
+    authMe() {
+        return instance.get(`auth/me`)
     }
 }

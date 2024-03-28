@@ -1,24 +1,25 @@
 import React from 'react';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import {ResponseAPIProfileType, setUserProfile} from '../../redux/profileReducer';
+import {getUserProfileTC, ResponseAPIProfileType, setUserProfile} from '../../redux/profileReducer';
 import {toggleIsFetching} from '../../redux/usersReducer';
 import {Profile} from './Profile';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+
 
 //2
 class ProfileContainer extends React.Component<OwnPropsType> {
 
     componentDidMount() {
 // вытаскивает ИД из текущего УРЛ и диспатчит в редакс стор
-        let userId=this.props.match.params.userId
+        let userId=this.props.match.params.userId //string
         if(!userId){userId="2"}
         // делаем запрос на сервер за профилем по этому ИД
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`).then(response => {
+        this.props.getUserProfileTC(Number(userId))
+/*        userAPI.getProfile(userId).then(response => {
             // диспатчим данные в стейт и mstp потом увидит изм стейта и Профайл перерисуется.
             this.props.setUserProfile(response.data)
-        })
+        })*/
     }
 
     render() {
@@ -28,8 +29,9 @@ class ProfileContainer extends React.Component<OwnPropsType> {
 
 //1
 type MapDispatchToProsType = {
-    setUserProfile: (profile: ResponseAPIProfileType | null) => void
+/*    setUserProfile: (profile: ResponseAPIProfileType | null) => void*/
     toggleIsFetching: (isFetching: boolean) => void
+    getUserProfileTC:(userId:number)=>void
 }
 type MapStateToPropsType = { profile: ResponseAPIProfileType | null }
 type ProfileContainerType = MapDispatchToProsType & MapStateToPropsType
@@ -46,4 +48,4 @@ const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
 //3 контейнерная компонента для отслеж УРЛ
 const withURLDataContainerComponent = withRouter(ProfileContainer)
 
-export default connect(mapStateToProps, {setUserProfile, toggleIsFetching})(withURLDataContainerComponent)
+export default connect(mapStateToProps, {/*setUserProfile,*/ toggleIsFetching, getUserProfileTC})(withURLDataContainerComponent)

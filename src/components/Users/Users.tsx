@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './users.module.css'
 import UserPhotoNull from '../../assets/images/usersNull.png'
-import {toggleIsFollowingProgress, unfollowTC, UserType} from '../../redux/usersReducer';
+import { UserType} from '../../redux/usersReducer';
 import {NavLink} from 'react-router-dom';
-import axios from 'axios';
-import {userAPI} from '../../api/api';
+
 
 
 type UsersPropsType = {
