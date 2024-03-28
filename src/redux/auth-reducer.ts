@@ -1,4 +1,6 @@
 import {AllActionTypes} from './store';
+import {Dispatch} from 'redux';
+import {userAPI} from '../api/api';
 
 const SET_USER_DATA = 'SET_USER_DATA'
 // со старта вся инфа по юзеру null - тк не залогинен
@@ -32,6 +34,14 @@ export const setAuthUserData = (userId: string, email: string, login: string) =>
         type: SET_USER_DATA,
         data: {userId, email, login}
     } as const
+}
+
+// TC
+export const authMeTC =()=>(dispatch:Dispatch)=>{
+    userAPI.authMe().then(res => {
+        if (res.data.resultCode === 0) {
+            let {id, login, email} = res.data.data
+            dispatch(setAuthUserData(id, email, login))}})
 }
 
 export default authReducer;

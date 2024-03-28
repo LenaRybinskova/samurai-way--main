@@ -1,4 +1,6 @@
 import {AllActionTypes} from './store';
+import {userAPI} from '../api/api';
+import {Dispatch} from 'redux';
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -125,6 +127,38 @@ export const toggleIsFollowingProgress = (userId: number, isFetching: boolean) =
 }
 
 
+//TC
+export const setUsersTC=(currentPage:number,pageSize:number)=>(dispatch:Dispatch)=>{
+    /*со старта приложения, запрос идет этот и подгружает пользователей и totalCount пользователей*/
+    dispatch(setCurrentPage(currentPage)) // чтобы выделялась текущ строка
+    dispatch(toggleIsFetching(true))//крутилка вкл
+    userAPI.getUsers(currentPage, pageSize).then(data => {
+        dispatch(setUsers(data.items))
+        dispatch(setTotalCount(data.totalCount))
+        dispatch(toggleIsFetching(false)) //крутилка выкл
+    })
+}
+
+
+export const followTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFollowingProgress(userId, true))
+    userAPI.follow(userId).then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(follow(userId))
+        }
+        dispatch(toggleIsFollowingProgress(userId, false))
+    })
+}
+
+export const unfollowTC = (userId: number) => (dispatch: Dispatch) => {
+    dispatch(toggleIsFollowingProgress(userId, true))
+    userAPI.unfollow(userId).then(res => {
+        if (res.data.resultCode === 0) {
+            dispatch(unfollow(userId))
+        }
+        dispatch(toggleIsFollowingProgress(userId, false))
+    })
+}
 export default usersReducer;
 
 

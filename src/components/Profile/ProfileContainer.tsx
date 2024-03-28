@@ -22,7 +22,6 @@ class ProfileContainer extends React.Component<OwnPropsType> {
     }
 
     render() {
-        console.log("попали в метод рендер ProfileContainer")
         return <Profile {...this.props} profile={this.props.profile}/>
     }
 }
