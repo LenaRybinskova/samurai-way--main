@@ -68,7 +68,7 @@ const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     }
 }
 
-const withRedirect = WithAuthRedirect<UsersContainerType>(UsersContainerClass)
+/*const withRedirect = WithAuthRedirect<UsersContainerType>(UsersContainerClass)
 
 connect(mapStateToProps, {
     setCurrentPage,
@@ -76,14 +76,14 @@ connect(mapStateToProps, {
     followTC,
     unfollowTC
 })
-(withRedirect)
+(withRedirect)*/
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
     setCurrentPage,
     setUsersTC,
     followTC,
     unfollowTC
-}) , withRedirect,WithAuthRedirect)(UsersContainerClass)
+}) , WithAuthRedirect)(UsersContainerClass)
 
 
 /*const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {
