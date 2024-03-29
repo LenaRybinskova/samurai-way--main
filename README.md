@@ -1,3 +1,28 @@
+# 70: compose()()
+
+функция, в которую передаем все контейн компоненты(функции) и целевую компоненту.
+
+# 69: HOC
+
+НОС - это функ, принимающая компоненту и возвращающая унифицированную контейн компоненту.
+
+Чтобы в кажд компоненте не делать проверку на isAuth, эту проверку можно делать в НОС, в которую передавать презент компоненту и получать из НОС контейн компоненту.
+
+```
+export function WithAuthRedirect <T>(Component: React.ComponentType<T>)  {
+
+    const RedirectComponent=(props:MstpType)=> {
+        let {isAuth, ...restProps}=props
+        if (!isAuth) return <Redirect to={'/login'}/>
+        return <Component {...restProps as T}/>
+    }
+    //обернули коннектом, чтобы получть из Стора isAuth
+    let ConnectRedirectComponent = connect(mstp)(RedirectComponent)
+
+    return ConnectRedirectComponent
+};
+```
+
 # 66: THUNK
 
 THUNK - функ, принимающая параметрами dispatch и getStore(), в которой выполняются асинхр действия( запрос на сервер, напр) и диспатчатся экшены в редьюсор.

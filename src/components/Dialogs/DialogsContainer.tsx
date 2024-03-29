@@ -3,25 +3,23 @@ import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../red
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
 type MapStateToPropsType ={
     dialogsPage: InitialStateType
-    isAuth:boolean
+/*    isAuth:boolean*/
 }
 type MapDispatchToPropsType ={
     updateNewMessageBody:(body: string) =>void,
     sendMessage:() =>void
 }
 export type DialogsContainerType= MapStateToPropsType & MapDispatchToPropsType
-
-
 // СВОЙСТВА
 let mapStateToProps = (state: AppRootSTateType):MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
-        isAuth:state.auth.isAuth
     }
 }
 // КОЛЛЛБЕКИ
@@ -31,8 +29,19 @@ let mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
         sendMessage: () => {dispatch(sendMessageAC())}
     }
 }
+
+
+/*//HOC
+const DialogsRedirectComponent=WithAuthRedirect<DialogsContainerType>(Dialogs)
+
+
 //этими функциями(через функцию коннект) дали числой компон Dialogs все что нужно. По сути создали контейнерную компоненту
-export const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+ const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(DialogsRedirectComponent)*/
+
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+    WithAuthRedirect
+)(Dialogs)
 
 
 

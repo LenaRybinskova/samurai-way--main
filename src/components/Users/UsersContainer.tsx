@@ -4,6 +4,8 @@ import {AppRootSTateType} from '../../redux/reduxStore';
 import {followTC, setCurrentPage, setUsersTC, unfollowTC, UserType} from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+import {compose} from 'redux';
 
 
 // 2я контейнерная компонента, которая обращ к АПИ
@@ -66,13 +68,22 @@ const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {
+const withRedirect = WithAuthRedirect<UsersContainerType>(UsersContainerClass)
+
+connect(mapStateToProps, {
     setCurrentPage,
     setUsersTC,
     followTC,
     unfollowTC
 })
-(UsersContainerClass)
+(withRedirect)
+
+export default compose<React.ComponentType>(connect(mapStateToProps, {
+    setCurrentPage,
+    setUsersTC,
+    followTC,
+    unfollowTC
+}) , withRedirect,WithAuthRedirect)(UsersContainerClass)
 
 
 /*const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {

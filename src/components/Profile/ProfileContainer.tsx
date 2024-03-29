@@ -1,52 +1,63 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import {getUserProfileTC, ResponseAPIProfileType, setUserProfile} from '../../redux/profileReducer';
+import {getUserProfileTC, ResponseAPIProfileType} from '../../redux/profileReducer';
 import {toggleIsFetching} from '../../redux/usersReducer';
 import {Profile} from './Profile';
-import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
+import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
+import {compose} from 'redux';
 
 
-//2
 class ProfileContainer extends React.Component<OwnPropsType> {
-
     componentDidMount() {
-        let userId=this.props.match.params.userId //string
-        if(!userId){userId="2"}
+        let userId = this.props.match.params.userId //string
+        if (!userId) {
+            userId = '2'
+        }
         this.props.getUserProfileTC(Number(userId))
     }
-
     render() {
-        if(!this.props.isAuth){
-            return <Redirect to={"/login"}/>
-        }
         return <Profile {...this.props} profile={this.props.profile}/>
     }
 }
 
-//1
 type MapDispatchToProsType = {
     toggleIsFetching: (isFetching: boolean) => void
-    getUserProfileTC:(userId:number)=>void
+    getUserProfileTC: (userId: number) => void
 }
-type MapStateToPropsType = { profile: ResponseAPIProfileType | null,
-    isAuth:boolean
+type MapStateToPropsType = {
+    profile: ResponseAPIProfileType | null,
+/*    isAuth: boolean*/
 }
 type ProfileContainerType = MapDispatchToProsType & MapStateToPropsType
-type PathParamsType={
-    userId:string
+type PathParamsType = {
+    userId: string
 }
 // вытащили типы из RouteComponentProps и свои типы для контейнерной компоненты добавили
-type OwnPropsType=RouteComponentProps<PathParamsType> & ProfileContainerType
+type OwnPropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
 
 const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
-    return {
-        profile: state.profilePage.profile,
-        isAuth:state.auth.isAuth
-    }
+    return {profile: state.profilePage.profile,}
 }
 
-//3 контейнерная компонента для отслеж УРЛ
-const withURLDataContainerComponent = withRouter(ProfileContainer)
+/*//HOC
+const AuthRedirectComponent=WithAuthRedirect<OwnPropsType>(ProfileContainer)
+/!*const AuthRedirectComponent = (props: OwnPropsType) => {
+    if (!props.isAuth) {
+        return <Redirect to={'/login'}/>
+    }
+    return <ProfileContainer {...props}/>
+}*!/
 
-export default connect(mapStateToProps, {/*setUserProfile,*/ toggleIsFetching, getUserProfileTC})(withURLDataContainerComponent)
+
+//3 контейнерная компонента для отслеж УРЛ
+const withURLDataContainerComponent = withRouter(AuthRedirectComponent)
+
+export default  connect(mapStateToProps, {toggleIsFetching, getUserProfileTC
+})(withURLDataContainerComponent)*/
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {toggleIsFetching, getUserProfileTC}) ,
+    withRouter,
+    WithAuthRedirect)
+(ProfileContainer)

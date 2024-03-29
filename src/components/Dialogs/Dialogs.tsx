@@ -3,7 +3,7 @@ import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogsItem';
 import {DialogsContainerType} from './DialogsContainer';
-import {Redirect} from 'react-router-dom';
+
 
 
 
@@ -21,10 +21,6 @@ import {Redirect} from 'react-router-dom';
         const onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
             let body = e.currentTarget.value
             props.updateNewMessageBody(body)
-        }
-
-        if(!props.isAuth){
-            return <Redirect to={"/login"}/>
         }
 
         return (
