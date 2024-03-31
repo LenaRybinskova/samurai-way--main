@@ -2,7 +2,7 @@ import {
     AddPostActionType,
     ProfileReducerAcTypes,
     SetUserProfileType,
-    UpdateNewPostTextActionType
+    UpdateNewPostTextActionType, UpdateProfileStatusACType
 } from './profileReducer';
 import {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
 import {
@@ -29,6 +29,7 @@ export type AllActionTypes =
     | ProfileReducerAcTypes
     | SetAuthUserDataACType
     | ToggleIsFollowingProgressType
+| UpdateProfileStatusACType
 
 
 /*type StoreType = {

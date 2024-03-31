@@ -5,7 +5,7 @@ import {userAPI} from '../api/api';
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
-
+const UPDATE_PROFILE_STATUS = 'UPDATE_PROFILE_STATUS'
 
 
 // стартовый стейт
@@ -15,6 +15,7 @@ let initialState: ProfilePageType = {
         {id: 2, message: 'Its my first post', likesCount: 0}
     ] as PostType[],
     newPostText: 'IT-kamasutra',
+    profileStatus:"СТАРТОВЫЙ СТАТУС",
     profile: {
         userId: 2,
         lookingForAJob: true,
@@ -46,6 +47,8 @@ export const profileReducer = (state: initialStateType = initialState, action: A
             return {...state, newPostText: action.newText}
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
+        case UPDATE_PROFILE_STATUS:
+            return {...state, profileStatus: action.newStatus}
         default:
             return state
     }
@@ -81,13 +84,16 @@ export type PostType = {
 export type ProfilePageType = {
     posts: PostType[]
     newPostText: string
-    profile: ResponseAPIProfileType  | null
+    profile: ResponseAPIProfileType  | null,
+    profileStatus:string
 }
 
 export type ProfileReducerAcTypes = AddPostActionType | UpdateNewPostTextActionType | SetUserProfileType
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type UpdateNewPostTextActionType = ReturnType<typeof updateNewPostTextAC>
 export type SetUserProfileType = ReturnType<typeof setUserProfile>
+export type UpdateProfileStatusACType =ReturnType<typeof updateProfileStatusAC>
+
 
 
 // AC
@@ -108,13 +114,24 @@ export const setUserProfile = (profile: ResponseAPIProfileType | null) => {
         profile
     } as const
 }
+export const updateProfileStatusAC=(newStatus:string)=>{
+    return {type:UPDATE_PROFILE_STATUS, newStatus} as const
+}
 
 // TC
-
 export const getUserProfileTC=(userId:number)=>(dispatch:Dispatch)=>{
     userAPI.getProfile(userId).then(response => {
         dispatch(setUserProfile(response.data))
     })
 }
 
+export const updateProfileStatusTC=(newStatus:string)=>(dispatch:Dispatch)=>{
+    userAPI.updateProfileStatus(newStatus).then(res=>{
+console.log("c сервера пришел", res)
+        if(res.data.resultCode===0){
+            dispatch(updateProfileStatusAC(newStatus))
+        }
+
+    })
+}
 export default profileReducer;

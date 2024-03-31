@@ -17,6 +17,9 @@ export const userAPI = {
     },
     follow(id:number){
         return instance.post(`/follow/${id}`)
+    },
+    updateProfileStatus(newStatus:string){
+        return instance.put(" /profile/status", newStatus)
     }
 }
 
