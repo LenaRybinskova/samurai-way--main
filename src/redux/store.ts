@@ -1,17 +1,18 @@
 import {
     AddPostActionType,
     ProfileReducerAcTypes,
-    SetUserProfileType,
-    UpdateNewPostTextActionType, UpdateProfileStatusACType
+    SetProfileStatusType,
+    UpdateNewPostTextActionType
 } from './profileReducer';
 import {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
 import {
     followACType,
     setCurrentPageACType,
+    setIsFetchingType,
     setTotalCountACType,
     setUsersACType,
-    setIsFetchingType,
-    unfollowACType, ToggleIsFollowingProgressType
+    ToggleIsFollowingProgressType,
+    unfollowACType
 } from './usersReducer';
 import {SetAuthUserDataACType} from './auth-reducer';
 
@@ -29,7 +30,7 @@ export type AllActionTypes =
     | ProfileReducerAcTypes
     | SetAuthUserDataACType
     | ToggleIsFollowingProgressType
-| UpdateProfileStatusACType
+| SetProfileStatusType
 
 
 /*type StoreType = {

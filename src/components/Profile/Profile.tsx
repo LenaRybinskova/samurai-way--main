@@ -17,7 +17,7 @@ export type ProfileType = {
 export const Profile = (props: ProfileType) => {
     return (
         <div>Main content
-            <ProfileInfo profile={props.profile} updateProfileStatusTC={props.updateProfileStatusTC} profileStatus={props.profileStatus} />
+            <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC}/>
             <MyPostsContainer/>
         </div>
     )

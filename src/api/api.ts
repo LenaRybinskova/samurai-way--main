@@ -6,9 +6,6 @@ const instance = axios.create({
 });
 
 export const userAPI = {
-    getProfile(userId:number) {
-        return instance.get(`/profile/${userId}`)
-    },
     getUsers(currentPage: number, pageSize: number) {
         return instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`).then(res => res.data)
     },
@@ -18,13 +15,28 @@ export const userAPI = {
     follow(id:number){
         return instance.post(`/follow/${id}`)
     },
-    updateProfileStatus(newStatus:string){
-        return instance.put(" /profile/status", newStatus)
-    }
+    // сделали аналог backward compatibility
+    getProfile(userId:number) {
+        console.warn("userAPI.getProfile() method is outdated, use profileAPI.getProfile()")
+        return profileAPI.getProfile(userId)
+    },
+
 }
 
 export const authAPI = {
     authMe() {
         return instance.get(`auth/me`)
+    }
+}
+
+export const profileAPI = {
+    getProfile(userId:number) {
+        return instance.get(`/profile/${userId}`)
+    },
+    getStatus(userId:number){
+        return instance.get(`/profile/status/${userId}`)
+    },
+    updateStatus(newStatus:string){
+        return instance.put("/profile/status", {status:newStatus})
     }
 }
