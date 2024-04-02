@@ -1,7 +1,14 @@
 import React from 'react';
-import {Field, reduxForm} from 'redux-form';
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
-const LoginForm = (props:any) => {
+export type FormDataType={
+    login:string,
+    password:string,
+    RememberMe:boolean
+}
+
+
+const LoginForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
 //конт компон снабдила в пропсах кучей событий, в тч handleSubmit - для сбора всех данных с форм, без принудит перезагрузки
     return (
             <form onSubmit={props.handleSubmit}>
@@ -12,7 +19,7 @@ const LoginForm = (props:any) => {
                    */}
                 <div><Field component={"input"} name={"login"} placeholder={"login"} /></div>
                 <div><Field component={"input"} name={"password"}  placeholder={"password"} /></div>
-                <div><Field component={"input"} name={"Remember"}  type="checkbox"  />Remember me</div>
+                <div><Field component={"input"} name={"RememberMe"}  type="checkbox"  />Remember me</div>
                 <div>
                     <button type={"submit"}>Login</button>
                 </div>
@@ -22,7 +29,7 @@ const LoginForm = (props:any) => {
 
 //ReduxLoginForm функ, которая возвращает ХОК,
 // который возвр конт компоненту с новым функционалом для LoginForm
-export const ReduxLoginForm=reduxForm({
+export const ReduxLoginForm=reduxForm<FormDataType>({
 // пишем уникальное название формы
     form:"login"
 })(LoginForm)

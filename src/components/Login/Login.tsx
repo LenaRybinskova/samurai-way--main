@@ -1,8 +1,8 @@
 import React from 'react';
-import { ReduxLoginForm} from './LoginForm';
+import {FormDataType, ReduxLoginForm} from './LoginForm';
 
 const Login = () => {
-    const onSubmit=(formData:any)=>{
+    const onSubmit=(formData:FormDataType)=>{
 console.log("данные из форм",formData)
     }
 
