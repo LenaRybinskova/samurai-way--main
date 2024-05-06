@@ -1,5 +1,5 @@
 import React from 'react';
-import {InitialStateType, sendMessageAC, updateNewMessageBodyAC} from '../../redux/dialogsReducer';
+import {InitialStateType, sendMessageAC} from '../../redux/dialogsReducer';
 import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
@@ -7,26 +7,27 @@ import {compose, Dispatch} from 'redux';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 
 
-type MapStateToPropsType ={
+type MapStateToPropsType = {
     dialogsPage: InitialStateType
-/*    isAuth:boolean*/
+    /*    isAuth:boolean*/
 }
-type MapDispatchToPropsType ={
-    updateNewMessageBody:(body: string) =>void,
-    sendMessage:() =>void
+type MapDispatchToPropsType = {
+
+    sendMessage: (newMessageBody: string) => void
 }
-export type DialogsContainerType= MapStateToPropsType & MapDispatchToPropsType
+export type DialogsContainerType = MapStateToPropsType & MapDispatchToPropsType
 // СВОЙСТВА
-let mapStateToProps = (state: AppRootSTateType):MapStateToPropsType => {
+let mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
     }
 }
 // КОЛЛЛБЕКИ
-let mapDispatchToProps = (dispatch: Dispatch):MapDispatchToPropsType => {
+let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        updateNewMessageBody: (body: string) => {dispatch(updateNewMessageBodyAC(body))},
-        sendMessage: () => {dispatch(sendMessageAC())}
+        sendMessage: (newMessageBody: string) => {
+            dispatch(sendMessageAC(newMessageBody))
+        }
     }
 }
 

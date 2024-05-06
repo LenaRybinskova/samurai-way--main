@@ -27,6 +27,7 @@ export type AppRootSTateType = ReturnType<typeof rootReducer> // типизац�
 export type StoreType = typeof store // типизация всего Стора: тут и стейт и функции:диспач, сабскрайб и тд
 export default store
 
+
 // @ts-ignore
 window.store = store; // созд глоб переменную в window, присвоили ей значение store. теперь можно в Ф12 обращаться и смотреть Стор
 

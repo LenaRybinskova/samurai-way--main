@@ -2,9 +2,8 @@ import {
     AddPostActionType,
     ProfileReducerAcTypes,
     SetProfileStatusType,
-    UpdateNewPostTextActionType
 } from './profileReducer';
-import {SendMessageAC, UpdateNewMessageBodyACType} from './dialogsReducer';
+import {SendMessageAC} from './dialogsReducer';
 import {
     followACType,
     setCurrentPageACType,
@@ -17,10 +16,8 @@ import {
 import {SetAuthUserDataACType} from './auth-reducer';
 
 export type AllActionTypes =
-    UpdateNewMessageBodyACType
     | SendMessageAC
     | AddPostActionType
-    | UpdateNewPostTextActionType
     | followACType
     | unfollowACType
     | setUsersACType

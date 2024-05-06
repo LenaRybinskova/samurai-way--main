@@ -1,6 +1,5 @@
 import {AllActionTypes} from './store';
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
 export type DialogType = {
@@ -30,22 +29,18 @@ let initialState = {
         {id: 3, message: 'fine'},
         {id: 4, message: 'smthng'}
     ] as MessageType[],
-    newMessageBody: ''
+
 }
 export type InitialStateType = typeof initialState
 
 const DialogsReducer = (state: InitialStateType = initialState, action: AllActionTypes): InitialStateType => {
 
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-             return {
-                ...state,newMessageBody:action.body // введеная строка в инпут сохранилась в newMessageBody*/
-            }
         case SEND_MESSAGE:
-            let body = state.newMessageBody // сохр в перем то что пришло из инпута
+            let body = action.newMessageBody // сохр в перем то что пришло из инпута
             return {
                 ...state,
-                newMessageBody: '',// зачистили поле
+
                 messages: [...state.messages,{id: 6, message: body}]//запушили в стейт => теперь отрисуется
             }
 
@@ -53,19 +48,14 @@ const DialogsReducer = (state: InitialStateType = initialState, action: AllActio
             return state
     }
 }
-export type UpdateNewMessageBodyACType = ReturnType<typeof updateNewMessageBodyAC>
-export type SendMessageAC = ReturnType<typeof sendMessageAC>
-export type DialogsReducerAcTypes = UpdateNewMessageBodyACType | SendMessageAC
 
-export const updateNewMessageBodyAC = (newMessage: string) => {
+export type SendMessageAC = ReturnType<typeof sendMessageAC>
+export type DialogsReducerAcTypes =  SendMessageAC
+
+export const sendMessageAC = (newMessageBody:string) => {
     return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        body: newMessage
-    } as const
-}
-export const sendMessageAC = () => {
-    return {
-        type: SEND_MESSAGE
+        type: SEND_MESSAGE,
+        newMessageBody
     } as const
 }
 export default DialogsReducer

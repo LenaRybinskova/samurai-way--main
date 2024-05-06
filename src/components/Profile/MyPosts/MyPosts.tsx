@@ -1,9 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {addPostAC,  updateNewPostTextAC} from '../../../redux/profileReducer';
-import {AllActionTypes} from '../../../redux/store';
 import {MyPostsContainerPropsType} from './MyPostsContainer';
+import {InputFormType, ReduxInputForm} from '../../InputForm/InputForm'
 
 
 /*export type MyPostsType = {
@@ -23,26 +22,33 @@ export const MyPosts = (props: MyPostsContainerPropsType) => {
 
     let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
 
-    const onAddPost = () =>{
+/*
+    const onAddPost = () => {
         props.addPost()
     }
+*/
 
-    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+/*    const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const text = e.currentTarget.value
         props.updateNewPostText(text)
+    }*/
+
+    const addPost = (data: InputFormType) => {
+        console.log('text ', data)
+        props.addPost(data.newPostText)
 
     }
 
     return (
         <div className={s.postsBlock}><h3>My posts</h3>
             <div>
-                <div>
+                <ReduxInputForm onSubmit={addPost}/>
+                {/*                <div>
                     <textarea value={props.newPostText} onChange={onPostChange}></textarea>
                 </div>
                 <div>
                     <button onClick={onAddPost}>Add post</button>
-                </div>
-
+                </div>*/}
             </div>
             <div className={s.posts}>
                 {postsElements}
