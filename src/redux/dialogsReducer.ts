@@ -40,10 +40,8 @@ const DialogsReducer = (state: InitialStateType = initialState, action: AllActio
             let body = action.newMessageBody // сохр в перем то что пришло из инпута
             return {
                 ...state,
-
                 messages: [...state.messages,{id: 6, message: body}]//запушили в стейт => теперь отрисуется
             }
-
         default:
             return state
     }

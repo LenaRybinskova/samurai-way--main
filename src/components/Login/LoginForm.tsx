@@ -1,5 +1,7 @@
 import React from 'react';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {Input} from '../common/FormsControls/FormsControls';
+import {required} from '../../utils/validators/validators';
 
 export type FormDataType={
     login:string,
@@ -17,9 +19,19 @@ const LoginForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
                    В Field уже есть onChange, они к name буду собирать данные
 
                    */}
-                <div><Field component={"input"} name={"login"} placeholder={"login"} /></div>
-                <div><Field component={"input"} name={"password"}  placeholder={"password"} /></div>
-                <div><Field component={"input"} name={"RememberMe"}  type="checkbox"  />Remember me</div>
+                <div><Field
+                    component={Input}
+                    name={"login"}
+                    placeholder={"login"}
+                validate={[required]}
+                /></div>
+                <div><Field
+                    component={Input}
+                    name={"password"}
+                    placeholder={"password"}
+                    validate={[required]}
+                /></div>
+                <div><Field component={Input} name={"RememberMe"}  type="checkbox"  />Remember me</div>
                 <div>
                     <button type={"submit"}>Login</button>
                 </div>

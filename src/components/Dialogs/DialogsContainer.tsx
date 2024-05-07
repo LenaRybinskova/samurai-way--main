@@ -1,11 +1,10 @@
 import React from 'react';
 import {InitialStateType, sendMessageAC} from '../../redux/dialogsReducer';
-import Dialogs from './Dialogs';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
 import {compose, Dispatch} from 'redux';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
-
+import {Dialogs} from "../Dialogs/Dialogs"
 
 type MapStateToPropsType = {
     dialogsPage: InitialStateType
@@ -43,7 +42,4 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
     WithAuthRedirect
 )(Dialogs)
-
-
-
 
