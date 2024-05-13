@@ -1,11 +1,10 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {maxLengthCreator, required} from '../../../utils/validators/validators'
 import {Textarea} from '../../../../src/components/common/FormsControls/FormsControls'
+import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 
 export type InputFormType = {
-    newPostText: string
-}
+    newPostText: string }
 
 const maxLength100 = maxLengthCreator(100)
 
@@ -27,10 +26,8 @@ const AddNewPost: React.FC<InjectedFormProps<InputFormType>> = (props) => {
                 </div>
             </div>
         </form>
-
     );
 };
-
 export default  reduxForm<InputFormType>({
     form: 'ProfileAddNewPostForm'
 })(AddNewPost)

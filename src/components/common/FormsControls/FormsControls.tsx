@@ -3,7 +3,6 @@ import styles from './FormsControls.module.css'
 import React from 'react'
 import {WrappedFieldProps} from 'redux-form';
 
-
 type FormControlProps = WrappedFieldProps & {
     tagName: 'textarea' | 'input'
 }
@@ -25,13 +24,9 @@ const FormControl: FC<FormControlProps> = ({input, meta, tagName, ...props}) => 
 };
 
 export const Input = (props: any) => {
-    return (
-    <FormControl {...props} tagName={"input"}/>
-    )
+    return <FormControl {...props} tagName={"input"}/>
 }
 
 export const Textarea = (props: any) => {
-    return (
-        <FormControl {...props} tagName={"textarea"}/>
-    )
+    return<FormControl {...props} tagName={"textarea"}/>
 }

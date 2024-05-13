@@ -4,8 +4,9 @@ import dialogsReducer from './dialogsReducer';
 import sideBarReducer from './sideBarReducer';
 import usersReducer from './usersReducer';
 import authReducer from './auth-reducer';
-import thunk from 'redux-thunk';
+import thunk, {ThunkAction} from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form'
+import {AllActionTypes} from '../redux/store';
 
 // наши все редьюсеры нужно склеить в кучу(в объект). Этот объект надо вопринимать как наш Стейт, архитект похожа на наш старый store._state
 // сейчас все стейты расписахы по иниц стейтам в редьюсорах
@@ -24,6 +25,7 @@ export const rootReducer = combineReducers(
 export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export type AppRootSTateType = ReturnType<typeof rootReducer> // типизация склеенных стейтов из редьюсеров
+export type AppThunk<ReturnType=void> =ThunkAction<ReturnType,AppRootSTateType, unknown, AllActionTypes >
 export type StoreType = typeof store // типизация всего Стора: тут и стейт и функции:диспач, сабскрайб и тд
 export default store
 

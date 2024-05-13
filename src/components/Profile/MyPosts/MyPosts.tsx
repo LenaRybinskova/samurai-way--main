@@ -23,7 +23,6 @@ export const MyPosts = (props: MyPostsContainerPropsType) => {
                 {postsElements}
             </div>
         </div>
-
     )
 }
 
