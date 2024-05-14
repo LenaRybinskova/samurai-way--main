@@ -1,33 +1,17 @@
-import {
-    AddPostActionType,
-    ProfileReducerAcTypes,
-    SetProfileStatusType,
-} from './profileReducer';
-import {SendMessageAC} from './dialogsReducer';
-import {
-    followACType,
-    setCurrentPageACType,
-    setIsFetchingType,
-    setTotalCountACType,
-    setUsersACType,
-    ToggleIsFollowingProgressType,
-    unfollowACType
-} from './usersReducer';
-import {SetAuthUserDataACType} from './auth-reducer';
+import {ProfileReducerAcTypes,} from './profileReducer';
+import {DialogsReducerAcTypes} from './dialogsReducer';
+import {UsersReducerAcTypes} from './usersReducer';
+import {AuthReducerAcTypes} from './auth-reducer';
+import {stopSubmit} from 'redux-form';
+
+export type StopSubmitActionType = ReturnType<typeof stopSubmit>;
 
 export type AllActionTypes =
-    | SendMessageAC
-    | AddPostActionType
-    | followACType
-    | unfollowACType
-    | setUsersACType
-    | setCurrentPageACType
-    | setTotalCountACType
-    | setIsFetchingType
+    | DialogsReducerAcTypes
     | ProfileReducerAcTypes
-    | SetAuthUserDataACType
-    | ToggleIsFollowingProgressType
-| SetProfileStatusType
+    | AuthReducerAcTypes
+    | UsersReducerAcTypes
+    | StopSubmitActionType
 
 
 /*type StoreType = {

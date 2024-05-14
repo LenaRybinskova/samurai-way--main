@@ -1,5 +1,3 @@
-import {AllActionTypes} from './store';
-
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
 export type DialogType = {
@@ -33,14 +31,14 @@ let initialState = {
 }
 export type InitialStateType = typeof initialState
 
-const DialogsReducer = (state: InitialStateType = initialState, action: AllActionTypes): InitialStateType => {
+const DialogsReducer = (state: InitialStateType = initialState, action: DialogsReducerAcTypes): InitialStateType => {
 
     switch (action.type) {
         case SEND_MESSAGE:
             let body = action.newMessageBody // сохр в перем то что пришло из инпута
             return {
                 ...state,
-                messages: [...state.messages,{id: 6, message: body}]//запушили в стейт => теперь отрисуется
+                messages: [...state.messages, {id: 6, message: body}]//запушили в стейт => теперь отрисуется
             }
         default:
             return state
@@ -48,9 +46,9 @@ const DialogsReducer = (state: InitialStateType = initialState, action: AllActio
 }
 
 export type SendMessageAC = ReturnType<typeof sendMessageAC>
-export type DialogsReducerAcTypes =  SendMessageAC
+export type DialogsReducerAcTypes = SendMessageAC
 
-export const sendMessageAC = (newMessageBody:string) => {
+export const sendMessageAC = (newMessageBody: string) => {
     return {
         type: SEND_MESSAGE,
         newMessageBody

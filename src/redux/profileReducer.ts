@@ -1,4 +1,3 @@
-import {AllActionTypes} from './store';
 import {Dispatch} from 'redux';
 import {profileAPI, userAPI} from '../api/api';
 
@@ -37,7 +36,7 @@ let initialState: ProfilePageType = {
     } as ResponseAPIProfileType
 }
 
-export const profileReducer = (state: initialStateType = initialState, action: AllActionTypes): initialStateType => {
+export const profileReducer = (state: initialStateType = initialState, action: ProfileReducerAcTypes): initialStateType => {
     switch (action.type) {
         case ADD_POST:
             let newPost = {id: 5, message: action.newPostText, likesCount: 0}
@@ -85,14 +84,14 @@ export type ProfilePageType = {
     profileStatus: string
 }
 
-export type ProfileReducerAcTypes = AddPostActionType | SetUserProfileType
+export type ProfileReducerAcTypes = AddPostActionType | SetUserProfileType | SetProfileStatusType
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type SetUserProfileType = ReturnType<typeof setUserProfile>
 export type SetProfileStatusType = ReturnType<typeof setProfileStatus>
 
 
 // AC
-export const addPostAC = (newPostText:string) => {
+export const addPostAC = (newPostText: string) => {
     return {
         type: ADD_POST,
         newPostText
@@ -118,13 +117,13 @@ export const getUserProfileTC = (userId: number) => (dispatch: Dispatch) => {
 
 export const getUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
     profileAPI.getStatus(userId).then(res => {
-            dispatch(setProfileStatus(res.data))
+        dispatch(setProfileStatus(res.data))
     })
 }
 
 export const updateProfileStatusTC = (newStatus: string) => (dispatch: Dispatch) => {
     profileAPI.updateStatus(newStatus).then(res => {
-            dispatch(setProfileStatus(newStatus))
+        dispatch(setProfileStatus(newStatus))
     })
 }
 export default profileReducer;

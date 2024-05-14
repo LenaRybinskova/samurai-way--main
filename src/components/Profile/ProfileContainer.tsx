@@ -18,26 +18,30 @@ class ProfileContainer extends React.Component<OwnPropsType> {
     componentDidMount() {
         let userId = this.props.match.params.userId //string
         if (!userId) {
-            userId = '30404'
+            userId = this.props.authorizedUserId + ''
         }
         this.props.getUserProfileTC(Number(userId))
         this.props.getUserStatusTC(Number(userId))
     }
 
     render() {
-        return <Profile {...this.props} profile={this.props.profile} updateProfileStatusTC={this.props.updateProfileStatusTC} profileStatus={this.props.profileStatus}/>
+        return <Profile {...this.props} profile={this.props.profile}
+                        updateProfileStatusTC={this.props.updateProfileStatusTC}
+                        profileStatus={this.props.profileStatus}/>
     }
 }
 
 type MapDispatchToProsType = {
     toggleIsFetching: (isFetching: boolean) => void
     getUserProfileTC: (userId: number) => void
-    getUserStatusTC : (userId: number) =>void
-    updateProfileStatusTC:(newStatus:string)=> void
+    getUserStatusTC: (userId: number) => void
+    updateProfileStatusTC: (newStatus: string) => void
 }
 type MapStateToPropsType = {
     profile: ResponseAPIProfileType | null,
-    profileStatus:string
+    profileStatus: string
+    authorizedUserId: string | null
+    isAuth: boolean
 }
 type ProfileContainerType = MapDispatchToProsType & MapStateToPropsType
 type PathParamsType = {
@@ -47,12 +51,16 @@ type PathParamsType = {
 type OwnPropsType = RouteComponentProps<PathParamsType> & ProfileContainerType
 
 const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
-    return {profile: state.profilePage.profile,
-    profileStatus:state.profilePage.profileStatus}
+    return {
+        profile: state.profilePage.profile,
+        profileStatus: state.profilePage.profileStatus,
+        authorizedUserId: state.auth.userId,
+        isAuth: state.auth.isAuth
+    }
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {toggleIsFetching, getUserProfileTC,getUserStatusTC, updateProfileStatusTC}) ,
+    connect(mapStateToProps, {toggleIsFetching, getUserProfileTC, getUserStatusTC, updateProfileStatusTC}),
     withRouter,
     WithAuthRedirect)
 (ProfileContainer)

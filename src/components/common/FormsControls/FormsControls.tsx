@@ -23,10 +23,10 @@ const FormControl: FC<FormControlProps> = ({input, meta, tagName, ...props}) => 
     );
 };
 
-export const Input = (props: any) => {
+export const Input = (props: FormControlProps) => {
     return <FormControl {...props} tagName={"input"}/>
 }
 
-export const Textarea = (props: any) => {
+export const Textarea = (props: FormControlProps) => {
     return<FormControl {...props} tagName={"textarea"}/>
 }

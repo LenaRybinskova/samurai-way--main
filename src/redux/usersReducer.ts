@@ -1,4 +1,3 @@
-import {AllActionTypes} from './store';
 import {userAPI} from '../api/api';
 import {Dispatch} from 'redux';
 
@@ -47,7 +46,7 @@ export type initialStateType = {
     followingProgress: Number[]
 }
 
-export const usersReducer = (state: initialStateType = initialState, action: AllActionTypes): initialStateType => {
+export const usersReducer = (state: initialStateType = initialState, action: UsersReducerAcTypes): initialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)}
@@ -79,7 +78,14 @@ export type setCurrentPageACType = ReturnType<typeof setCurrentPage>
 export type setTotalCountACType = ReturnType<typeof setTotalCount>
 export type setIsFetchingType = ReturnType<typeof toggleIsFetching>
 export type ToggleIsFollowingProgressType = ReturnType<typeof toggleIsFollowingProgress>
-
+export type UsersReducerAcTypes =
+    followACType
+    | unfollowACType
+    | setUsersACType
+    | setCurrentPageACType
+    | setTotalCountACType
+    | setIsFetchingType
+    | ToggleIsFollowingProgressType
 
 // AC
 export const follow = (userId: number) => {
@@ -128,7 +134,7 @@ export const toggleIsFollowingProgress = (userId: number, isFetching: boolean) =
 
 
 //TC
-export const setUsersTC=(currentPage:number,pageSize:number)=>(dispatch:Dispatch)=>{
+export const setUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     /*со старта приложения, запрос идет этот и подгружает пользователей и totalCount пользователей*/
     dispatch(setCurrentPage(currentPage)) // чтобы выделялась текущ строка
     dispatch(toggleIsFetching(true))//крутилка вкл
