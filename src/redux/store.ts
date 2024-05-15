@@ -3,6 +3,7 @@ import {DialogsReducerAcTypes} from './dialogsReducer';
 import {UsersReducerAcTypes} from './usersReducer';
 import {AuthReducerAcTypes} from './auth-reducer';
 import {stopSubmit} from 'redux-form';
+import {AppReducerType} from '../redux/app-reducer';
 
 export type StopSubmitActionType = ReturnType<typeof stopSubmit>;
 
@@ -12,6 +13,7 @@ export type AllActionTypes =
     | AuthReducerAcTypes
     | UsersReducerAcTypes
     | StopSubmitActionType
+    | AppReducerType
 
 
 /*type StoreType = {
