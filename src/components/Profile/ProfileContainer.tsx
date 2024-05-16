@@ -19,6 +19,9 @@ class ProfileContainer extends React.Component<OwnPropsType> {
         let userId = this.props.match.params.userId //string
         if (!userId) {
             userId = this.props.authorizedUserId + ''
+            if (!userId) {
+                this.props.history.push('/login')// через history.push делаем редирект, если нет куки и в стейте не присвоен userId
+            }
         }
         this.props.getUserProfileTC(Number(userId))
         this.props.getUserStatusTC(Number(userId))

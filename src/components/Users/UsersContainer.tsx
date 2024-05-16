@@ -4,7 +4,6 @@ import {AppRootSTateType} from '../../redux/reduxStore';
 import {followTC, setCurrentPage, setUsersTC, unfollowTC, UserType} from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
-import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 import {compose} from 'redux';
 
 
@@ -12,11 +11,11 @@ import {compose} from 'redux';
 class UsersContainerClass extends React.Component<UsersContainerType> {
 
     componentDidMount() {
-        this.props.setUsersTC(this.props.currentPage,this.props.pageSize)
+        this.props.setUsersTC(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanged(pageNumber: number) {
-        this.props.setUsersTC(pageNumber,this.props.pageSize)
+        this.props.setUsersTC(pageNumber, this.props.pageSize)
     }
 
     render(): React.ReactNode {
@@ -26,7 +25,7 @@ class UsersContainerClass extends React.Component<UsersContainerType> {
                        pageSize={this.props.pageSize}
                        currentPage={this.props.currentPage}
                        users={this.props.users}
-                       //обернула в стрел чтобы не потерялся контекст
+                    //обернула в стрел чтобы не потерялся контекст
                        onPageChanged={(p) => this.onPageChanged(p)}
                        followingProgress={this.props.followingProgress}
                        followTC={this.props.followTC}
@@ -48,10 +47,9 @@ type mapStateToPropsType = {
 }
 type mapDispatchToProsType = {
     setCurrentPage: (pageNumber: number) => void
-    setUsersTC:(currentPage:number,pageSize:number)=>void
+    setUsersTC: (currentPage: number, pageSize: number) => void
     followTC: (userId: number) => void
     unfollowTC: (userId: number) => void
-
 
 
 }
@@ -83,7 +81,9 @@ export default compose<React.ComponentType>(connect(mapStateToProps, {
     setUsersTC,
     followTC,
     unfollowTC
-}) , WithAuthRedirect)(UsersContainerClass)
+}),
+/*    WithAuthRedirect*/ // убрали редирект, путь неавторизо польз тоже видит страницу юзеров
+)(UsersContainerClass)
 
 
 /*const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {

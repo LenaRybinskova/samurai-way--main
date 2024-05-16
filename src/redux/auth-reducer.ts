@@ -29,7 +29,6 @@ export const authReducer = (state: AuthStateType = initialState, action: SetAuth
 }
 export type SetAuthUserDataACType = ReturnType<typeof setAuthUserData>
 export type  AuthReducerAcTypes = SetAuthUserDataACType
-
 // AC
 export const setAuthUserData = (userId: string | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
@@ -40,7 +39,7 @@ export const setAuthUserData = (userId: string | null, email: string | null, log
 
 // TC
 export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
-    authAPI.authMe().then(res => {
+   return  authAPI.authMe().then(res => { // доб ретурт чтобы исп промис в initializedAppTC
         if (res.data.resultCode === 0) {
             let {id, login, email} = res.data.data
             dispatch(setAuthUserData(id, email, login, true))

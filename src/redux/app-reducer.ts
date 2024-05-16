@@ -1,4 +1,3 @@
-import {Dispatch} from 'redux';
 import {getAuthUserDataTC} from '../redux/auth-reducer';
 import {AppThunk} from '../redux/reduxStore';
 
@@ -20,21 +19,23 @@ export const appReducer = (state: AppReducerType = initialState, action: AppACTy
     }
 }
 
-
 // AC
-export const setInitializedAC = () => {
-    return {
-        type: INITIALIZED_SUCCESS
-    } as const
+export const initializedSuccessAC = () => {
+    return {type: INITIALIZED_SUCCESS} as const
 }
 
 // TC
 export const initializedAppTC = (): AppThunk => (dispatch) => {
-    const dispachResult = dispatch(getAuthUserDataTC()) // запраш, кука есть?
-
+    const promise = dispatch(getAuthUserDataTC()) // запраш, кука есть?
+    /*  dispatch(njsdjfjkhsd()) // еще может какие то запросы
+        dispatch(njsdjfjkhsd())*/
+    Promise.all([promise]) //когда они ВСЕ зарезолвятся, тогда только в зен попадем
+        .then(res => {
+            dispatch(initializedSuccessAC())
+        })
 }
 
-export type SetInitializedType = ReturnType<typeof setInitializedAC>
+export type SetInitializedType = ReturnType<typeof initializedSuccessAC>
 export type AppACType = SetInitializedType
 
 export default appReducer;

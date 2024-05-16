@@ -11,14 +11,22 @@ import {connect} from 'react-redux';
 import {getAuthUserDataTC} from '../src/redux/auth-reducer';
 import {compose} from 'redux';
 import {initializedAppTC} from '../src/redux/app-reducer';
+import {AppRootSTateType} from '../src/redux/reduxStore';
+import Preloader from '../src/components/common/preloader/Preloader';
 
 
 class App extends React.Component<CommonType> {
 
     componentDidMount() {
-        this.props.getAuthUserDataTC()
+        this.props.initializedAppTC()
     }
+
     render() {
+        {
+            if (!this.props.initialized) {
+                return <Preloader/>
+            }
+        }
         return (
             <div className="app-wrapper">
                 <HeaderContainer/>
@@ -28,7 +36,6 @@ class App extends React.Component<CommonType> {
                     <Route exact path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
                     <Route exact path={'/users'} render={() => <UsersContainer/>}/>
                     <Route exact path={'/login'} render={() => <Login/>}/>
-
                 </div>
             </div>
         )
@@ -37,11 +44,18 @@ class App extends React.Component<CommonType> {
 
 type mapDispatchToPropsType = {
     getAuthUserDataTC: () => void
-    initializedAppTC:() => void
+    initializedAppTC: () => void
 }
-type CommonType = mapDispatchToPropsType
+type mapStateToPropsType = {
+    initialized: boolean
+}
+type CommonType = mapDispatchToPropsType & mapStateToPropsType
+const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
+    return {
+        initialized: state.app.initialized,
+    }
+}
 
 export default compose(
     withRouter,
-    connect(null, {getAuthUserDataTC,initializedAppTC}))(App)
-
+    connect(mapStateToProps, {getAuthUserDataTC, initializedAppTC}))(App) as React.ComponentClass
