@@ -1,10 +1,18 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import {followTC, setCurrentPage, setUsersTC, unfollowTC, UserType} from '../../redux/usersReducer';
+import {followTC, setCurrentPage, requestUsersTC, unfollowTC, UserType} from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import {compose} from 'redux';
+import {
+    getCurrentPage,
+    getFollowingProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/users-selectors';
 
 
 // 2я контейнерная компонента, которая обращ к АПИ
@@ -55,7 +63,7 @@ type mapDispatchToProsType = {
 }
 export type UsersContainerType = mapStateToPropsType & mapDispatchToProsType
 
-const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
+/*const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     return {
         users: state.usersPage.users,
         pageSize: state.usersPage.pageSize,
@@ -63,6 +71,17 @@ const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingProgress: state.usersPage.followingProgress
+    }
+}*/
+
+const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
+    return {
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingProgress: getFollowingProgress(state)
     }
 }
 
@@ -77,12 +96,12 @@ connect(mapStateToProps, {
 (withRedirect)*/
 
 export default compose<React.ComponentType>(connect(mapStateToProps, {
-    setCurrentPage,
-    setUsersTC,
-    followTC,
-    unfollowTC
-}),
-/*    WithAuthRedirect*/ // убрали редирект, путь неавторизо польз тоже видит страницу юзеров
+        setCurrentPage,
+        setUsersTC: requestUsersTC,
+        followTC,
+        unfollowTC
+    }),
+    /*    WithAuthRedirect*/ // убрали редирект, путь неавторизо польз тоже видит страницу юзеров
 )(UsersContainerClass)
 
 

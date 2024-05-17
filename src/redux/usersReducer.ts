@@ -134,7 +134,7 @@ export const toggleIsFollowingProgress = (userId: number, isFetching: boolean) =
 
 
 //TC
-export const setUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const requestUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
     /*со старта приложения, запрос идет этот и подгружает пользователей и totalCount пользователей*/
     dispatch(setCurrentPage(currentPage)) // чтобы выделялась текущ строка
     dispatch(toggleIsFetching(true))//крутилка вкл
