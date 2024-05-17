@@ -11,7 +11,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsers
+    getUsers, getUserSelector
 } from '../../redux/users-selectors';
 
 
@@ -76,7 +76,7 @@ export type UsersContainerType = mapStateToPropsType & mapDispatchToProsType
 
 const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     return {
-        users: getUsers(state),
+        users: getUserSelector(state),
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
         currentPage: getCurrentPage(state),
