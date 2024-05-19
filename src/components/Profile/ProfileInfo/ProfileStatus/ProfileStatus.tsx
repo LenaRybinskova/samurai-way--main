@@ -5,7 +5,6 @@ export type ProfileStatusType = {
     status: string
     updateProfileStatusTC: (newStatus: string) => void
 }
-
 class ProfileStatus extends React.Component<ProfileStatusType> {
 
     state = {
@@ -14,14 +13,12 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
     }
 
     activateEditMode = () => {
-        console.log('activateEditMode')
         this.setState({editMode: true})
         // кастыльный метод заставить компон ререндериться
         /*        this.forceUpdate()*/
     }
 
     deactivateEditMode = () => {
-        console.log('deactivateEditMode')
         this.setState({editMode: false})
         this.props.updateProfileStatusTC(this.state.status)
     }
@@ -48,7 +45,6 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
         }
         console.log('componentDidUpdate')
     }
-
 
     render() {
         return (
@@ -107,3 +103,5 @@ const ProfileStatus = (props: ProfileStatusType) => {
 };
 
 export default ProfileStatus;*/
+
+

@@ -3,7 +3,7 @@ import s from './ProfilInfo.module.css'
 import {ResponseAPIProfileType} from '../../../redux/profileReducer';
 import Preloader from '../../common/preloader/Preloader';
 import UserPhotoNull from '../../../assets/images/usersNull.png'
-import ProfileStatus from './ProfileStatus/ProfileStatus';
+import ProfileStatusWithHooks from '../ProfileInfo/ProfileStatus/ProfileStatusWithHooks';
 
 
 export type ProfileInfoType = {
@@ -25,7 +25,7 @@ export const ProfileInfo = (props: ProfileInfoType) => {
             </div>*/}
             <div className={s.descriptionBlock}>
                 <img src={props.profile?.photos.large !=null ?props.profile?.photos.large : UserPhotoNull}/>
-                <ProfileStatus status={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} />
+                <ProfileStatusWithHooks status={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} />
                 <div>Полное имя: {props.profile.fullName}</div>
                 <div>Контакты: {props.profile.contacts.vk}</div>
                 <div>Ищу работу:{props.profile.lookingForAJob?"Да":"Нет"}</div>

@@ -44,6 +44,7 @@ export const profileReducer = (state: initialStateType = initialState, action: P
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}
         case SET_PROFILE_STATUS:
+            console.log("profileReducer profileStatus", action.newStatus)
             return {...state, profileStatus: action.newStatus}
         default:
             return state
@@ -105,6 +106,7 @@ export const setUserProfile = (profile: ResponseAPIProfileType | null) => {
     } as const
 }
 export const setProfileStatus = (newStatus: string) => {
+    debugger
     return {type: SET_PROFILE_STATUS, newStatus} as const
 }
 
@@ -122,8 +124,10 @@ export const getUserStatusTC = (userId: number) => (dispatch: Dispatch) => {
 }
 
 export const updateProfileStatusTC = (newStatus: string) => (dispatch: Dispatch) => {
+    debugger
     profileAPI.updateStatus(newStatus).then(res => {
         dispatch(setProfileStatus(newStatus))
     })
+
 }
 export default profileReducer;
