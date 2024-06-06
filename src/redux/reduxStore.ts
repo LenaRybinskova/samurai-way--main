@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux'
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux'
 import profileReducer from './profileReducer';
 import dialogsReducer from './dialogsReducer';
 import sideBarReducer from './sideBarReducer';
@@ -24,7 +24,9 @@ export const rootReducer = combineReducers(
 )
 
 // createStore создает хранилище (Стор) одной командой, под копотом там создалось содержимое store. Там и _state, dispatch(), _subscriber(), getState() создались сами.
-export const store = createStore(rootReducer, applyMiddleware(thunk));
+
+const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+export const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 
 export type AppRootSTateType = ReturnType<typeof rootReducer> // типизация склеенных стейтов из редьюсеров
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootSTateType, unknown, AllActionTypes>
