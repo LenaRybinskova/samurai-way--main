@@ -1,13 +1,14 @@
 import {userAPI} from '../api/api';
 import {Dispatch} from 'redux';
+import {updateObjectInArray} from '../utils/object-helher';
 
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
-const SET_USERS = 'SET_USERS'
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
+const FOLLOW = 'samurai-network/users/FOLLOW'
+const UNFOLLOW = 'samurai-network/users/UNFOLLOW'
+const SET_USERS = 'samurai-network/users/SET_USERS'
+const SET_CURRENT_PAGE = 'samurai-network/users/SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'samurai-network/users/SET_TOTAL_COUNT'
+const TOGGLE_IS_FETCHING = 'samurai-network/users/TOGGLE_IS_FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'samurai-network/users/TOGGLE_IS_FOLLOWING_PROGRESS'
 
 export type UserType = {
     id: number,
@@ -49,9 +50,15 @@ export type initialStateType = {
 export const usersReducer = (state: initialStateType = initialState, action: UsersReducerAcTypes): initialStateType => {
     switch (action.type) {
         case FOLLOW:
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: true} : u)}
+            return {
+                ...state,
+                users: updateObjectInArray(state.users, action.id, 'id', {followed: true})
+            }
         case UNFOLLOW:
-            return {...state, users: state.users.map(u => u.id === action.id ? {...u, followed: false} : u)}
+            return {
+                ...state, users:
+                    updateObjectInArray(state.users, action.id, 'id', {followed: false})
+            }
         case SET_USERS:
             // копий юзеров не делаем, тк хотим, чтобы при пагинации одна порция юзеров заменяла другую порцию
             return {...state, users: action.users}
@@ -134,36 +141,34 @@ export const toggleIsFollowingProgress = (userId: number, isFetching: boolean) =
 
 
 //TC
-export const requestUsersTC = (currentPage: number, pageSize: number) => (dispatch: Dispatch) => {
+export const requestUsersTC = (currentPage: number, pageSize: number) => async (dispatch: Dispatch) => {
     /*со старта приложения, запрос идет этот и подгружает пользователей и totalCount пользователей*/
     dispatch(setCurrentPage(currentPage)) // чтобы выделялась текущ строка
     dispatch(toggleIsFetching(true))//крутилка вкл
-    userAPI.getUsers(currentPage, pageSize).then(data => {
-        dispatch(setUsers(data.items))
-        dispatch(setTotalCount(data.totalCount))
-        dispatch(toggleIsFetching(false)) //крутилка выкл
-    })
+    const data = await userAPI.getUsers(currentPage, pageSize)
+    dispatch(setUsers(data.items))
+    dispatch(setTotalCount(data.totalCount))
+    dispatch(toggleIsFetching(false)) //крутилка выкл
 }
 
-
-export const followTC = (userId: number) => (dispatch: Dispatch) => {
+const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => any, actionCreator: any) => {
     dispatch(toggleIsFollowingProgress(userId, true))
-    userAPI.follow(userId).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(follow(userId))
-        }
-        dispatch(toggleIsFollowingProgress(userId, false))
-    })
+    const res = await apiMethod(userId)
+    if (res.data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toggleIsFollowingProgress(userId, false))
 }
 
-export const unfollowTC = (userId: number) => (dispatch: Dispatch) => {
-    dispatch(toggleIsFollowingProgress(userId, true))
-    userAPI.unfollow(userId).then(res => {
-        if (res.data.resultCode === 0) {
-            dispatch(unfollow(userId))
-        }
-        dispatch(toggleIsFollowingProgress(userId, false))
-    })
+export const followTC = (userId: number) => {
+    return async (dispatch: Dispatch) => {
+        const apiMethod = userAPI.follow.bind(userAPI)
+        followUnfollowFlow(dispatch, userId, apiMethod, follow)
+    }
+}
+export const unfollowTC = (userId: number) => async (dispatch: Dispatch) => {
+    const apiMethod = userAPI.unfollow.bind(userAPI)
+    followUnfollowFlow(dispatch, userId, apiMethod, unfollow)
 }
 export default usersReducer;
 

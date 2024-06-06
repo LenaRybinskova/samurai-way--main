@@ -3,7 +3,7 @@ import {authAPI, LoginType} from '../api/api';
 import {AppThunk} from '../redux/reduxStore';
 import {stopSubmit} from 'redux-form';
 
-const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 // со старта вся инфа по юзеру null - тк не залогинен
 const initialState = {
     userId: null,
@@ -38,33 +38,50 @@ export const setAuthUserData = (userId: string | null, email: string | null, log
 }
 
 // TC
-export const getAuthUserDataTC = () => (dispatch: Dispatch) => {
-   return  authAPI.authMe().then(res => { // доб ретурт чтобы исп промис в initializedAppTC
-        if (res.data.resultCode === 0) {
-            let {id, login, email} = res.data.data
-            dispatch(setAuthUserData(id, email, login, true))
-        }
-    })
+export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
+    const res = await authAPI.authMe() //res то, чем зарезолвится промис
+    if (res.data.resultCode === 0) {
+        let {id, login, email} = res.data.data
+        dispatch(setAuthUserData(id, email, login, true))
+    }
+    /*return  authAPI.authMe().then(res => { // доб ретурт чтобы исп промис в initializedAppTC
+         if (res.data.resultCode === 0) {
+             let {id, login, email} = res.data.data
+             dispatch(setAuthUserData(id, email, login, true))
+         }
+     })*/
 }
 
-export const loginTC = (value: LoginType): AppThunk => (dispatch) => {
-    authAPI.login(value).then(res => {
-        if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
-            dispatch(getAuthUserDataTC())
-        } else {
-            const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
-            /*const action = stopSubmit('login', {email: 'email is wrong'})*/ //email значит валидироваться  будет только поле email
-            dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
-        }
-    })
+export const loginTC = (value: LoginType): AppThunk => async (dispatch) => {
+    const res = await authAPI.login(value)
+    if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
+        dispatch(getAuthUserDataTC())
+    } else {
+        const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
+        const action = stopSubmit('login', {email: 'email is wrong'}) //email значит валидироваться  будет только поле email
+        dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
+    }
+    /*    authAPI.login(value).then(res => {
+            if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
+                dispatch(getAuthUserDataTC())
+            } else {
+                const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
+                /!*const action = stopSubmit('login', {email: 'email is wrong'})*!/ //email значит валидироваться  будет только поле email
+                dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
+            }
+        })*/
 }
 
-export const logoutTC = (): AppThunk => (dispatch) => {
-    authAPI.logout().then(res => {
+export const logoutTC = (): AppThunk => async (dispatch) => {
+    const res=await authAPI.logout()
+    if (res.data.resultCode === 0) { // значит все, мы вылогинились
+        dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
+    }
+    /*authAPI.logout().then(res => {
         if (res.data.resultCode === 0) { // значит все, мы вылогинились
             dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
         }
-    })
+    })*/
 }
 
 

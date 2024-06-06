@@ -1,14 +1,14 @@
-import {FC} from 'react';
+import React, {FC, FunctionComponent} from 'react';
 import styles from './FormsControls.module.css'
-import React from 'react'
-import {WrappedFieldProps} from 'redux-form';
+import {Field, WrappedFieldProps} from 'redux-form';
+
 
 type FormControlProps = WrappedFieldProps & {
     tagName: 'textarea' | 'input'
 }
 
-const FormControl: FC<FormControlProps> = ({input, meta, tagName, ...props}) => {
-    const hasError = meta.touched && meta.error;
+const FormControl: FC<FormControlProps> = ({input, meta:{touched,error }, tagName, ...props}) => {
+    const hasError = touched && error;
     const Tag = tagName;
 
     return (
@@ -17,16 +17,32 @@ const FormControl: FC<FormControlProps> = ({input, meta, tagName, ...props}) => 
                 <div>
                     <Tag {...input} {...props} />
                 </div>
-                {hasError && <span>{meta.error}</span>}
+                {hasError && <span>{error}</span>}
             </div>
         </>
     );
 };
 
-export const Input = (props: FormControlProps) => {
-    return <FormControl {...props} tagName={"input"}/>
+export const Input: FC<WrappedFieldProps> =(props: WrappedFieldProps) => {
+    return <FormControl {...props} tagName={'input'}/>
 }
 
 export const Textarea = (props: FormControlProps) => {
-    return<FormControl {...props} tagName={"textarea"}/>
+    return <FormControl {...props} tagName={'textarea'}/>
 }
+
+export const createField = (placeholder: string | null, name: string, validators: (value: string) => void, component: FunctionComponent<WrappedFieldProps>, props={}, text="") => {
+    return (
+        <div>
+            <Field
+                component={component}
+                name={name}
+                placeholder={placeholder}
+                validate={[validators]}
+                {...props}
+            />
+        </div>
+    )
+}
+
+

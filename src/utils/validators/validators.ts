@@ -1,4 +1,4 @@
-export const required = (value: any) => {
+export const required = (value: string) => { // было эни
     // value  то что вводим в инпут
     if (value) {
         return undefined

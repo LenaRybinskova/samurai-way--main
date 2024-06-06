@@ -8,7 +8,7 @@ import AddNewPost, {InputFormType} from '../AddNewPost/AddNewPost';
 //React.memo ХОК
 export const MyPosts=React.memo((props: MyPostsContainerPropsType)=> {
 
-    let postsElements = props.posts.map(p => <Post message={p.message} likesCount={p.likesCount}/>)
+    let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount} />)
 
     const addPost = (data: InputFormType) => {
         console.log('text ', data)
