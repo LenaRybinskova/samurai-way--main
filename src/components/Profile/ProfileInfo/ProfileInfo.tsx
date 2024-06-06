@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import s from './ProfilInfo.module.css'
 import {ResponseAPIProfileType} from '../../../redux/profileReducer';
 import Preloader from '../../common/preloader/Preloader';
@@ -8,31 +8,25 @@ import ProfileStatusWithHooks from '../ProfileInfo/ProfileStatus/ProfileStatusWi
 
 export type ProfileInfoType = {
     profile: ResponseAPIProfileType | null
-    updateProfileStatusTC:(newStatus:string)=> void
-    profileStatus:string
+    updateProfileStatusTC: (newStatus: string) => void
+    profileStatus: string
 }
 
-export const ProfileInfo = (props: ProfileInfoType) => {
-    if (!props.profile) {return <Preloader/>}
-
-
+export const ProfileInfo: FC<ProfileInfoType> = ({profile, profileStatus, updateProfileStatusTC}) => {
+    if (!profile) {
+        return <Preloader/>
+    }
 
     return (
         <div>
-{/*            <div>
-                <img
-                    src="https://mobimg.b-cdn.net/v3/fetch/fe/fe9778a706308a25d2e6143e7bce5207.jpeg" alt=""/>
-            </div>*/}
             <div className={s.descriptionBlock}>
-                <img src={props.profile?.photos.large !=null ?props.profile?.photos.large : UserPhotoNull}/>
-                <ProfileStatusWithHooks status={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} />
-                <div>Полное имя: {props.profile.fullName}</div>
-                <div>Контакты: {props.profile.contacts.vk}</div>
-                <div>Ищу работу:{props.profile.lookingForAJob?"Да":"Нет"}</div>
+                <img src={profile?.photos.large != null ? profile?.photos.large : UserPhotoNull}/>
+                <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
+                <div>Полное имя: {profile.fullName}</div>
+                <div>Контакты: {profile.contacts.vk}</div>
+                <div>Ищу работу:{profile.lookingForAJob ? 'Да' : 'Нет'}</div>
                 ava+description
             </div>
         </div>
     )
 }
-
-//props.profile?.photos.large? props.profile?.photos.large : "../../../assets/images/usersNull.png"

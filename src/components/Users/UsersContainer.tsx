@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import {followTC, setCurrentPage, requestUsersTC, unfollowTC, UserType} from '../../redux/usersReducer';
+import {followTC, requestUsersTC, setCurrentPage, unfollowTC, UserType} from '../../redux/usersReducer';
 import Users from './Users';
 import Preloader from '../common/preloader/Preloader';
 import {compose} from 'redux';
@@ -11,7 +11,7 @@ import {
     getIsFetching,
     getPageSize,
     getTotalUsersCount,
-    getUsers, getUserSelector
+    getUserSelector
 } from '../../redux/users-selectors';
 
 
@@ -19,11 +19,13 @@ import {
 class UsersContainerClass extends React.Component<UsersContainerType> {
 
     componentDidMount() {
-        this.props.setUsersTC(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.setUsersTC(currentPage, pageSize)
     }
 
     onPageChanged(pageNumber: number) {
-        this.props.setUsersTC(pageNumber, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.setUsersTC(pageNumber, pageSize)
     }
 
     render(): React.ReactNode {
@@ -63,17 +65,6 @@ type mapDispatchToProsType = {
 }
 export type UsersContainerType = mapStateToPropsType & mapDispatchToProsType
 
-/*const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
-    return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingProgress: state.usersPage.followingProgress
-    }
-}*/
-
 const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     return {
         users: getUserSelector(state),
@@ -85,45 +76,10 @@ const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     }
 }
 
-/*const withRedirect = WithAuthRedirect<UsersContainerType>(UsersContainerClass)
-
-connect(mapStateToProps, {
-    setCurrentPage,
-    setUsersTC,
-    followTC,
-    unfollowTC
-})
-(withRedirect)*/
-
 export default compose<React.ComponentType>(connect(mapStateToProps, {
         setCurrentPage,
         setUsersTC: requestUsersTC,
         followTC,
         unfollowTC
     }),
-    /*    WithAuthRedirect*/ // убрали редирект, путь неавторизо польз тоже видит страницу юзеров
 )(UsersContainerClass)
-
-
-/*const mapDispatchToProps = (dispatch: Dispatch): mapDispatchToProsType => {
-    return {
-        follow: (id: number) => {
-            dispatch(followAC(id))
-        },
-        unfollow: (id: number) => {
-            dispatch(unfollowAC(id))
-        },
-        setUsers: (users: UserType[]) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrenPage: (pageNumber: number) => {
-            dispatch(setCurrentPageAC(pageNumber))
-        },
-        setTotalCount: (totalUsersCount: number) => {
-            dispatch(setTotalCountAC(totalUsersCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetchingAC(isFetching))
-        }
-    }
-}*/
