@@ -1,12 +1,10 @@
-import React from 'react';
+import React, {lazy} from 'react';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
 import {BrowserRouter, Route, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
-import ProfileContainer from './components/Profile/ProfileContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
 import {connect, Provider} from 'react-redux';
 import {getAuthUserDataTC} from '../src/redux/auth-reducer';
 import {compose} from 'redux';
@@ -14,6 +12,12 @@ import {initializedAppTC} from '../src/redux/app-reducer';
 import {AppRootSTateType} from '../src/redux/reduxStore';
 import Preloader from '../src/components/common/preloader/Preloader';
 import store from './redux/reduxStore';
+import {WithSuspense} from './hoc/WithSuspense';
+/*import DialogsContainer from './components/Dialogs/DialogsContainer';*/
+/*import ProfileContainer from './components/Profile/ProfileContainer';*/
+
+const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
 
 
 class App extends React.Component<CommonType> {
@@ -33,43 +37,48 @@ class App extends React.Component<CommonType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="appWrapperContent">
-                    <Route exact path={'/dialogs'} render={() => <DialogsContainer/>}/>
-                    <Route exact path={'/profile/:userId?'} render={() => <ProfileContainer/>}/>
+                    <Route exact path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
+                    {<Route exact path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
+{/*                    <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
                     <Route exact path={'/users'} render={() => <UsersContainer/>}/>
                     <Route exact path={'/login'} render={() => <Login/>}/>
                 </div>
             </div>
         )
     }
-}
-
-type mapDispatchToPropsType = {
-    getAuthUserDataTC: () => void
-    initializedAppTC: () => void
-}
-type mapStateToPropsType = {
-    initialized: boolean
-}
-type CommonType = mapDispatchToPropsType & mapStateToPropsType
-const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
-    return {
-        initialized: state.app.initialized,
     }
-}
 
-const AppContainer= compose(
+    type mapDispatchToPropsType = {
+        getAuthUserDataTC: () => void
+            initializedAppTC
+    :
+        () => void
+    }
+    type mapStateToPropsType = {
+        initialized: boolean
+    }
+    type CommonType = mapDispatchToPropsType & mapStateToPropsType
+    const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
+        return {
+            initialized: state.app.initialized,
+        }
+    }
+
+    const AppContainer= compose(
     withRouter,
-    connect(mapStateToProps, {getAuthUserDataTC, initializedAppTC}))(App) as React.ComponentClass
+    connect(mapStateToProps, {
+        getAuthUserDataTC, initializedAppTC
+    }))(App) as React.ComponentClass
 
 
-const SamuraiJSApp=(props:any)=>{
-    return (
-        <BrowserRouter>
-            <Provider store={store}>
-                <AppContainer  />
-            </Provider>
-        </BrowserRouter>
-    )
-}
+    const SamuraiJSApp=(props:any)=>{
+        return (
+            <BrowserRouter>
+                <Provider store={store}>
+                    <AppContainer/>
+                </Provider>
+            </BrowserRouter>
+        )
+    }
 
-export default SamuraiJSApp;
+    export default SamuraiJSApp;
