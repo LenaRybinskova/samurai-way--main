@@ -4,7 +4,7 @@ import {AppRootSTateType} from '../../redux/reduxStore';
 import {
     getUserProfileTC,
     getUserStatusTC,
-    ResponseAPIProfileType,
+    ResponseAPIProfileType, savePhoto,
     updateProfileStatusTC
 } from '../../redux/profileReducer';
 import {toggleIsFetching} from '../../redux/usersReducer';
@@ -15,7 +15,7 @@ import {compose} from 'redux';
 
 
 class ProfileContainer extends React.Component<OwnPropsType> {
-    componentDidMount() {
+    refreshProfile() {
         let userId = this.props.match.params.userId //string
         if (!userId) {
             userId = this.props.authorizedUserId + ''
@@ -27,18 +27,33 @@ class ProfileContainer extends React.Component<OwnPropsType> {
         this.props.getUserStatusTC(Number(userId))
     }
 
+    // чтобы при перех на др юзера он отобр, а перех на Профайл отобр всегда мой
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<OwnPropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        //если ИД в УРЛЕ изменился, то рефреш профайла
+        if (this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refreshProfile()
+        }
+    }
+
     render() {
         return <Profile {...this.props} profile={this.props.profile}
                         updateProfileStatusTC={this.props.updateProfileStatusTC}
-                        profileStatus={this.props.profileStatus}/>
+                        profileStatus={this.props.profileStatus}
+                        isOwner={!this.props.match.params.userId}
+                        savePhoto={this.props.savePhoto}/>
     }
 }
 
 type MapDispatchToProsType = {
     toggleIsFetching: (isFetching: boolean) => void
-    getUserProfileTC: (userId: number) => void
+    getUserProfileTC: (userId: number) => void //убрала |null
     getUserStatusTC: (userId: number) => void
     updateProfileStatusTC: (newStatus: string) => void
+    savePhoto:(photo:any)=>void
 }
 type MapStateToPropsType = {
     profile: ResponseAPIProfileType | null,
@@ -63,7 +78,7 @@ const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {toggleIsFetching, getUserProfileTC, getUserStatusTC, updateProfileStatusTC}),
+    connect(mapStateToProps, {toggleIsFetching, getUserProfileTC, getUserStatusTC, updateProfileStatusTC, savePhoto}),
     withRouter,
     WithAuthRedirect)
 (ProfileContainer)

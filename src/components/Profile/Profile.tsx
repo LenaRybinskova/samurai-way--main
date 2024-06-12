@@ -11,13 +11,15 @@ export type ProfileType = {
     profile:ResponseAPIProfileType  | null
     updateProfileStatusTC:(newStatus:string)=> void
     profileStatus:string
+    isOwner:boolean
+    savePhoto:(file: File) => void
 
 
 }
 export const Profile = (props: ProfileType) => {
     return (
         <div>Main content
-            <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC}/>
+            <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} isOwner={props.isOwner} savePhoto={props.savePhoto}/>
             <MyPostsContainer/>
         </div>
     )
