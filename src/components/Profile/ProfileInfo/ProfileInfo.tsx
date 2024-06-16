@@ -1,9 +1,10 @@
-import React, {ChangeEvent, ChangeEventHandler, FC} from 'react';
+import React, {ChangeEvent, FC, useState} from 'react';
 import s from './ProfilInfo.module.css'
-import {ResponseAPIProfileType} from '../../../redux/profileReducer';
+import {ContactsType, ResponseAPIProfileType} from '../../../redux/profileReducer';
 import Preloader from '../../common/preloader/Preloader';
 import UserPhotoNull from '../../../assets/images/usersNull.png'
 import ProfileStatusWithHooks from '../ProfileInfo/ProfileStatus/ProfileStatusWithHooks';
+import {ReduxProfileDataForm} from '../../Profile/ProfileInfo/ProfileDataForm/ProfileDataForm';
 
 
 export type ProfileInfoType = {
@@ -12,37 +13,100 @@ export type ProfileInfoType = {
     profileStatus: string
     isOwner: boolean
     savePhoto: (file: File) => void
+    saveProfile: (formData: ObtainedFormType) => void
 }
 
-export const ProfileInfo: FC<ProfileInfoType> = ({
-                                                     profile,
-                                                     profileStatus,
-                                                     updateProfileStatusTC,
-                                                     isOwner,
-                                                     savePhoto
-                                                 }) => {
+export type ObtainedFormType = {
+    fullName: string
+    lookingForAJob: boolean
+    lookingForAJobDescription?: string
+    MyProfessionalSkills: string
+
+};
+
+
+// Указываем тип  ИМЕННО ключей contacts // ContactsKeys будет СТРОГО типом 'github' | 'vk' | 'facebook' | 'instagram' | 'twitter' | 'website' | 'youtube' | 'mainLink'
+export  type ContactsKeys = keyof ContactsType;
+
+export const ProfileInfo: FC<ProfileInfoType> = ({profile, profileStatus, updateProfileStatusTC, isOwner, savePhoto, saveProfile}) => {
+    const [editMode, setEditMode] = useState(false)
+
     if (!profile) {
         return <Preloader/>
     }
-    const onMainPhotoSelected = (e:ChangeEvent<HTMLInputElement>) => {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            console.log("e.target.files[0]",typeof e.target.files[0])
+            console.log('e.target.files[0]', typeof e.target.files[0])
             savePhoto(e.target.files[0])
         }
+    }
+    const onSubmit = (formData: ObtainedFormType) => {
+        saveProfile(formData)
+        setEditMode(false)
     }
 
     return (
         <div>
             <div className={s.descriptionBlock}>
-                {/* <img src={profile?.photos.large != null ? profile?.photos.large : UserPhotoNull}/>*/}
                 <img src={profile?.photos.large || UserPhotoNull} className={s.mainPhoto}/>
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
+                {editMode
+                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner} onSubmit={onSubmit}/>
+                    : <ProfileData profile={profile} isOwner={isOwner} toEditMode={() => setEditMode(true)}/>}
                 <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
-                <div>Полное имя: {profile.fullName}</div>
-                <div>Контакты: {profile.contacts.vk}</div>
-                <div>Ищу работу:{profile.lookingForAJob ? 'Да' : 'Нет'}</div>
                 ava+description
             </div>
         </div>
     )
+}
+
+export type ProfileDataType = {
+    profile: ResponseAPIProfileType | null
+    isOwner: boolean
+    toEditMode: () => void
+}
+
+
+export const ProfileData: FC<ProfileDataType> = ({profile, isOwner, toEditMode}) => {
+    return (
+        <div>
+            <div>{isOwner && <button onClick={() => {
+                toEditMode()
+            }}>редактировать</button>}</div>
+            <div>Full name:
+                <span>{profile?.fullName}</span>
+            </div>
+            <div>Looking for a job:
+                <span>{profile?.lookingForAJob ? 'Да' : 'Нет'}</span>
+            </div>
+            {profile?.lookingForAJob && <div>
+                <span> {profile.lookingForAJobDescription}</span>
+            </div>}
+            <div>About me:
+                <span>{profile?.aboutMe}</span>
+            </div>
+            <div>Contacts:
+                <div>{Object.keys(profile?.contacts as ContactsType).map((key: string) => {
+                    return profile != null &&
+                        <Contact key={key} contactTitle={key} contactValue={profile.contacts[key as ContactsKeys]}/>
+                })}</div>
+            </div>
+
+        </div>
+    )
+}
+
+
+export type ContactType = {
+    contactTitle: string
+    contactValue?: string
+}
+
+export const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
+    return (
+        <div>{contactTitle}:{contactValue}</div>
+    )
+}
+
+{/* <img src={profile?.photos.large != null ? profile?.photos.large : UserPhotoNull}/>*/
 }

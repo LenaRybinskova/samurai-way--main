@@ -1,5 +1,8 @@
-import {Dispatch} from 'redux';
+import {AnyAction, Dispatch} from 'redux';
 import {profileAPI, userAPI} from '../api/api';
+import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
+import store, {AppRootSTateType, AppThunk} from '../redux/reduxStore';
+import {ThunkDispatch} from 'redux-thunk';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST'
 const DELETE_POST = 'samurai-network/profile/DELETE-POST'
@@ -39,7 +42,7 @@ let initialState: ProfilePageType = {
     newPostText: 'IT-kamasutra',
     profileStatus: '',
     profile: {
-        aboutMe:null,
+        aboutMe: null,
         userId: 30404,
         lookingForAJob: true,
         lookingForAJobDescription: '11',
@@ -53,7 +56,7 @@ let initialState: ProfilePageType = {
             website: '11',
             youtube: '11',
             mainLink: '11'
-        },
+        } as ContactsType,
         photos: {
             small: '11',
             large: '11'
@@ -64,21 +67,12 @@ let initialState: ProfilePageType = {
 // Types
 export type initialStateType = typeof initialState
 export type ResponseAPIProfileType = {
-    aboutMe:null,
+    aboutMe: null,
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    contacts: {
-        github: string,
-        vk: string,
-        facebook: string,
-        instagram: string,
-        twitter: string,
-        website: string,
-        youtube: string,
-        mainLink: string
-    }
+    contacts: ContactsType
     photos: {
         small: string,
         large: string
@@ -94,6 +88,16 @@ export type ProfilePageType = {
     newPostText: string
     profile: ResponseAPIProfileType | null,
     profileStatus: string
+}
+export type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
 }
 
 export type ProfileReducerAcTypes =
@@ -165,4 +169,13 @@ export const savePhoto = (file: string) => async (dispatch: Dispatch) => {
         dispatch(savePhotoSuccess(res.data.data.photos))
     }
 }
+
+export const saveProfile = (profile: ObtainedFormType): AppThunk =>
+    async (dispatch: ThunkDispatch<AppRootSTateType, unknown, AnyAction>, getState: () => AppRootSTateType) => {
+        const userId = getState().auth.userId;
+        const res = await profileAPI.saveProfile(profile);
+        if (res.data.resultCode === 0) {
+            dispatch(getUserProfileTC(Number(userId)));
+        }
+    };
 export default profileReducer;

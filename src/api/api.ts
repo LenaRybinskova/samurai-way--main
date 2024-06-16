@@ -1,9 +1,10 @@
 import axios from 'axios';
+import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers:{
-        "API-KEY":"3d3b9155-6649-42ea-90b9-cf4f2be8bdbb"
+        "API-KEY":""
     },
 });
 
@@ -54,7 +55,11 @@ export const profileAPI = {
             headers:
                 {"Content-Type":"multipart/form-data"}
         })
+    },
+    saveProfile(profile: ObtainedFormType){
+      return  instance.put("/profile", profile)
     }
+
 }
 
 export type LoginType = {

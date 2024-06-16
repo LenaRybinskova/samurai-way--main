@@ -5,6 +5,7 @@ import {
     getUserProfileTC,
     getUserStatusTC,
     ResponseAPIProfileType, savePhoto,
+    saveProfile,
     updateProfileStatusTC
 } from '../../redux/profileReducer';
 import {toggleIsFetching} from '../../redux/usersReducer';
@@ -12,6 +13,8 @@ import {Profile} from './Profile';
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
 import {compose} from 'redux';
+import {ObtainedFormType} from "./ProfileInfo/ProfileInfo";
+
 
 
 class ProfileContainer extends React.Component<OwnPropsType> {
@@ -44,7 +47,7 @@ class ProfileContainer extends React.Component<OwnPropsType> {
                         updateProfileStatusTC={this.props.updateProfileStatusTC}
                         profileStatus={this.props.profileStatus}
                         isOwner={!this.props.match.params.userId}
-                        savePhoto={this.props.savePhoto}/>
+                        savePhoto={this.props.savePhoto} saveProfile={this.props.saveProfile}/>
     }
 }
 
@@ -53,7 +56,8 @@ type MapDispatchToProsType = {
     getUserProfileTC: (userId: number) => void //убрала |null
     getUserStatusTC: (userId: number) => void
     updateProfileStatusTC: (newStatus: string) => void
-    savePhoto:(photo:any)=>void
+    savePhoto: (photo: any) => void
+    saveProfile: (formData: ObtainedFormType) => void
 }
 type MapStateToPropsType = {
     profile: ResponseAPIProfileType | null,
@@ -78,7 +82,14 @@ const mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
 }
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps, {toggleIsFetching, getUserProfileTC, getUserStatusTC, updateProfileStatusTC, savePhoto}),
+    connect(mapStateToProps, {
+        toggleIsFetching,
+        getUserProfileTC,
+        getUserStatusTC,
+        updateProfileStatusTC,
+        savePhoto,
+        saveProfile
+    }),
     withRouter,
     WithAuthRedirect)
 (ProfileContainer)

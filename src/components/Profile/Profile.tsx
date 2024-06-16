@@ -1,5 +1,5 @@
 import React from 'react'
-import {ProfileInfo} from './ProfileInfo/ProfileInfo';
+import {ObtainedFormType, ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {ResponseAPIProfileType} from '../../redux/profileReducer';
 
@@ -13,13 +13,13 @@ export type ProfileType = {
     profileStatus:string
     isOwner:boolean
     savePhoto:(file: File) => void
-
+    saveProfile:(formData: ObtainedFormType)=>void
 
 }
 export const Profile = (props: ProfileType) => {
     return (
         <div>Main content
-            <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} isOwner={props.isOwner} savePhoto={props.savePhoto}/>
+            <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} isOwner={props.isOwner} savePhoto={props.savePhoto} saveProfile={props.saveProfile}/>
             <MyPostsContainer/>
         </div>
     )

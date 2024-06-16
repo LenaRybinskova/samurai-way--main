@@ -20,14 +20,6 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
                    В Field уже есть onChange, они к name буду собирать данные
 
                    */}
-            {/*            <div>
-                { <Field
-                component={Input}
-                name={'email'}
-                placeholder={'email'}
-                validate={[required]}
-            />}
-            </div>*/}
             {createField('email', 'email', required, Input)}
             {createField('password', 'password', required, Input, {type:"password"})}
             {createField(null, 'rememberMe', required, Input, {type:"checkbox"}, "Remember me")}
