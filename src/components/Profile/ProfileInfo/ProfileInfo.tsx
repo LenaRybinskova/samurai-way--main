@@ -28,7 +28,14 @@ export type ObtainedFormType = {
 // Указываем тип  ИМЕННО ключей contacts // ContactsKeys будет СТРОГО типом 'github' | 'vk' | 'facebook' | 'instagram' | 'twitter' | 'website' | 'youtube' | 'mainLink'
 export  type ContactsKeys = keyof ContactsType;
 
-export const ProfileInfo: FC<ProfileInfoType> = ({profile, profileStatus, updateProfileStatusTC, isOwner, savePhoto, saveProfile}) => {
+export const ProfileInfo: FC<ProfileInfoType> = ({
+                                                     profile,
+                                                     profileStatus,
+                                                     updateProfileStatusTC,
+                                                     isOwner,
+                                                     savePhoto,
+                                                     saveProfile
+                                                 }) => {
     const [editMode, setEditMode] = useState(false)
 
     if (!profile) {
@@ -42,7 +49,7 @@ export const ProfileInfo: FC<ProfileInfoType> = ({profile, profileStatus, update
     }
     const onSubmit = (formData: ObtainedFormType) => {
         saveProfile(formData)
-        setEditMode(false)
+/*        setEditMode(false)*/
     }
 
     return (
@@ -51,7 +58,8 @@ export const ProfileInfo: FC<ProfileInfoType> = ({profile, profileStatus, update
                 <img src={profile?.photos.large || UserPhotoNull} className={s.mainPhoto}/>
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
                 {editMode
-                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner} onSubmit={onSubmit}/>
+                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner}
+                                            onSubmit={onSubmit}/>
                     : <ProfileData profile={profile} isOwner={isOwner} toEditMode={() => setEditMode(true)}/>}
                 <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
                 ava+description
@@ -94,6 +102,7 @@ export const ProfileData: FC<ProfileDataType> = ({profile, isOwner, toEditMode})
 
         </div>
     )
+
 }
 
 
@@ -104,7 +113,7 @@ export type ContactType = {
 
 export const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => {
     return (
-        <div>{contactTitle}:{contactValue}</div>
+        <div className={s.contacts}>{contactTitle}:{contactValue}</div>
     )
 }
 

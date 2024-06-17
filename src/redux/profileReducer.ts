@@ -3,6 +3,7 @@ import {profileAPI, userAPI} from '../api/api';
 import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
 import store, {AppRootSTateType, AppThunk} from '../redux/reduxStore';
 import {ThunkDispatch} from 'redux-thunk';
+import {stopSubmit} from 'redux-form';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST'
 const DELETE_POST = 'samurai-network/profile/DELETE-POST'
@@ -176,6 +177,10 @@ export const saveProfile = (profile: ObtainedFormType): AppThunk =>
         const res = await profileAPI.saveProfile(profile);
         if (res.data.resultCode === 0) {
             dispatch(getUserProfileTC(Number(userId)));
+        }else {
+            console.log("_error: res.data.messages[0]", res.data.messages[0])
+
+            dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]})) //вывод ошибки
         }
     };
 export default profileReducer;

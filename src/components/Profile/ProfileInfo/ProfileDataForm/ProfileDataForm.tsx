@@ -1,5 +1,6 @@
 import React from 'react';
-import {Contact, ContactsKeys, ObtainedFormType} from '../../../..//components/Profile/ProfileInfo/ProfileInfo';
+import s from '../ProfileDataForm/ProfileDataForm.module.css'
+import {ObtainedFormType} from '../../../..//components/Profile/ProfileInfo/ProfileInfo';
 import {ContactsType, ResponseAPIProfileType} from '../../../../../src/redux/profileReducer';
 import {createField, Input, Textarea} from '../../../common/FormsControls/FormsControls';
 import {required} from '../../../../../src/utils/validators/validators';
@@ -13,12 +14,19 @@ export type ProfilePropsType = {
 }
 
 //зачем дважды ProfileDataFormType
-export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, ProfilePropsType> & ProfilePropsType> = ({handleSubmit, profile, isOwner}) => {
+export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, ProfilePropsType> & ProfilePropsType> = ({
+                                                                                                                        handleSubmit,
+                                                                                                                        error,
+                                                                                                                        profile,
+                                                                                                                        isOwner
+}) => {
+    console.log("ProfileDataForm error", error)
     return (
         <form onSubmit={handleSubmit}>
 
-            <div>{<button onClick={() => {
-            }}>save</button>}</div>
+            <div>{<button type={'submit'}>save</button>}</div>
+            {error && <div>{error}</div>}
+
             <div>Full name:{createField('Full name', 'fullName', required, Input)}</div>
             <div>Looking for a job:
                 {createField('', 'lookingForAJob', required, Input, {type: 'checkbox'})}
@@ -35,8 +43,8 @@ export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, Profi
             </div>*/}
             <div>Contacts:
                 <div>{Object.keys(profile?.contacts as ContactsType).map((key: string) => {
-                    return profile != null &&
-                        <Contact key={key} contactTitle={key} contactValue={profile.contacts[key as ContactsKeys]}/>
+                    return <div
+                        className={s.contacts}>{key}: {createField(key, 'contacts.' + key, required, Input)}</div>
                 })}</div>
             </div>
         </form>
