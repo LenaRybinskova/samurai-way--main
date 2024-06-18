@@ -5,7 +5,7 @@ import {Field, WrappedFieldProps} from 'redux-form';
 
 type FormControlProps = WrappedFieldProps & { tagName: 'textarea' | 'input' }
 
-const FormControl: FC<FormControlProps> = ({input, meta:{touched,error }, tagName, ...props}) => {
+const FormControl: FC<FormControlProps> = ({input, meta: {touched, error}, tagName, ...props}) => {
 
     const hasError = touched && error;
     const Tag = tagName;
@@ -22,7 +22,7 @@ const FormControl: FC<FormControlProps> = ({input, meta:{touched,error }, tagNam
     );
 };
 
-export const Input: FC<WrappedFieldProps> =(props: WrappedFieldProps) => {
+export const Input: FC<WrappedFieldProps> = (props: WrappedFieldProps) => {
     return <FormControl {...props} tagName={'input'}/>
 }
 
@@ -30,15 +30,13 @@ export const Textarea: FC<WrappedFieldProps> = (props: WrappedFieldProps) => {
     return <FormControl {...props} tagName={'textarea'}/>
 }
 
-export const createField = (placeholder: string | null, name: string, validators: (value: string) => void, component: FunctionComponent<WrappedFieldProps>, props={}, text="") => {
+export const createField = (placeholder: string | null, name: string, validators: (value: string) => void, component: FunctionComponent<WrappedFieldProps>, props = {}, text = '') => {
     return (
         <div>
             <Field component={component} name={name} placeholder={placeholder} validate={[validators]}{...props}/>
         </div>
     )
 }
-
-
 
 
 //--------------------------------------------------------------------------------

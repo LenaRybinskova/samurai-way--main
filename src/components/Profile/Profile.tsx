@@ -13,7 +13,7 @@ export type ProfileType = {
     profileStatus:string
     isOwner:boolean
     savePhoto:(file: File) => void
-    saveProfile:(formData: ObtainedFormType)=>void
+    saveProfile:(formData: ObtainedFormType)=>Promise<void>
 
 }
 export const Profile = (props: ProfileType) => {

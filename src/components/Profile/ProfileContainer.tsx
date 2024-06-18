@@ -57,7 +57,7 @@ type MapDispatchToProsType = {
     getUserStatusTC: (userId: number) => void
     updateProfileStatusTC: (newStatus: string) => void
     savePhoto: (photo: any) => void
-    saveProfile: (formData: ObtainedFormType) => void
+    saveProfile: (formData: ObtainedFormType) => Promise<void>
 }
 type MapStateToPropsType = {
     profile: ResponseAPIProfileType | null,

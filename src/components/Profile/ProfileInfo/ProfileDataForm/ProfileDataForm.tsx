@@ -14,13 +14,8 @@ export type ProfilePropsType = {
 }
 
 //зачем дважды ProfileDataFormType
-export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, ProfilePropsType> & ProfilePropsType> = ({
-                                                                                                                        handleSubmit,
-                                                                                                                        error,
-                                                                                                                        profile,
-                                                                                                                        isOwner
-}) => {
-    console.log("ProfileDataForm error", error)
+export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, ProfilePropsType> & ProfilePropsType> = ({handleSubmit, error, profile,}) => {
+    console.log('ОШИБКА ProfileDataForm', error)
     return (
         <form onSubmit={handleSubmit}>
 

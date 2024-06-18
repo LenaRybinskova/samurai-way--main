@@ -13,7 +13,7 @@ export type ProfileInfoType = {
     profileStatus: string
     isOwner: boolean
     savePhoto: (file: File) => void
-    saveProfile: (formData: ObtainedFormType) => void
+    saveProfile: (formData: ObtainedFormType) => Promise<void>
 }
 
 export type ObtainedFormType = {
@@ -43,13 +43,15 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
     }
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
-            console.log('e.target.files[0]', typeof e.target.files[0])
             savePhoto(e.target.files[0])
         }
     }
-    const onSubmit = (formData: ObtainedFormType) => {
-        saveProfile(formData)
-/*        setEditMode(false)*/
+    const onSubmit =  (formData: ObtainedFormType) => {
+       saveProfile(formData).then(
+           ()=>{
+               setEditMode(false)
+           }
+       )
     }
 
     return (
@@ -58,8 +60,7 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
                 <img src={profile?.photos.large || UserPhotoNull} className={s.mainPhoto}/>
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
                 {editMode
-                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner}
-                                            onSubmit={onSubmit}/>
+                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner} onSubmit={onSubmit}/>
                     : <ProfileData profile={profile} isOwner={isOwner} toEditMode={() => setEditMode(true)}/>}
                 <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
                 ava+description

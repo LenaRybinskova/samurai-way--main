@@ -1,7 +1,7 @@
 import {AnyAction, Dispatch} from 'redux';
 import {profileAPI, userAPI} from '../api/api';
 import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
-import store, {AppRootSTateType, AppThunk} from '../redux/reduxStore';
+import {AppRootSTateType, AppThunk} from '../redux/reduxStore';
 import {ThunkDispatch} from 'redux-thunk';
 import {stopSubmit} from 'redux-form';
 
@@ -176,11 +176,14 @@ export const saveProfile = (profile: ObtainedFormType): AppThunk =>
         const userId = getState().auth.userId;
         const res = await profileAPI.saveProfile(profile);
         if (res.data.resultCode === 0) {
-            dispatch(getUserProfileTC(Number(userId)));
-        }else {
-            console.log("_error: res.data.messages[0]", res.data.messages[0])
-
-            dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]})) //вывод ошибки
+            dispatch(getUserProfileTC(Number(userId)))
+        } else {
+            /*dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]})) //сохр текст ошибки для всей формы*/ /*Invalid url format (Contacts->Facebook)*/
+            console.log('общая ошибка:', res.data.messages[0])
+            const separatorSymbol = res.data.messages[0].indexOf('>')
+            const contactName = res.data.messages[0].slice([separatorSymbol + 1]).slice(0, -1).toLowerCase() //вытаск из текста ош название поля с ошибкой и задаем его динамически
+            dispatch(stopSubmit('edit-profile', {'contacts': {[contactName]: res.data.messages[0]}})) //сохр текст этой ошибки
+            return Promise.reject(res.data.messages[0])
         }
     };
 export default profileReducer;
