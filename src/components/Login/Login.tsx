@@ -9,9 +9,11 @@ import {AppRootSTateType} from '../../redux/reduxStore';
 type LoginProps = {
     loginTC: (value: LoginType) => void
     isAuth: boolean
+    captchaUrl:string|null
 }
 type MstpType = {
     isAuth: boolean
+    captchaUrl:string|null
 }
 
 const Login = (props: LoginProps) => {
@@ -27,12 +29,13 @@ const Login = (props: LoginProps) => {
     return (
         <div>
             <h1>LOGIN</h1>
-            <ReduxLoginForm onSubmit={onSubmit}/>
+            <ReduxLoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
         </div>
     );
 };
 const mstp = (state: AppRootSTateType): MstpType => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl:state.auth.captchaUrl
 })
 
 export default connect(mstp, {loginTC})(Login)

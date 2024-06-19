@@ -8,10 +8,15 @@ export type FormDataType = {
     email: string,
     password: string,
     rememberMe: boolean
+    captcha?:string|null
+
+}
+export type OwnPropsType ={
+    captchaUrl:string|null
 }
 
 
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+const LoginForm: React.FC<InjectedFormProps< FormDataType, OwnPropsType> & OwnPropsType> = ({handleSubmit, error, captchaUrl}) => {
 //конт компон снабдила в пропсах кучей событий, в тч handleSubmit - для сбора всех данных с форм, без принудит перезагрузки, error-объект и тд
     return (
         <form onSubmit={handleSubmit}>
@@ -24,19 +29,23 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, err
             {createField('password', 'password', required, Input, {type:"password"})}
             {createField(null, 'rememberMe', required, Input, {type:"checkbox"}, "Remember me")}
 
+            {captchaUrl && <img src={captchaUrl}/>}
+            {captchaUrl && createField('enter symbolr from image', 'captcha', required, Input)}
+
             {error && <div className={styles.formSummaryError}>
                 {error}
             </div>}
             <div>
                 <button type={'submit'}>Login</button>
             </div>
+
         </form>
     );
 };
 
 //ReduxLoginForm функ, которая возвращает ХОК,
 // который возвр конт компоненту с новым функционалом для LoginForm
-export const ReduxLoginForm = reduxForm<FormDataType>({
+export const ReduxLoginForm = reduxForm<FormDataType,OwnPropsType>({
 // пишем уникальное название формы
     form: 'login'
 })(LoginForm)

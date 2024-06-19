@@ -62,9 +62,15 @@ export const profileAPI = {
 
 }
 
+export const securityAPI={
+    getCaptcha(){
+        return instance.get("security/get-captcha-url")
+    }
+}
+
 export type LoginType = {
     email: string,
     password: string,
     rememberMe?: boolean,
-    captcha?: boolean
+    captcha?: string | null
 }

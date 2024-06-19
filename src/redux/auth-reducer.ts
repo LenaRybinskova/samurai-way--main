@@ -1,15 +1,17 @@
 import {Dispatch} from 'redux';
-import {authAPI, LoginType} from '../api/api';
+import {authAPI, LoginType, securityAPI} from '../api/api';
 import {AppThunk} from '../redux/reduxStore';
 import {stopSubmit} from 'redux-form';
 
 const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
+const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL'
 // со старта вся инфа по юзеру null - тк не залогинен
 const initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    captchaUrl: null
 }
 
 export type AuthStateType = {
@@ -17,23 +19,34 @@ export type AuthStateType = {
     email: string | null
     login: string | null
     isAuth: boolean
+    captchaUrl: string | null
 }
 
-export const authReducer = (state: AuthStateType = initialState, action: SetAuthUserDataACType): AuthStateType => {
+export const authReducer = (state: AuthStateType = initialState, action: AuthReducerAcTypes): AuthStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {...state, ...action.payload}
+        case GET_CAPTCHA_URL_SUCCESS:
+            return {...state, captchaUrl: action.captchaUrl}
         default:
             return state
     }
 }
 export type SetAuthUserDataACType = ReturnType<typeof setAuthUserData>
-export type  AuthReducerAcTypes = SetAuthUserDataACType
+export type GetCaptchaUrlACType = ReturnType<typeof getCaptchaUrl>
+export type  AuthReducerAcTypes = SetAuthUserDataACType | GetCaptchaUrlACType
 // AC
 export const setAuthUserData = (userId: string | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
         type: SET_USER_DATA,
         payload: {userId, email, login, isAuth}
+    } as const
+}
+
+export const getCaptchaUrl = (captchaUrl: string) => {
+    return {
+        type: GET_CAPTCHA_URL_SUCCESS,
+        captchaUrl
     } as const
 }
 
@@ -57,23 +70,23 @@ export const loginTC = (value: LoginType): AppThunk => async (dispatch) => {
     if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
         dispatch(getAuthUserDataTC())
     } else {
+        if(res.data.resultCode ===10){
+            dispatch(getCaptchaURL())
+        }
         const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
         const action = stopSubmit('login', {email: 'email is wrong'}) //email значит валидироваться  будет только поле email
         dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
     }
-    /*    authAPI.login(value).then(res => {
-            if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
-                dispatch(getAuthUserDataTC())
-            } else {
-                const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
-                /!*const action = stopSubmit('login', {email: 'email is wrong'})*!/ //email значит валидироваться  будет только поле email
-                dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
-            }
-        })*/
+}
+
+export const getCaptchaURL = () => async (dispatch: Dispatch) => {
+    const res = await securityAPI.getCaptcha()
+    const captchURL = res.data.url
+    dispatch(getCaptchaUrl(captchURL))
 }
 
 export const logoutTC = (): AppThunk => async (dispatch) => {
-    const res=await authAPI.logout()
+    const res = await authAPI.logout()
     if (res.data.resultCode === 0) { // значит все, мы вылогинились
         dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
     }
