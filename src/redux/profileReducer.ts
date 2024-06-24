@@ -156,10 +156,15 @@ export const getUserStatusTC = (userId: number) => async (dispatch: Dispatch) =>
         })*/
 }
 export const updateProfileStatusTC = (newStatus: string) => async (dispatch: Dispatch) => {
-    const res = await profileAPI.updateStatus(newStatus)
-    if (res.data.resultCode === 0) {
-        dispatch(setProfileStatus(newStatus))
+    try {
+        const res = await profileAPI.updateStatus(newStatus)
+        if (res.data.resultCode === 0) {
+            dispatch(setProfileStatus(newStatus))
+        }
+    } catch (error) {
+console.log("updateProfileStatusTC error", error)
     }
+
     /* profileAPI.updateStatus(newStatus).then(res => {
          dispatch(setProfileStatus(newStatus))
      })*/

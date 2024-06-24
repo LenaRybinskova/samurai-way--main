@@ -1,7 +1,7 @@
 import React, {lazy} from 'react';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
-import {BrowserRouter, HashRouter, Route, withRouter} from 'react-router-dom';
+import {BrowserRouter, HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
@@ -13,6 +13,7 @@ import {AppRootSTateType} from '../src/redux/reduxStore';
 import Preloader from '../src/components/common/preloader/Preloader';
 import store from './redux/reduxStore';
 import {WithSuspense} from './hoc/WithSuspense';
+import {Result} from 'antd';
 /*import DialogsContainer from './components/Dialogs/DialogsContainer';*/
 /*import ProfileContainer from './components/Profile/ProfileContainer';*/
 
@@ -37,48 +38,53 @@ class App extends React.Component<CommonType> {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="appWrapperContent">
-                    <Route exact path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
-                    {<Route exact path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
-{/*                    <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
-                    <Route exact path={'/users'} render={() => <UsersContainer/>}/>
-                    <Route exact path={'/login'} render={() => <Login/>}/>
+                    <Switch>
+                        <Route exact path={'/'} render={() => <Redirect to={'profile'}/>}/> {/*со старта дб Профайл*/}
+                        <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
+                        {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
+
+                        {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
+                        <Route path={'/users'} render={() => <UsersContainer/>}/>
+                        <Route path={'/login'} render={() => <Login/>}/>
+                        <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
+                    </Switch>
                 </div>
             </div>
         )
     }
-    }
+}
 
-    type mapDispatchToPropsType = {
-        getAuthUserDataTC: () => void
-            initializedAppTC
-    :
+type mapDispatchToPropsType = {
+    getAuthUserDataTC: () => void
+    initializedAppTC
+        :
         () => void
+}
+type mapStateToPropsType = {
+    initialized: boolean
+}
+type CommonType = mapDispatchToPropsType & mapStateToPropsType
+const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
+    return {
+        initialized: state.app.initialized,
     }
-    type mapStateToPropsType = {
-        initialized: boolean
-    }
-    type CommonType = mapDispatchToPropsType & mapStateToPropsType
-    const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
-        return {
-            initialized: state.app.initialized,
-        }
-    }
+}
 
-    const AppContainer= compose(
+const AppContainer = compose(
     withRouter,
     connect(mapStateToProps, {
         getAuthUserDataTC, initializedAppTC
     }))(App) as React.ComponentClass
 
 
-    const SamuraiJSApp=(props:any)=>{
-        return (
-            <HashRouter basename={process.env.PUBLIC_URL}>
-                <Provider store={store}>
-                    <AppContainer/>
-                </Provider>
-            </HashRouter>
-        )
-    }
+const SamuraiJSApp = (props: any) => {
+    return (
+        <HashRouter basename={process.env.PUBLIC_URL}>
+            <Provider store={store}>
+                <AppContainer/>
+            </Provider>
+        </HashRouter>
+    )
+}
 
-    export default SamuraiJSApp;
+export default SamuraiJSApp;
