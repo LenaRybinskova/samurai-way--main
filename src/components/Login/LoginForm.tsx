@@ -25,12 +25,12 @@ const LoginForm: React.FC<InjectedFormProps< FormDataType, OwnPropsType> & OwnPr
                    В Field уже есть onChange, они к name буду собирать данные
 
                    */}
-            {createField('email', 'email', required, Input)}
-            {createField('password', 'password', required, Input, {type:"password"})}
-            {createField(null, 'rememberMe', required, Input, {type:"checkbox"}, "Remember me")}
+            {createField('email', 'email', [required], Input)}
+            {createField('password', 'password', [required], Input, {type:"password"})}
+            {createField(null, 'rememberMe', [],Input, {type:"checkbox"}, "Remember me")}
 
             {captchaUrl && <img src={captchaUrl}/>}
-            {captchaUrl && createField('enter symbolr from image', 'captcha', required, Input)}
+            {captchaUrl && createField('enter symbolr from image', 'captcha', [required], Input)}
 
             {error && <div className={styles.formSummaryError}>
                 {error}
@@ -51,3 +51,4 @@ export const ReduxLoginForm = reduxForm<FormDataType,OwnPropsType>({
 })(LoginForm)
 
 
+// ()=> ''

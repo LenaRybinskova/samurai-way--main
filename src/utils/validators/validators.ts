@@ -1,4 +1,4 @@
-export const required = (value: string) => { // было эни
+export const required = (value:string) => { // было эни
     // value  то что вводим в инпут
     if (value) {
         return undefined
@@ -13,4 +13,5 @@ export const maxLengthCreator = (maxLength: number) => (value: any) => {
     }
     return undefined
 }
+
 

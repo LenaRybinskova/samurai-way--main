@@ -30,10 +30,10 @@ export const Textarea: FC<WrappedFieldProps> = (props: WrappedFieldProps) => {
     return <FormControl {...props} tagName={'textarea'}/>
 }
 
-export const createField = (placeholder: string | null, name: string, validators: (value: string) => void, component: FunctionComponent<WrappedFieldProps>, props = {}, text = '') => {
+export const createField = (placeholder: string | null, name: string, validators: ((value: string) => void)[] | [], component: FunctionComponent<WrappedFieldProps>, props = {}, text = '') => {
     return (
         <div>
-            <Field component={component} name={name} placeholder={placeholder} validate={[validators]}{...props}/>
+            <Field component={component} name={name} placeholder={placeholder} validate={validators}{...props}/>
         </div>
     )
 }

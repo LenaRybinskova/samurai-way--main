@@ -162,13 +162,10 @@ export const updateProfileStatusTC = (newStatus: string) => async (dispatch: Dis
             dispatch(setProfileStatus(newStatus))
         }
     } catch (error) {
-console.log("updateProfileStatusTC error", error)
+        console.log('updateProfileStatusTC error', error)
     }
-
-    /* profileAPI.updateStatus(newStatus).then(res => {
-         dispatch(setProfileStatus(newStatus))
-     })*/
 }
+
 export const savePhoto = (file: string) => async (dispatch: Dispatch) => {
     const res = await profileAPI.savePhoto(file)
     if (res.data.resultCode === 0) {
