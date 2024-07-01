@@ -23,16 +23,17 @@ export const appReducer = (state: AppReducerType = initialState, action: AppACTy
 export const initializedSuccessAC = () => {
     return {type: INITIALIZED_SUCCESS} as const
 }
-
-// TC
-export const initializedAppTC = (): AppThunk => (dispatch) => {
+// пример, если надо ждать неск промисов когда зарезолваятся и тогда что что диспатчить
+/*export const initializedAppTC = (): AppThunk => (dispatch) => {
     const promise = dispatch(getAuthUserDataTC()) // запраш, кука есть?
-    /*  dispatch(njsdjfjkhsd()) // еще может какие то запросы
-        dispatch(njsdjfjkhsd())*/
     Promise.all([promise]) //когда они ВСЕ зарезолвятся, тогда только в зен попадем
-        .then(res => {
-            dispatch(initializedSuccessAC())
-        })
+        .then(res => {dispatch(initializedSuccessAC())})
+}*/
+// я переписала
+export const initializedAppTC = (): AppThunk => (dispatch) => {
+    dispatch(getAuthUserDataTC()).then(res => { // если ответ серв 200
+        dispatch(initializedSuccessAC()) // инициал =ТРУ
+    })
 }
 
 export type SetInitializedType = ReturnType<typeof initializedSuccessAC>

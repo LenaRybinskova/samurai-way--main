@@ -42,7 +42,6 @@ export const setAuthUserData = (userId: string | null, email: string | null, log
         payload: {userId, email, login, isAuth}
     } as const
 }
-
 export const getCaptchaUrl = (captchaUrl: string) => {
     return {
         type: GET_CAPTCHA_URL_SUCCESS,
@@ -56,6 +55,8 @@ export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
     if (res.data.resultCode === 0) {
         let {id, login, email} = res.data.data
         dispatch(setAuthUserData(id, email, login, true))
+    } else {
+        return res // если резКод===1, значит ошибка какая то
     }
     /*return  authAPI.authMe().then(res => { // доб ретурт чтобы исп промис в initializedAppTC
          if (res.data.resultCode === 0) {

@@ -1,7 +1,7 @@
 import React, {lazy} from 'react';
 import './App.css';
 import {Navbar} from './components/Navbar/Navbar';
-import {BrowserRouter, HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
+import {HashRouter, Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import Login from './components/Login/Login';
@@ -13,7 +13,7 @@ import {AppRootSTateType} from '../src/redux/reduxStore';
 import Preloader from '../src/components/common/preloader/Preloader';
 import store from './redux/reduxStore';
 import {WithSuspense} from './hoc/WithSuspense';
-import {Result} from 'antd';
+import Subscribers from '../src/components/Subscribers/Subscribers';
 /*import DialogsContainer from './components/Dialogs/DialogsContainer';*/
 /*import ProfileContainer from './components/Profile/ProfileContainer';*/
 
@@ -22,33 +22,30 @@ const ProfileContainer = lazy(() => import('./components/Profile/ProfileContaine
 
 
 class App extends React.Component<CommonType> {
-
     componentDidMount() {
-        this.props.initializedAppTC()
-    }
+        this.props.initializedAppTC()}
 
     render() {
-        {
-            if (!this.props.initialized) {
-                return <Preloader/>
-            }
+        {if (!this.props.initialized) {
+                return <Preloader/>}
         }
         return (
             <div className="app-wrapper">
+                <Subscribers/>
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="appWrapperContent">
                     <Switch>
                         <Route exact path={'/'} render={() => <Redirect to={'profile'}/>}/> {/*со старта дб Профайл*/}
                         <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
-                        {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
-
-                        {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
                         <Route path={'/users'} render={() => <UsersContainer/>}/>
+                        {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
+                        {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
                         <Route path={'/login'} render={() => <Login/>}/>
                         <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
                     </Switch>
                 </div>
+
             </div>
         )
     }
@@ -56,9 +53,7 @@ class App extends React.Component<CommonType> {
 
 type mapDispatchToPropsType = {
     getAuthUserDataTC: () => void
-    initializedAppTC
-        :
-        () => void
+    initializedAppTC: () => void
 }
 type mapStateToPropsType = {
     initialized: boolean

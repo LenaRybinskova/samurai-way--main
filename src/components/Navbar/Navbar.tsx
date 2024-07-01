@@ -1,6 +1,7 @@
 import React from 'react';
 import s from "./Navbar.module.css"
 import {NavLink} from 'react-router-dom';
+import Subscribers from '../Subscribers/Subscribers';
 
 
 export type NavbarType={
@@ -28,11 +29,6 @@ export const Navbar = (props:NavbarType) => {
             <div className={s.item}>
                 <NavLink to={"/users"} activeClassName={s.activeLink}>Users</NavLink>
             </div>
-
-            <div>
-
-            </div>
-
 
         </nav>
     )

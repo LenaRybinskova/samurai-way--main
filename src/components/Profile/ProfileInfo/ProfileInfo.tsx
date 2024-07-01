@@ -46,12 +46,12 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
             savePhoto(e.target.files[0])
         }
     }
-    const onSubmit =  (formData: ObtainedFormType) => {
-       saveProfile(formData).then(
-           ()=>{
-               setEditMode(false)
-           }
-       )
+    const onSubmit = (formData: ObtainedFormType) => {
+        saveProfile(formData).then(
+            () => {
+                setEditMode(false)
+            }
+        )
     }
 
     return (
@@ -60,10 +60,10 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
                 <img src={profile?.photos.large || UserPhotoNull} className={s.mainPhoto}/>
                 {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
                 {editMode
-                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner} onSubmit={onSubmit}/>
+                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner}
+                                            onSubmit={onSubmit}/>
                     : <ProfileData profile={profile} isOwner={isOwner} toEditMode={() => setEditMode(true)}/>}
                 <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
-                ava+description
             </div>
         </div>
     )
@@ -88,9 +88,10 @@ export const ProfileData: FC<ProfileDataType> = ({profile, isOwner, toEditMode})
             <div>Looking for a job:
                 <span>{profile?.lookingForAJob ? 'Да' : 'Нет'}</span>
             </div>
-            {profile?.lookingForAJob && <div>
+            <div>Description: {profile?.lookingForAJob &&
                 <span> {profile.lookingForAJobDescription}</span>
-            </div>}
+            }</div>
+
             <div>About me:
                 <span>{profile?.aboutMe}</span>
             </div>

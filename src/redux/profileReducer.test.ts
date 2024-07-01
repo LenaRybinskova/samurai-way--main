@@ -6,6 +6,7 @@ import profileReducer, {
     ResponseAPIProfileType
 } from '../redux/profileReducer';
 
+
 //1 start data
 let state: ProfilePageType = {
     posts: [
@@ -33,40 +34,41 @@ let state: ProfilePageType = {
             small: '11',
             large: '11'
         }
-    } as ResponseAPIProfileType
+    } as ResponseAPIProfileType,
+    friends: []
 }
 
-it("new post should be added",()=>{
+it('new post should be added', () => {
 
     //2 actions
-    const newState=profileReducer(state,addPostAC("new post"))
+    const newState = profileReducer(state, addPostAC('new post'))
 
     //3. expectation
     expect(newState.posts.length).toBe(3)
 })
 
-it("message of new post should be correct",()=>{
+it('message of new post should be correct', () => {
 
     //2 actions
-    const newState=profileReducer(state,addPostAC("new post"))
+    const newState = profileReducer(state, addPostAC('new post'))
 
     //3. expectation
-    expect(newState.posts[2].message).toBe("new post")
+    expect(newState.posts[2].message).toBe('new post')
 })
 
-it("after deleting length of message should be decrement",()=>{
+it('after deleting length of message should be decrement', () => {
 
     //2 actions
-    const newState=profileReducer(state,deletePostAC(1))
+    const newState = profileReducer(state, deletePostAC(1))
 
     //3. expectation
     expect(newState.posts.length).toBe(1)
 })
 
-it("after deleting length shouldn`t be decrement if id is incorrect",()=>{
+it('after deleting length shouldn`t be decrement if id is incorrect', () => {
 
     //2 actions
-    const newState=profileReducer(state,deletePostAC(1000))
+    const newState = profileReducer(state, deletePostAC(1000))
 
     //3. expectation
     expect(newState.posts.length).toBe(2) // сколько было, столько и осталось
