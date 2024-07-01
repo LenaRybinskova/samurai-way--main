@@ -25,6 +25,7 @@ class App extends React.Component<CommonType> {
     componentDidMount() {
         this.props.initializedAppTC()}
 
+
     render() {
         {if (!this.props.initialized) {
                 return <Preloader/>}

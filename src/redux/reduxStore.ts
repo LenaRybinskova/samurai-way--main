@@ -8,6 +8,7 @@ import thunk, {ThunkAction} from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form'
 import {AllActionTypes} from '../redux/store';
 import appReducer from '../redux/app-reducer';
+import subscribersReducer from '../redux/subscribers-reducer';
 
 // наши все редьюсеры нужно склеить в кучу(в объект). Этот объект надо вопринимать как наш Стейт, архитект похожа на наш старый store._state
 // сейчас все стейты расписахы по иниц стейтам в редьюсорах
@@ -19,6 +20,7 @@ export const rootReducer = combineReducers(
         usersPage: usersReducer,
         auth: authReducer,
         app: appReducer,
+        subscribers: subscribersReducer,
         form: formReducer
     }
 )

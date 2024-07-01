@@ -35,7 +35,6 @@ let state: ProfilePageType = {
             large: '11'
         }
     } as ResponseAPIProfileType,
-    friends: []
 }
 
 it('new post should be added', () => {

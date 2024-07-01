@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import s from './Dialogs.module.css'
 import {Message} from './Message/Message';
 import {DialogItem} from './DialogItem/DialogsItem';
@@ -8,6 +8,7 @@ import AddMessageForm from '../../../src/components/Dialogs/AddMessageForm/AddMe
 
 /*const Dialogs: React.FC<DialogsType> = (props) => {*/
 export const Dialogs = (props: DialogsContainerType) => {
+
 
         let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}
                                                                              avatar={d.avatar}/>)

@@ -4,14 +4,13 @@ import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
 import {AppRootSTateType, AppThunk} from '../redux/reduxStore';
 import {ThunkDispatch} from 'redux-thunk';
 import {stopSubmit} from 'redux-form';
-import {UserType} from '../redux/usersReducer';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST'
 const DELETE_POST = 'samurai-network/profile/DELETE-POST'
 const SET_USER_PROFILE = 'samurai-network/profile/SET_USER_PROFILE'
 const SET_PROFILE_STATUS = 'samurai-network/profile/SET_PROFILE_STATUS'
 const SET_PHOTO_SUCCESS = 'samurai-network/profile/SET_PHOTO_SUCCESS'
-const SET_FRIENDS = 'samurai-network/profile/SET_FRIENDS'
+
 
 /*{ profile: { photos: { small: string; large: string } }; profileStatus: string; newPostText: string; posts: PostType[] }*/
 export const profileReducer = (state: initialStateType = initialState, action: ProfileReducerAcTypes): initialStateType => {
@@ -31,9 +30,7 @@ export const profileReducer = (state: initialStateType = initialState, action: P
                 return {...state, profile: {...state.profile, photos: action.photo}}
             }
             return state
-        case SET_FRIENDS: {
-            return {...state, friends: action.friends}
-        }
+
         default:
             return state
     }
@@ -68,7 +65,6 @@ let initialState: ProfilePageType = {
             large: '11'
         }
     } as ResponseAPIProfileType,
-    friends: []
 }
 
 // Types
@@ -95,7 +91,6 @@ export type ProfilePageType = {
     newPostText: string
     profile: ResponseAPIProfileType | null,
     profileStatus: string
-    friends: [] | UserType[]
 }
 export type ContactsType = {
     github: string
@@ -114,13 +109,13 @@ export type ProfileReducerAcTypes =
     | SetProfileStatusType
     | deletePostActionType
     | SetPhotoSuccessType
-    | SetFriendsType
+
 export type AddPostActionType = ReturnType<typeof addPostAC>
 export type deletePostActionType = ReturnType<typeof deletePostAC>
 export type SetUserProfileType = ReturnType<typeof setUserProfile>
 export type SetProfileStatusType = ReturnType<typeof setProfileStatus>
 export type SetPhotoSuccessType = ReturnType<typeof savePhotoSuccess>
-export type SetFriendsType = ReturnType<typeof setFriends>
+
 
 // AC
 export const addPostAC = (newPostText: string) => {
@@ -197,12 +192,5 @@ export const saveProfile = (profile: ObtainedFormType): AppThunk =>
         }
     };
 
-export const setFriends = (friends: UserType[]) => {
-    return {type: SET_FRIENDS, friends} as const
-}
 
-export const getSubscribersTC = (currentPage: number, pageSize: number, friend: boolean) => async (dispatch: Dispatch) => {
-    const res = await userAPI.getUsers(currentPage, pageSize, friend)
-    dispatch(setFriends(res.items))
-}
 export default profileReducer;
