@@ -38,7 +38,7 @@ class App extends React.Component<CommonType> {
                 <div className="appWrapperContent">
                     <Switch>
                         <Route exact path={'/'} render={() => <Redirect to={'profile'}/>}/> {/*со старта дб Профайл*/}
-                        <Route path={'/dialogs'} render={WithSuspense(DialogsContainer)}/>
+                        <Route path={'/dialogs/:userId?'} render={WithSuspense(DialogsContainer)}/>
                         <Route path={'/users'} render={() => <UsersContainer/>}/>
                         {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
                         {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}

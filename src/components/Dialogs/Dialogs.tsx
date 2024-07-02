@@ -1,32 +1,31 @@
-import React, {useEffect} from 'react';
-import s from './Dialogs.module.css'
-import {Message} from './Message/Message';
+import React from 'react';
+import s from "./Dialogs.module.css"
 import {DialogItem} from './DialogItem/DialogsItem';
 import {DialogsContainerType} from './DialogsContainer';
-import AddMessageForm from '../../../src/components/Dialogs/AddMessageForm/AddMessageForm';
+import {useSelector} from 'react-redux';
+import {AppRootSTateType} from '../../redux/reduxStore';
+import {UserType} from '../../redux/usersReducer';
+import usersNull from '../../assets/images/usersNull.png'
+import Chat from './Chat';
 
 
 /*const Dialogs: React.FC<DialogsType> = (props) => {*/
 export const Dialogs = (props: DialogsContainerType) => {
 
+        const friends = useSelector<AppRootSTateType, UserType[]>(state => state.subscribers.friends)
 
-        let dialogsElements = props.dialogsPage.dialogs.map(d => <DialogItem key={d.id} name={d.name} id={d.id}
-                                                                             avatar={d.avatar}/>)
-        let messagesElements = props.dialogsPage.messages.map(m => <Message key={m.id} message={m.message}/>)
+        const dialogsElements = friends.map(d => <DialogItem key={d.id}
+                                                             name={d.name}
+                                                             id={d.id}
+                                                             avatar={d.photos.small ? d.photos.small : usersNull}/>)
 
-        const addNewMessage = (data: any) => {
-            props.sendMessage(data.newMessageBody)
-        }
 
         return (
             <div className={s.dialogs}>
-                <div className={s.dialogsItems}>
+                <div>
                     {dialogsElements}
                 </div>
-                <div className={s.messages}>
-                    <div>{messagesElements}</div>
-                </div>
-                <AddMessageForm onSubmit={addNewMessage}/>
+                <Chat sendMessage={props.sendMessage}/>
             </div>
         );
     }

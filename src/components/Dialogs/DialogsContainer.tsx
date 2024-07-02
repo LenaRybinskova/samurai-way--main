@@ -12,7 +12,7 @@ type MapStateToPropsType = {
 }
 type MapDispatchToPropsType = {
 
-    sendMessage: (newMessageBody: string) => void
+    sendMessage: (userId:string,newMessageBody: string) => void
 }
 export type DialogsContainerType = MapStateToPropsType & MapDispatchToPropsType
 // СВОЙСТВА
@@ -24,8 +24,8 @@ let mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
 // КОЛЛЛБЕКИ
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        sendMessage: (newMessageBody: string) => {
-            dispatch(sendMessageAC(newMessageBody))
+        sendMessage: (userId:string, newMessageBody: string) => {
+            dispatch(sendMessageAC(userId,newMessageBody))
         }
     }
 }

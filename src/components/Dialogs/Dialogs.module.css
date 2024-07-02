@@ -5,8 +5,9 @@
 }*/
 
 .dialogs {
-    display: grid;
-    grid-template-columns: 2fr 10fr;
+/*    display: grid;
+    grid-template-columns: 2fr 10fr;*/
+    display: flex;
 }
 
 .dialogsItems {
@@ -18,8 +19,8 @@
 }
 
 .dialog img {
-    width: 20px;
-    height: 20px;
+    width: 50px;
+    height: 50px;
     padding-right: 10px;
 }
 
@@ -29,5 +30,6 @@
 }
 
 .message {
-
+    width: 500px;
+    background-color: lightgray;
 }

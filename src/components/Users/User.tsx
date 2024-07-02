@@ -3,6 +3,7 @@ import styles from './users.module.css'
 import UserPhotoNull from '../../assets/images/usersNull.png'
 import {UserType} from '../../redux/usersReducer';
 import {NavLink} from 'react-router-dom';
+import s from "./users.module.css"
 
 
 type UserPropsType = {
@@ -26,11 +27,11 @@ const User: FC<UserPropsType> = ({user, ...props}) => {
                            </div>
                            {u.followed
 
-                               ? <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
+                               ? <button className={s.red} disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
                                    props.unfollowTC(u.id)
                                }
                                }>unfollow</button>
-                               : <button disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
+                               : <button  disabled={props.followingProgress.some(id => id === u.id)} onClick={() => {
                                    props.followTC(u.id)
                                }}>follow</button>}
                        </span>
