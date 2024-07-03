@@ -63,9 +63,8 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
             <div className={s.descriptionBlock}>
                 <img src={profile?.photos.large || UserPhotoNull} className={s.mainPhoto}/>
 
-                {userId === ownUserId && (
-                    <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>)}
-                {/*                {isOwner && <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>}*/}
+{/*                {userId === ownUserId && <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>}*/}
+                                {isOwner && <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>}
                 {editMode
                     ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner}
                                             onSubmit={onSubmit}/>
@@ -84,8 +83,10 @@ export type ProfileDataType = {
 
 
 export const ProfileData: FC<ProfileDataType> = ({profile, isOwner, toEditMode}) => {
+
     return (
         <div>
+
             <div>{isOwner && <button onClick={() => {
                 toEditMode()
             }}>редактировать</button>}</div>

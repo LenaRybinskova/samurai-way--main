@@ -12,13 +12,12 @@ type HeaderType = {
 }
 
 export const Header = (props: HeaderType) => {
-    const ownId = useSelector<AppRootSTateType, string | null>(state => state.auth.userId)
     const ownPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
 
 
     return (
         <header className={s.header}>
-            <NavLink className={s.topHomeLink} to={`/profile/${ownId}`}><img
+            <NavLink className={s.topHomeLink} to={`/profile`}><img
                 src={ownPhoto ? ownPhoto : usersNull}
                 alt="logo"/></NavLink>
             <div className={s.loginBlock}>
