@@ -5,8 +5,8 @@
 }*/
 
 .dialogs {
-/*    display: grid;
-    grid-template-columns: 2fr 10fr;*/
+    /*    display: grid;
+        grid-template-columns: 2fr 10fr;*/
     display: flex;
 }
 
@@ -30,6 +30,20 @@
 }
 
 .message {
+    display: flex;
+    flex-direction: column;
     width: 500px;
     background-color: lightgray;
+}
+
+.me {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.friend {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }

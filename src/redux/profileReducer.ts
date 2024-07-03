@@ -4,6 +4,7 @@ import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
 import {AppRootSTateType, AppThunk} from '../redux/reduxStore';
 import {ThunkDispatch} from 'redux-thunk';
 import {stopSubmit} from 'redux-form';
+import {setUserAvatar} from '../redux/auth-reducer';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST'
 const DELETE_POST = 'samurai-network/profile/DELETE-POST'
@@ -144,9 +145,17 @@ export const savePhotoSuccess = (photo: { small: string, large: string }) => {
 }
 
 // TC
-export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch) => {
+export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch, getState: () => AppRootSTateType) => {
     const response = await userAPI.getProfile(userId)
     dispatch(setUserProfile(response.data))
+
+    const hasSmallPhoto = getState().auth.smallPhoto
+    const isAuth = getState().auth.isAuth
+
+    if (!hasSmallPhoto && isAuth) {
+        dispatch(setUserAvatar(response.data.photos.small))
+    }
+
     /*    userAPI.getProfile(userId).then(response => {
             dispatch(setUserProfile(response.data))
         })*/

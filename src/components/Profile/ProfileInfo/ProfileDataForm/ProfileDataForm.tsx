@@ -24,7 +24,7 @@ export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, Profi
     return (
         <form onSubmit={handleSubmit}>
 
-            <div>{<button type={'submit'}>save</button>}</div>
+            <div>{<button type={'submit'} >save</button>}</div>
             {error && <div>{error}</div>}
 
             <div>Full name:{createField('Full name', 'fullName', [required], Input)}</div>

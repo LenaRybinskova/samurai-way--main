@@ -5,13 +5,16 @@ import {stopSubmit} from 'redux-form';
 
 const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL'
+const SET_SMALL_PHOTO = 'samurai-network/auth/SET_SMALL_PHOTO'
+
 // со старта вся инфа по юзеру null - тк не залогинен
 const initialState = {
     userId: null,
     email: null,
     login: null,
     isAuth: false,
-    captchaUrl: null
+    captchaUrl: null,
+    smallPhoto: null
 }
 
 export type AuthStateType = {
@@ -20,6 +23,7 @@ export type AuthStateType = {
     login: string | null
     isAuth: boolean
     captchaUrl: string | null
+    smallPhoto: string | null
 }
 
 export const authReducer = (state: AuthStateType = initialState, action: AuthReducerAcTypes): AuthStateType => {
@@ -28,13 +32,16 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthRed
             return {...state, ...action.payload}
         case GET_CAPTCHA_URL_SUCCESS:
             return {...state, captchaUrl: action.captchaUrl}
+        case SET_SMALL_PHOTO:
+            return {...state,smallPhoto:action.smallPhoto }
         default:
             return state
     }
 }
 export type SetAuthUserDataACType = ReturnType<typeof setAuthUserData>
 export type GetCaptchaUrlACType = ReturnType<typeof getCaptchaUrl>
-export type  AuthReducerAcTypes = SetAuthUserDataACType | GetCaptchaUrlACType
+export type SetUserAvatarType = ReturnType<typeof setUserAvatar>
+export type AuthReducerAcTypes = SetAuthUserDataACType | GetCaptchaUrlACType | SetUserAvatarType
 // AC
 export const setAuthUserData = (userId: string | null, email: string | null, login: string | null, isAuth: boolean) => {
     return {
@@ -47,6 +54,9 @@ export const getCaptchaUrl = (captchaUrl: string) => {
         type: GET_CAPTCHA_URL_SUCCESS,
         captchaUrl
     } as const
+}
+export const setUserAvatar = (smallPhoto: string) => {
+    return {type: SET_SMALL_PHOTO, smallPhoto} as const
 }
 
 // TC
@@ -71,7 +81,7 @@ export const loginTC = (value: LoginType): AppThunk => async (dispatch) => {
     if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
         dispatch(getAuthUserDataTC())
     } else {
-        if(res.data.resultCode ===10){
+        if (res.data.resultCode === 10) {
             dispatch(getCaptchaURL())
         }
         const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'

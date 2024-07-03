@@ -8,6 +8,8 @@ const instance = axios.create({
     },
 });
 
+//dialogs/{userId}/messages
+
 export const authAPI = {
     authMe() {
         return instance.get(`auth/me`) // возвр Id, email, loggin если кука есть

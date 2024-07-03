@@ -23,17 +23,20 @@ const ProfileContainer = lazy(() => import('./components/Profile/ProfileContaine
 
 class App extends React.Component<CommonType> {
     componentDidMount() {
-        this.props.initializedAppTC()}
+        this.props.initializedAppTC()
+    }
 
 
     render() {
-        {if (!this.props.initialized) {
-                return <Preloader/>}
+        {
+            if (!this.props.initialized) {
+                return <Preloader/>
+            }
         }
         return (
             <div className="app-wrapper">
-                <Subscribers/>
                 <HeaderContainer/>
+                <Subscribers/>
                 <Navbar/>
                 <div className="appWrapperContent">
                     <Switch>

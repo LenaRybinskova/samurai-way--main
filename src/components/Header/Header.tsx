@@ -1,6 +1,9 @@
 import React from 'react';
 import s from './Header.module.css'
 import {NavLink} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {AppRootSTateType} from '../../redux/reduxStore';
+import usersNull from '../../assets/images/usersNull.png'
 
 type HeaderType = {
     isAuth: boolean
@@ -9,11 +12,15 @@ type HeaderType = {
 }
 
 export const Header = (props: HeaderType) => {
+    const ownId = useSelector<AppRootSTateType, string | null>(state => state.auth.userId)
+    const ownPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
+
+
     return (
         <header className={s.header}>
-            <img
-                src="https://catherineasquithgallery.com/uploads/posts/2021-02/1612893370_194-p-krasnii-prozrachnii-fon-222.png"
-                alt="logo"/>
+            <NavLink className={s.topHomeLink} to={`/profile/${ownId}`}><img
+                src={ownPhoto ? ownPhoto : usersNull}
+                alt="logo"/></NavLink>
             <div className={s.loginBlock}>
                 {/*                если залогинен, показать логин пользователя, если нет то ссылку на страницу ЛОГИН*/}
                 {props.isAuth ? <div>{props.login} - <button onClick={props.logoutTC}>Log out</button></div> :

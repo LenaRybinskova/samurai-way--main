@@ -1,7 +1,7 @@
 .header {
     /*дали псевдонимы */
     grid-area: h;
-    background-color: #557d08
+    background-color: #88ad77;
 }
 
 .header img {
@@ -14,4 +14,7 @@
 
 .loginBlock a{
     color: lightgray;
+}
+.topHomeLink{
+
 }
