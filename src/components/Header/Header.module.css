@@ -1,7 +1,7 @@
 .header {
     /*дали псевдонимы */
     grid-area: h;
-    background-color: #88ad77;
+    background: var(--theme-default-background-color-header);
 }
 
 .header img {

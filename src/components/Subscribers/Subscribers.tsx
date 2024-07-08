@@ -19,9 +19,10 @@ const Subscribers = () => {
     return (
         <div>{isAuth &&
             <div>Friends:
-                <div className={s.friendsWrapper}>{friends.map(f => <Subscriber key={f.id} {...f}/>)}</div></div>}
+                <div className={s.friendsWrapper}>{friends.map(f => <div className={s.fiendItem}><Subscriber key={f.id} {...f}/></div>)}</div></div>}
         </div>
     );
 };
+
 
 export default Subscribers;

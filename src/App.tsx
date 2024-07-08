@@ -14,6 +14,8 @@ import Preloader from '../src/components/common/preloader/Preloader';
 import store from './redux/reduxStore';
 import {WithSuspense} from './hoc/WithSuspense';
 import Subscribers from '../src/components/Subscribers/Subscribers';
+import ThemeProvider from '../src/context/ThemeProvider';
+import Settings from '../src/components/Settings/Settings';
 /*import DialogsContainer from './components/Dialogs/DialogsContainer';*/
 /*import ProfileContainer from './components/Profile/ProfileContainer';*/
 
@@ -46,6 +48,7 @@ class App extends React.Component<CommonType> {
                         {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
                         {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
                         <Route path={'/login'} render={() => <Login/>}/>
+                        <Route path={'/settings'} render={() => <Settings/>}/>
                         <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
                     </Switch>
                 </div>
@@ -80,7 +83,9 @@ const SamuraiJSApp = (props: any) => {
     return (
         <HashRouter basename={process.env.PUBLIC_URL}>
             <Provider store={store}>
-                <AppContainer/>
+                <ThemeProvider>
+                    <AppContainer/>
+                </ThemeProvider>
             </Provider>
         </HashRouter>
     )

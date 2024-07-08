@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import s from './Header.module.css'
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
 import usersNull from '../../assets/images/usersNull.png'
+import {ThemeContext} from '../../context/ThemeProvider';
 
 type HeaderType = {
     isAuth: boolean
@@ -12,6 +13,7 @@ type HeaderType = {
 }
 
 export const Header = (props: HeaderType) => {
+
     const ownPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
 
 

@@ -1,12 +1,199 @@
+/**
+  Нормализация блочной модели
+ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/**
+  Убираем внутренние отступы слева тегам списков,
+  у которых есть атрибут class
+ */
+:where(ul, ol):where([class]) {
+    padding-left: 0;
+}
+
+/**
+  Убираем внешние отступы body и двум другим тегам,
+  у которых есть атрибут class
+ */
+body,
+:where(blockquote, figure):where([class]) {
+    margin: 0;
+}
+
+/**
+  Убираем внешние отступы вертикали нужным тегам,
+  у которых есть атрибут class
+ */
+:where(
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  dl
+):where([class]) {
+    margin-block: 0;
+}
+
+:where(dd[class]) {
+    margin-left: 0;
+}
+
+:where(fieldset[class]) {
+    margin-left: 0;
+    padding: 0;
+    border: none;
+}
+
+/**
+  Убираем стандартный маркер маркированному списку,
+  у которого есть атрибут class
+ */
+:where(ul[class]) {
+    list-style: none;
+}
+
+/**
+  Обнуляем вертикальные внешние отступы параграфа,
+  объявляем локальную переменную для внешнего отступа вниз,
+  чтобы избежать взаимодействие с более сложным селектором
+ */
+p {
+    --paragraphMarginBottom: 24px;
+
+    margin-block: 0;
+}
+
+/**
+  Внешний отступ вниз для параграфа без атрибута class,
+  который расположен не последним среди своих соседних элементов
+ */
+p:where(:not([class]):not(:last-child)) {
+    margin-bottom: var(--paragraphMarginBottom);
+}
+
+
+/**
+  Упрощаем работу с изображениями
+ */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/**
+  Наследуем свойства шрифт для полей ввода
+ */
+input,
+textarea,
+select,
+button {
+    font: inherit;
+}
+
+html {
+    /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+    height: 100%;
+    /**
+      Плавный скролл
+     */
+    scroll-behavior: smooth;
+}
+
+body {
+    /**
+      Пригодится в большинстве ситуаций
+      (когда, например, нужно будет "прижать" футер к низу сайта)
+     */
+    min-height: 100%;
+    /**
+      Унифицированный интерлиньяж
+     */
+    line-height: 1.5;
+}
+
+/**
+  Приводим к единому цвету svg-элементы
+ */
+svg *[fill] {
+    fill: currentColor
+}
+
+svg *[stroke] {
+    stroke: currentColor
+}
+
+/**
+  Чиним баг задержки смены цвета при взаимодействии с svg-элементами
+ */
+svg * {
+    transition-property: fill, stroke;
+}
+
+/**
+  Удаляем все анимации и переходы для людей,
+  которые предпочитают их не использовать
+ */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+:root {
+
+    /*    цвет текста header*/
+    --theme-dark-text-color-header: #3c3f41;
+    --theme-light-text-color-header: #25292d;
+    --theme-default-text-color-header: #25292d;
+
+    /*    фон header*/
+    --theme-light-background-color-header: #c0c1ba;
+    --theme-dark-background-color-header: #1b1b1b;
+    --theme-default-background-color-header: #c0c1ba;
+
+    /*    фон navbar*/
+    --theme-light-background-color-navbar: #ffe2d3;
+    --theme-dark-background-color-navbar: #45494a;
+    --theme-default-background-color-navbar: #ffe2d3;
+
+    /*    фон main*/
+    --theme-light-background-color-main: #fffcf9;
+    --theme-dark-background-color-main: #2b2b2b;
+    --theme-default-background-color-main: #fffcf9;
+
+}
+/*цвет текста*/
+body {
+    color: var(--theme-default-text-color-header);
+}
+
+
 .app-wrapper {
+
     max-width: 1200px;
     margin: 0 auto;
-    /*обозн что это будут гриды   */
     display: grid;
 
     grid-template-areas:
             "h h"
-            "n c";
+            "n c"
+            "s c";
 
     /*высота первой строки 60 пикс, вторая строка 1 фракция  */
     grid-template-rows: 60px 1fr;
@@ -21,9 +208,16 @@
 .appWrapperContent {
     /*дали псевдонимы */
     grid-area: c;
-    background-color: #a6579a;
-
+    background-color: var(--theme-default-background-color-main);
 }
+
+/*
+.appWrapperSubscribers {
+    !*дали псевдонимы *!
+    grid-area: s;
+    background-color: #7989e7;
+}*/
+
 
 /*
 

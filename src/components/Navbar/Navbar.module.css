@@ -1,16 +1,18 @@
 .nav {
+/*    color: #110f0f;*/
     /*дали псевдонимы */
     grid-area: n;
-    background-color: cornflowerblue;
+    background-color: var(--theme-default-background-color-navbar);
     padding: 20px;
 }
 .item a{
-    color: white;
     text-decoration: none;
+    color:var(--theme-default-text-color-header);
 }
 
 .item a.activeLink{
-    color: blueviolet;
+
+    font-weight: bold;
 }
 
 

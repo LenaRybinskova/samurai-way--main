@@ -1,6 +1,13 @@
 .friendsWrapper {
+    text-decoration: none;
     display: flex;
     flex-direction: row;
+
+}
+
+.fiendItem a{
+    text-decoration: none;
+    color:var(--theme-default-text-color-header);
 }
 
 .friendAvatar {
