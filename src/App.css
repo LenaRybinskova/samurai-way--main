@@ -1,3 +1,19 @@
+@font-face {
+    font-family: "Raleway";
+    src: url("./css/fonts/Raleway-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url("./css/fonts/Raleway-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 /**
   Нормализация блочной модели
  */
@@ -156,9 +172,10 @@ svg * {
 
 
 :root {
+    --font-family-base: "Raleway", sans-serif;
 
     /*    цвет текста header*/
-    --theme-dark-text-color-header: #3c3f41;
+    --theme-dark-text-color-header: #bbbbbb;
     --theme-light-text-color-header: #25292d;
     --theme-default-text-color-header: #25292d;
 
@@ -177,37 +194,64 @@ svg * {
     --theme-dark-background-color-main: #2b2b2b;
     --theme-default-background-color-main: #fffcf9;
 
+    /* цвета кнопок */
+    --theme-light-background-color-button: #02391d;
+    --theme-dark-background-color-button: #afb1b3;
+    --theme-default-background-color-button: #02391d;
+
+    --border-radius: 5px;
+
 }
-/*цвет текста*/
+
 body {
+    font-family: var(--font-family-base);
+    font-size: 17px;
     color: var(--theme-default-text-color-header);
 }
 
 
-.app-wrapper {
-
+.appWrapper {
+    display: flex;
+    flex-direction: column;
     max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
 
-    grid-template-areas:
-            "h h"
-            "n c"
-            "s c";
+    /*
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
 
-    /*высота первой строки 60 пикс, вторая строка 1 фракция  */
-    grid-template-rows: 60px 1fr;
+        grid-template-areas:
+                "h h"
+                "n c"
+                "s c";
 
-    /*ширина первой колонки 2 фр, вторая колонка 10 фр */
-    grid-template-columns: 2fr 10fr;
+        !*высота первой строки 60 пикс, вторая строка 1 фракция  *!
+        grid-template-rows: 60px 1fr;
 
-    /*расст между элеме*/
-    /*    grid-gap: 10px;*/
+        !*ширина первой колонки 2 фр, вторая колонка 10 фр *!
+        grid-template-columns: 2fr 10fr;
+
+        !*расст между элеме*!
+        !*    grid-gap: 10px;*!*/
 }
 
+.appMainWrapper{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.appWrapperLeftSide{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
 .appWrapperContent {
-    /*дали псевдонимы */
-    grid-area: c;
+    flex-grow: 1;
+/*    !*дали псевдонимы *!
+    grid-area: c;*/
     background-color: var(--theme-default-background-color-main);
 }
 

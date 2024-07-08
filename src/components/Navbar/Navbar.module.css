@@ -10,6 +10,10 @@
     color:var(--theme-default-text-color-header);
 }
 
+.item a:hover{
+    color: #e8bf6a;
+}
+
 .item a.activeLink{
 
     font-weight: bold;

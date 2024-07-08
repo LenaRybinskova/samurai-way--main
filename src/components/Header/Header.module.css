@@ -1,20 +1,38 @@
 .header {
-    /*дали псевдонимы */
-    grid-area: h;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 15px;
     background: var(--theme-default-background-color-header);
+
+    /*    !*дали псевдонимы *!
+    grid-area: h;*/
 }
 
 .header img {
     width: 50px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
 }
 
-.loginBlock{
-    float: right;
+.loginBlock {
+    display: flex;
 }
 
-.loginBlock a{
+.loginBlock a {
     color: lightgray;
 }
-.topHomeLink{
 
+.loginName{
+    margin-right: 15px;
+}
+
+.loginButton{
+    background-color: var(--theme-default-background-color-button);
+    padding-inline:15px;
+    padding-block: 0;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
 }

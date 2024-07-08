@@ -17,7 +17,8 @@ const Subscribers = () => {
     }, [dispatch])
 
     return (
-        <div>{isAuth &&
+        <div >
+            {isAuth &&
             <div>Friends:
                 <div className={s.friendsWrapper}>{friends.map(f => <div className={s.fiendItem}><Subscriber key={f.id} {...f}/></div>)}</div></div>}
         </div>

@@ -36,23 +36,27 @@ class App extends React.Component<CommonType> {
             }
         }
         return (
-            <div className="app-wrapper">
+            <div className="appWrapper">
                 <HeaderContainer/>
-                <Subscribers/>
-                <Navbar/>
-                <div className="appWrapperContent">
-                    <Switch>
-                        <Route exact path={'/'} render={() => <Redirect to={'profile'}/>}/> {/*со старта дб Профайл*/}
-                        <Route path={'/dialogs/:userId?'} render={WithSuspense(DialogsContainer)}/>
-                        <Route path={'/users'} render={() => <UsersContainer/>}/>
-                        {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
-                        {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
-                        <Route path={'/login'} render={() => <Login/>}/>
-                        <Route path={'/settings'} render={() => <Settings/>}/>
-                        <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
-                    </Switch>
+                <div className={"appMainWrapper"}>
+                    <div className={"appWrapperLeftSide"}>
+                        <nav><Navbar/></nav>
+                        <Subscribers/>
+                    </div>
+                    <div className="appWrapperContent">
+                        <Switch>
+                            <Route exact path={'/'}
+                                   render={() => <Redirect to={'profile'}/>}/> {/*со старта дб Профайл*/}
+                            <Route path={'/dialogs/:userId?'} render={WithSuspense(DialogsContainer)}/>
+                            <Route path={'/users'} render={() => <UsersContainer/>}/>
+                            {<Route path={'/profile/:userId?'} render={WithSuspense(ProfileContainer)}/>}
+                            {/*   <Route exact path={'/profile/:userId?'} render={() => {return <React.Suspense fallback={<div>Loading ...</div>}><ProfileContainer/></React.Suspense>}}/>*/}
+                            <Route path={'/login'} render={() => <Login/>}/>
+                            <Route path={'/settings'} render={() => <Settings/>}/>
+                            <Route path={'*'} render={() => <div>404 NOT FOUND</div>}/>
+                        </Switch>
+                    </div>
                 </div>
-
             </div>
         )
     }

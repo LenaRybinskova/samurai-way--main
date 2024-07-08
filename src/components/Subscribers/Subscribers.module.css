@@ -1,9 +1,13 @@
 .friendsWrapper {
-    text-decoration: none;
+
     display: flex;
     flex-direction: row;
 
 }
+.fiendItem{
+
+}
+
 
 .fiendItem a{
     text-decoration: none;
@@ -13,8 +17,10 @@
 .friendAvatar {
     width: 50px;
     height: 50px;
+    border-radius:var(--border-radius)
 }
 
 .friendName{
     font-size: 10px;
 }
+

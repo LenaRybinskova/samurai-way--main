@@ -10,8 +10,9 @@ const Subscriber = (props: UserType) => {
 
     return (
         <NavLink to={'/profile/' + props.id}>
-                <img src={props.photos.small ? props.photos.small : usersNull} className={s.friendAvatar}/>
-                <div className={s.friendName}>{props.name}</div>
+            <img src={props.photos.small ? props.photos.small : usersNull} className={s.friendAvatar}/>
+            <div className={s.friendName}>{props.name}</div>
+            <div className={s.friendName}>{props.location}</div>
         </NavLink>
     );
 };

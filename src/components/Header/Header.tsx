@@ -19,13 +19,16 @@ export const Header = (props: HeaderType) => {
 
     return (
         <header className={s.header}>
-            <NavLink className={s.topHomeLink} to={`/profile`}><img
-                src={ownPhoto ? ownPhoto : usersNull}
-                alt="logo"/></NavLink>
+            <NavLink className={s.topHomeLink} to={`/profile`}>
+                <img src={ownPhoto ? ownPhoto : usersNull} alt="logo"/></NavLink>
             <div className={s.loginBlock}>
                 {/*                если залогинен, показать логин пользователя, если нет то ссылку на страницу ЛОГИН*/}
-                {props.isAuth ? <div>{props.login} - <button onClick={props.logoutTC}>Log out</button></div> :
-                    <NavLink to={'/login'}>Login</NavLink>}
+                {props.isAuth
+                    ? <div >
+                        <span className={s.loginName}>{props.login}</span>
+                        <button className={s.loginButton} onClick={props.logoutTC}>Log out</button>
+                    </div>
+                    : <div><NavLink to={'/login'}>Login</NavLink></div>}
             </div>
         </header>
     )
