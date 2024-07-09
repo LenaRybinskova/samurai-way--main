@@ -6,14 +6,17 @@ import {NavLink} from 'react-router-dom';
 
 
 const Subscriber = (props: UserType) => {
-
-
+console.log("Subscriber", props)
     return (
-        <NavLink to={'/profile/' + props.id}>
-            <img src={props.photos.small ? props.photos.small : usersNull} className={s.friendAvatar}/>
-            <div className={s.friendName}>{props.name}</div>
-            <div className={s.friendName}>{props.location}</div>
-        </NavLink>
+        <>
+            <NavLink to={'/profile/' + props.id} >
+                <img src={props.photos.small ? props.photos.small : usersNull} className={s.friendAvatar}/>
+            </NavLink>
+            <div className={s.friendInfo}>
+                <div className={s.friendName}><b>{props.name}</b></div>
+                <div className={s.friendStatus}><b>Статус:</b> {props.status}</div>
+            </div>
+        </>
     );
 };
 

@@ -21,6 +21,8 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    margin:0;
+    padding: 0;
 }
 
 /**
@@ -199,6 +201,12 @@ svg * {
     --theme-dark-background-color-button: #afb1b3;
     --theme-default-background-color-button: #02391d;
 
+    /* цвет текста кнопок */
+    --theme-dark-text-color-button: #25292d;
+    --theme-light-text-color-button: #bbbbbb;
+    --theme-default-text-color-button: #bbbbbb;
+
+
     --border-radius: 5px;
 
 }
@@ -244,6 +252,7 @@ body {
 .appWrapperLeftSide{
     display: flex;
     flex-direction: column;
+max-width: 265px;
 }
 
 

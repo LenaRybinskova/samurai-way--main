@@ -17,10 +17,15 @@ const Subscribers = () => {
     }, [dispatch])
 
     return (
-        <div >
+        <div className={s.friendsWrapper}>
             {isAuth &&
-            <div>Friends:
-                <div className={s.friendsWrapper}>{friends.map(f => <div className={s.fiendItem}><Subscriber key={f.id} {...f}/></div>)}</div></div>}
+                (<>
+                    <h3 className={s.friendTitle}>Friends:</h3>
+                    <div className={s.friendsList}>{friends.map(f =>
+                        <div className={s.fiendItem}><Subscriber key={f.id} {...f}/></div>)}
+                    </div>
+                </>)
+            }
         </div>
     );
 };

@@ -1,26 +1,52 @@
 .friendsWrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 00px 20px 20px;
+    background-color: var(--theme-default-background-color-navbar);
+}
 
+.friendTitle {
+
+}
+
+.friendsList {
+    display: flex;
+    flex-direction: column;
+    padding-inline: 7px;
+    row-gap: 5px;
+
+}
+
+.fiendItem {
     display: flex;
     flex-direction: row;
-
+    column-gap: 5px;
+    align-items: flex-start;
+    border: 1px solid var(--theme-default-text-color-header);
+    border-radius: var(--border-radius);
 }
-.fiendItem{
-
-}
 
 
-.fiendItem a{
+.fiendItem a {
     text-decoration: none;
-    color:var(--theme-default-text-color-header);
+    color: var(--theme-default-text-color-header);
 }
 
 .friendAvatar {
-    width: 50px;
+    min-width: 50px;
     height: 50px;
-    border-radius:var(--border-radius)
+    border-radius: var(--border-radius)
 }
 
-.friendName{
+.friendInfo {
+
+}
+
+.friendName {
+    font-size: 10px;
+}
+
+.friendStatus {
     font-size: 10px;
 }
 

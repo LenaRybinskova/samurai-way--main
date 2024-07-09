@@ -1,9 +1,9 @@
 .nav {
 /*    color: #110f0f;*/
     /*дали псевдонимы */
-    grid-area: n;
+/*    grid-area: n;*/
     background-color: var(--theme-default-background-color-navbar);
-    padding: 20px;
+    padding: 20px 60px 20px 20px;
 }
 .item a{
     text-decoration: none;

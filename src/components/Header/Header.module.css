@@ -30,6 +30,7 @@
 
 .loginButton{
     background-color: var(--theme-default-background-color-button);
+    color: var(--theme-default-text-color-button);
     padding-inline:15px;
     padding-block: 0;
     border-radius: var(--border-radius);
