@@ -6,7 +6,7 @@ import {NavLink} from 'react-router-dom';
 
 
 const Subscriber = (props: UserType) => {
-console.log("Subscriber", props)
+
     return (
         <>
             <NavLink to={'/profile/' + props.id} >

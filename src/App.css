@@ -21,8 +21,6 @@
 *::before,
 *::after {
     box-sizing: border-box;
-    margin:0;
-    padding: 0;
 }
 
 /**
@@ -175,6 +173,8 @@ svg * {
 
 :root {
     --font-family-base: "Raleway", sans-serif;
+    --container-width:1200px;
+    --container-padding-x:15px;
 
     /*    цвет текста header*/
     --theme-dark-text-color-header: #bbbbbb;
@@ -221,7 +221,7 @@ body {
 .appWrapper {
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
+    max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
 
     /*
         max-width: 1200px;
@@ -243,25 +243,29 @@ body {
         !*    grid-gap: 10px;*!*/
 }
 
-.appMainWrapper{
+.appMainWrapper {
     display: flex;
     flex-direction: row;
 
 }
 
-.appWrapperLeftSide{
+.appWrapperLeftSide {
     display: flex;
     flex-direction: column;
-max-width: 265px;
+    max-width: 265px;
 }
 
 
-
 .appWrapperContent {
+    display: flex;
     flex-grow: 1;
-/*    !*дали псевдонимы *!
-    grid-area: c;*/
+    justify-content: flex-start;
+    padding-left: 4px;
     background-color: var(--theme-default-background-color-main);
+    /*    !*дали псевдонимы *!
+        grid-area: c;*/
+
+
 }
 
 /*

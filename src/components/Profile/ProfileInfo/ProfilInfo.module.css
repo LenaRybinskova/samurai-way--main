@@ -1,49 +1,80 @@
-/*.content img {*/
-/*    height: 500px;*/
-/*}*/
-
-/*.item {*/
-/*color: lightgreen;*/
-/*}*/
-/*.active {*/
-/*    font-style: italic;*/
-/*}*/
 
 .descriptionBlock {
     padding: 10px;
 }
 
 .mainPhoto {
+
+    border-radius: var(--border-radius);
     max-width: 200px;
-    aspect-ratio: 1;
+    max-height: 200px;
+
+}
+
+.mainPhotoBlock {
+    width: 276px;
+    height: 200px;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 20px;
 }
 
 .contacts {
     margin-left: 10px;
 }
 
+/*это дефолтный вариант инпута скрыли*/
+input[type=file] {
+    display: none;
+}
+
+.customLabelFileInput {
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-image: url("./editImg.png");
+    background-size: cover;
+    position: absolute;
+    right: 85px;
+    top: 3px;
+    z-index: 100;
+    cursor: pointer;
+}
+
+.customLabelFileInput:hover{
+    position: absolute;
+    right: 97px;
+    top: 17px;
+}
+/*
+!*чтобы скрыть надпись на инпуте*!
 .customFileInput {
     color: transparent;
 }
 
 .customFileInput::-webkit-file-upload-button {
-    visibility: hidden;
+    !*visibility: hidden;*!
 }
 
 .customFileInput::before {
-    content: 'Файл не выбран';
-    color: black;
-    display: inline-block;
-    background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-    border-radius: 3px;
-    padding: 5px 8px;
+    position: absolute;
+    content: '';
+    width: 35px;
+    height: 35px;
+    display: block;
+    background: url("editImg.png") center/contain no-repeat;
+    border: 1px solid red;
+    border-radius: 50%;
+    padding: 8px 8px;
     outline: none;
     white-space: nowrap;
-    -webkit-user-select: none;
+!*    -webkit-user-select: none;*!
     cursor: pointer;
     text-shadow: 1px 1px #fff;
     font-weight: 400;
     font-size: 10pt;
+    left:440px;
+    bottom: 645px;
 }
 
 .customFileInput:hover::before {
@@ -56,4 +87,5 @@
 
 .customFileInput:active::before {
     background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-}
+
+}*/

@@ -5,9 +5,6 @@ import Preloader from '../../common/preloader/Preloader';
 import UserPhotoNull from '../../../assets/images/usersNull.png'
 import ProfileStatusWithHooks from '../ProfileInfo/ProfileStatus/ProfileStatusWithHooks';
 import {ReduxProfileDataForm} from '../../Profile/ProfileInfo/ProfileDataForm/ProfileDataForm';
-import {useParams} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import {AppRootSTateType} from '../../../redux/reduxStore';
 
 
 export type ProfileInfoType = {
@@ -40,8 +37,6 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
                                                      saveProfile
                                                  }) => {
     const [editMode, setEditMode] = useState(false)
-    const {userId} = useParams<{ userId: string }>()
-    const ownUserId = useSelector<AppRootSTateType, string | null>(state => state.auth.userId)
 
     if (!profile) {
         return <Preloader/>
@@ -55,22 +50,21 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
         saveProfile(formData).then(() => setEditMode(false))
     }
 
-    console.log('userId', userId)
-    console.log('ownUserId', ownUserId)
-    console.log('userId ==ownUserId', userId == ownUserId)
+    console.log('isOwner', isOwner)
     return (
-        <div>
-            <div className={s.descriptionBlock}>
+        <div className={s.descriptionBlock}>
+            <div className={s.mainPhotoBlock}>
                 <img src={profile?.photos.large || UserPhotoNull} className={s.mainPhoto}/>
-
-{/*                {userId === ownUserId && <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>}*/}
-                                {isOwner && <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>}
-                {editMode
-                    ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner}
-                                            onSubmit={onSubmit}/>
-                    : <ProfileData profile={profile} isOwner={isOwner} toEditMode={() => setEditMode(true)}/>}
-                <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
+                {isOwner && (
+                    <label className={`${s.customLabelFileInput}`}>
+                        <input type={'file'} onChange={onMainPhotoSelected}/>
+                    </label>)
+                }
             </div>
+            {editMode
+                ? <ReduxProfileDataForm initialValues={profile} profile={profile} isOwner={isOwner} onSubmit={onSubmit}/>
+                : <ProfileData profile={profile} isOwner={isOwner} toEditMode={() => setEditMode(true)}/>}
+            <ProfileStatusWithHooks status={profileStatus} updateProfileStatusTC={updateProfileStatusTC}/>
         </div>
     )
 }
@@ -129,3 +123,15 @@ export const Contact: React.FC<ContactType> = ({contactTitle, contactValue}) => 
 
 {/* <img src={profile?.photos.large != null ? profile?.photos.large : UserPhotoNull}/>*/
 }
+
+{/*                {userId === ownUserId && <input type={'file'} className={s.customFileInput} onChange={onMainPhotoSelected}/>}*/
+}
+
+
+/*
+(<button className={""}>
+    <input type={'file'} id="inputFile" hidden
+           className={`${s.customFileInput}`}
+           onChange={onMainPhotoSelected}/>
+    <label htmlFor={'inputFile'} className={'customFileUpload'}>изменить фото</label>
+</button>*/

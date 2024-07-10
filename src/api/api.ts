@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
-    headers:{
-        "API-KEY":"7671d79b-77ef-4e89-9c24-3444848368f5"
+    headers: {
+        'API-KEY': '7671d79b-77ef-4e89-9c24-3444848368f5'
     },
 });
 
@@ -12,7 +13,7 @@ const instance = axios.create({
 
 export const authAPI = {
     authMe() {
-        return instance.get(`auth/me`) // возвр Id, email, loggin если кука есть
+        return instance.get<ResponseType>(`auth/me`) // возвр Id, email, loggin если кука есть
     },
     login(dataLogin: LoginType) {
         return instance.post(`/auth/login`, dataLogin)
@@ -23,8 +24,8 @@ export const authAPI = {
 }
 
 export const userAPI = {
-    getUsers(currentPage: number, pageSize: number, friend=false) {
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}&term=${" "}&friend=${friend}`).then(res => res.data)
+    getUsers(currentPage: number, pageSize: number, friend = false) {
+        return instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}&term=${' '}&friend=${friend}`).then(res => res.data)
     },
     unfollow(id: number) {
         return instance.delete(`/follow/${id}`)
@@ -48,25 +49,25 @@ export const profileAPI = {
         return instance.get(`/profile/status/${userId}`)
     },
     updateStatus(status: string) {
-        return instance.put('profile/status', {status:status})
+        return instance.put('profile/status', {status: status})
     },
-    savePhoto(file:string | Blob){
-        const formData=new FormData()
-        formData.append("image",file )
+    savePhoto(file: string | Blob) {
+        const formData = new FormData()
+        formData.append('image', file)
         return instance.put('/profile/photo', formData, {
             headers:
-                {"Content-Type":"multipart/form-data"}
+                {'Content-Type': 'multipart/form-data'}
         })
     },
-    saveProfile(profile: ObtainedFormType){
-      return  instance.put("/profile", profile)
+    saveProfile(profile: ObtainedFormType) {
+        return instance.put('/profile', profile)
     }
 
 }
 
-export const securityAPI={
-    getCaptcha(){
-        return instance.get("security/get-captcha-url")
+export const securityAPI = {
+    getCaptcha() {
+        return instance.get('security/get-captcha-url')
     }
 }
 
@@ -75,4 +76,15 @@ export type LoginType = {
     password: string,
     rememberMe?: boolean,
     captcha?: string | null
+}
+
+export type ResponseType = {
+
+    resultCode: number,
+    messages: [],
+    data: {
+        id: string | null
+        email: string
+        login: string
+    }
 }

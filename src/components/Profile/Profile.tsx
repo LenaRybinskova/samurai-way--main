@@ -2,6 +2,7 @@ import React from 'react'
 import {ObtainedFormType, ProfileInfo} from './ProfileInfo/ProfileInfo';
 import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {ResponseAPIProfileType} from '../../redux/profileReducer';
+import s from "../Profile/Profile.module.css"
 
 
 
@@ -18,7 +19,7 @@ export type ProfileType = {
 }
 export const Profile = (props: ProfileType) => {
     return (
-        <div>Main content
+        <div className={s.profileContainer}>
             <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} isOwner={props.isOwner} savePhoto={props.savePhoto} saveProfile={props.saveProfile}/>
             <MyPostsContainer/>
         </div>
