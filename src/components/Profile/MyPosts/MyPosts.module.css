@@ -1,28 +1,46 @@
-/*.content {
-    !*дали псевдонимы *!
-    grid-area: c;
-    background-color: #a6579a
-}
-
-.content img {
-    height: 500px;
-}
-
-.item {
-color: lightgreen;
-}
-.active {
-    font-style: italic;
-}
-
-.item img{
-    height: 50px;
-}*/
-
 .postsBlock {
+    display: flex;
+    flex-direction: column;
     padding: 10px;
 }
 
-.posts{
+.postsBlockTitle {
+
+}
+
+.newPostContainer {;
+    width: 100%;
+    align-items: center;
+}
+
+.newPostBlock {
+    display: flex;
+    flex-direction: row;
+}
+
+.newPostTextarea {
+    width: 100%;
+    display: flex;
+    flex: 4;
+}
+
+.addNewPostButtonContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1
+}
+
+.addNewPostButton {
+    display: inline-flex;
+    align-items: center;
+    padding-inline: 15px;
+    line-height: 1.5;
+/*    ;*/
+    justify-content: center;
+    padding-block: 3px;
+}
+
+.posts {
     margin-top: 10px;
 }

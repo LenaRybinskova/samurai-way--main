@@ -11,14 +11,12 @@ const FormControl: FC<FormControlProps> = ({input, meta: {touched, error}, tagNa
     const Tag = tagName;
 
     return (
-        <>
-            <div className={`${styles.formControl} ${hasError ? styles.error : ''}`}>
-                <div>
-                    <Tag {...input} {...props} />
-                </div>
-                {hasError && <span>{error}</span>}
+        <div className={`${styles.formControl} ${hasError ? styles.error : ''}`}>
+            <div className={styles.formControlWrapper}>
+                <Tag {...input} {...props} className={Tag === 'textarea' ? styles.textarea : styles.input}/>
             </div>
-        </>
+            {hasError && <span>{error}</span>}
+        </div>
     );
 };
 
@@ -32,9 +30,7 @@ export const Textarea: FC<WrappedFieldProps> = (props: WrappedFieldProps) => {
 
 export const createField = (placeholder: string | null, name: string, validators: ((value: string) => void)[] | [], component: FunctionComponent<WrappedFieldProps>, props = {}, text = '') => {
     return (
-        <div>
-            <Field component={component} name={name} placeholder={placeholder} validate={validators}{...props}/>
-        </div>
+        <Field component={component} name={name} placeholder={placeholder} validate={validators}{...props} />
     )
 }
 

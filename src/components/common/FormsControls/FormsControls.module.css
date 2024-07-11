@@ -8,16 +8,28 @@
     color: red;
 }
 
+.formControl{
+    width: 100%;
+}
+
+.formControlWrapper{
+    width: 100%;
+}
+
 .formSummaryError{
     border: 2px solid red;
-    paddding:5px;
+    padding:5px;
     color: brown;
 }
 
 .textarea{
-
+    border-radius: var(--border-radius);
+    width: 100%;
 }
 
 .input{
-
+    width: 100%;
+}
+.fff{
+    width: 100%;
 }

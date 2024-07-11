@@ -3,17 +3,12 @@ import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MyPostsContainerPropsType} from './MyPostsContainer';
 import AddNewPost, {InputFormType} from '../AddNewPost/AddNewPost';
-import {useSelector} from 'react-redux';
-import {AppRootSTateType} from '../../../redux/reduxStore';
-import {useParams} from 'react-router-dom';
 
 
 // вариант мемоизации функц компоненты:
 //React.memo ХОК
 export const MyPosts = React.memo((props: MyPostsContainerPropsType) => {
-    const ownAccount = useSelector<AppRootSTateType, string | null>(state => state.auth.userId)
     let postsElements = props.posts.map(p => <Post key={p.id} message={p.message} likesCount={p.likesCount}/>)
-    const userId = useParams()
 
     const addPost = (data: InputFormType) => {
         props.addPost(data.newPostText)
@@ -21,17 +16,12 @@ export const MyPosts = React.memo((props: MyPostsContainerPropsType) => {
 
 
     return (
-        <div>
-            {
-                (<div className={s.postsBlock}><h3>My posts</h3>
-                    <div>
-                        <AddNewPost onSubmit={addPost}/>
-                    </div>
-                    <div className={s.posts}>
-                        {postsElements}
-                    </div>
-                </div>)
-            }
+        <div className={s.postsBlock}>
+            <h3 className={s.postsBlockTitle}>My posts</h3>
+            <AddNewPost onSubmit={addPost}/>
+            <div className={s.posts}>
+                {postsElements}
+            </div>
         </div>
     )
 })

@@ -174,7 +174,7 @@ svg * {
 :root {
     --font-family-base: "Raleway", sans-serif;
     --container-width:1200px;
-    --container-padding-x:15px;
+    --container-padding-x:20px;
 
     /*    цвет текста header*/
     --theme-dark-text-color-header: #bbbbbb;
@@ -259,6 +259,7 @@ button{
     border-radius: var(--border-radius);
     border: none;
     cursor: pointer;
+    line-height: 1.5;
 }
 
 
