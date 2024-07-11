@@ -202,16 +202,21 @@ svg * {
     --theme-default-background-color-button: #02391d;
 
     /* цвет текста кнопок */
-    --theme-dark-text-color-button: #25292d;
-    --theme-light-text-color-button: #bbbbbb;
-    --theme-default-text-color-button: #bbbbbb;
+    --theme-dark-text-color-button: #070809;
+    --theme-light-text-color-button: #c9c6c6;
+    --theme-default-text-color-button: #c9c6c6;
 
+    /* цвет кнопок HOVER */
+    --theme-dark-hover-background-color-button: #b8bdd0;
+    --theme-light-hover-background-color-button: #026031;
+    --theme-default-hover-background-color-button: #026031;
 
     --border-radius: 5px;
 
 }
 
 body {
+    margin: 0 auto;
     font-family: var(--font-family-base);
     font-size: 17px;
     color: var(--theme-default-text-color-header);
@@ -222,25 +227,6 @@ body {
     display: flex;
     flex-direction: column;
     max-width: calc(var(--container-width) + var(--container-padding-x) * 2);
-
-    /*
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-
-        grid-template-areas:
-                "h h"
-                "n c"
-                "s c";
-
-        !*высота первой строки 60 пикс, вторая строка 1 фракция  *!
-        grid-template-rows: 60px 1fr;
-
-        !*ширина первой колонки 2 фр, вторая колонка 10 фр *!
-        grid-template-columns: 2fr 10fr;
-
-        !*расст между элеме*!
-        !*    grid-gap: 10px;*!*/
 }
 
 .appMainWrapper {
@@ -253,35 +239,31 @@ body {
     display: flex;
     flex-direction: column;
     max-width: 265px;
+    flex: 2;
 }
 
 
 .appWrapperContent {
     display: flex;
-    flex-grow: 1;
     justify-content: flex-start;
-    padding-left: 4px;
     background-color: var(--theme-default-background-color-main);
-    /*    !*дали псевдонимы *!
-        grid-area: c;*/
-
-
+    flex: 5;
+    padding: 10px;
 }
 
-/*
-.appWrapperSubscribers {
-    !*дали псевдонимы *!
-    grid-area: s;
-    background-color: #7989e7;
-}*/
-
-
-/*
-
-.appWrapperContent img{
-    width: 800px;
-    height: 400px;
+button{
+    background-color: var(--theme-default-background-color-button);
+    color: var(--theme-default-text-color-button);
+    padding-inline:15px;
+    padding-block:3px ;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
 }
-*/
+
+
+button:hover{
+    background-color: var(--theme-default-hover-background-color-button);
+}
 
 

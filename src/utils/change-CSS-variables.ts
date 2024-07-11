@@ -7,7 +7,7 @@ export const changeCSSVariables = (theme: ThemesType) => {
            root.style.setProperty("--theme-default-background-color-header", `var(--theme-${theme}-background-color-header`)
         }*/
 
-    const cssVariables = ['text-color-header', 'background-color-header', "background-color-navbar","background-color-main", "background-color-button", "text-color-button"]
+    const cssVariables = ['text-color-header', 'background-color-header', "background-color-navbar","background-color-main", "background-color-button", "text-color-button", "hover-background-color-button"]
     cssVariables.forEach(element => {
         root.style.setProperty(`--theme-default-${element}`, `var(--theme-${theme}-${element}`)})
 

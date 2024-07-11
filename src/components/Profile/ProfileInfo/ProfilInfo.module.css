@@ -1,14 +1,13 @@
 
 .descriptionBlock {
-    padding: 10px;
+    display: flex;
+    flex-direction: column;
 }
 
 .mainPhoto {
-
     border-radius: var(--border-radius);
     max-width: 200px;
     max-height: 200px;
-
 }
 
 .mainPhotoBlock {
@@ -19,9 +18,22 @@
     margin-bottom: 20px;
 }
 
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.editProfileButton {
+    margin-bottom: 5px;
+
+}
+
+
 .contacts {
     margin-left: 10px;
+    margin-bottom: 4px;
 }
+
 
 /*это дефолтный вариант инпута скрыли*/
 input[type=file] {
@@ -41,51 +53,4 @@ input[type=file] {
     cursor: pointer;
 }
 
-.customLabelFileInput:hover{
-    position: absolute;
-    right: 97px;
-    top: 17px;
-}
-/*
-!*чтобы скрыть надпись на инпуте*!
-.customFileInput {
-    color: transparent;
-}
 
-.customFileInput::-webkit-file-upload-button {
-    !*visibility: hidden;*!
-}
-
-.customFileInput::before {
-    position: absolute;
-    content: '';
-    width: 35px;
-    height: 35px;
-    display: block;
-    background: url("editImg.png") center/contain no-repeat;
-    border: 1px solid red;
-    border-radius: 50%;
-    padding: 8px 8px;
-    outline: none;
-    white-space: nowrap;
-!*    -webkit-user-select: none;*!
-    cursor: pointer;
-    text-shadow: 1px 1px #fff;
-    font-weight: 400;
-    font-size: 10pt;
-    left:440px;
-    bottom: 645px;
-}
-
-.customFileInput:hover::before {
-    border-color: black;
-}
-
-.customFileInput:active {
-    outline: 0;
-}
-
-.customFileInput:active::before {
-    background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-
-}*/
