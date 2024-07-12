@@ -40,7 +40,6 @@ const AddNewPost: React.FC<InjectedFormProps<InputFormType, AddNewPostProps> & A
                     </div>
                 </div>
             </form>
-
         </div>
 
     );

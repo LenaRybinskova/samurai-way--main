@@ -5,6 +5,7 @@ import {UserType} from '../../redux/usersReducer';
 import Subscriber from '../Subscribers/Subscriber';
 import {getSubscribersTC} from '../../redux/subscribers-reducer';
 import s from './Subscribers.module.css'
+import { NavLink } from 'react-router-dom';
 
 const Subscribers = () => {
 
@@ -22,7 +23,11 @@ const Subscribers = () => {
                 (<>
                     <h3 className={s.friendTitle}>Friends:</h3>
                     <div className={s.friendsList}>{friends.map(f =>
-                        <div className={s.fiendItem}><Subscriber key={f.id} {...f}/></div>)}
+                        <div >
+                            <NavLink to={'/profile/' + f.id} className={s.fiendItem} >
+                            <Subscriber key={f.id} {...f}/>
+                            </NavLink>
+                        </div>)}
                     </div>
                 </>)
             }

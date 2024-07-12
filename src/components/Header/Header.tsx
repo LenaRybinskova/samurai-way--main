@@ -14,13 +14,12 @@ type HeaderType = {
 
 export const Header = (props: HeaderType) => {
 
-    const ownPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
-
+    const ownAccountPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
 
     return (
         <header className={s.header}>
             <NavLink className={s.topHomeLink} to={`/profile`}>
-                <img src={ownPhoto ? ownPhoto : usersNull} alt="logo"/></NavLink>
+                <img src={ownAccountPhoto ? ownAccountPhoto : usersNull} alt="logo"/></NavLink>
             <div className={s.loginBlock}>
                 {/*                если залогинен, показать логин пользователя, если нет то ссылку на страницу ЛОГИН*/}
                 {props.isAuth

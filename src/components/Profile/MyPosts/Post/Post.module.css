@@ -1,14 +1,49 @@
-
 .item {
-color: lightgreen;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 746px;
+    color: lightgreen;
+    border: 1px solid var(--theme-default-text-color-header);
+    border-radius: var(--border-radius);
+    margin-bottom: 8px;
+    padding: 5px;
 }
 
 .active {
     font-style: italic;
 }
 
-.item img{
+.itemAvatar {
     height: 50px;
     width: 50px;
-    border-radius: 30px;
+    border-radius: var(--border-radius);
+    margin-right: 7px;
+}
+
+.itemText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: end;
+    color:var(--theme-default-text-color-header);
+
+}
+.itemMessage{
+}
+
+.itemLikes{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    column-gap: 3px;
+    font-size:var(--font-size-small)
+}
+
+.likeImg{
+    box-shadow:none;
+    width: 10px;
+    height: 10px;
 }

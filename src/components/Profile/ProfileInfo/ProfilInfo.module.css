@@ -6,6 +6,7 @@
 
 .mainPhoto {
     border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
     max-width: 200px;
     max-height: 200px;
 }
@@ -25,7 +26,6 @@
 
 .editProfileButton {
     margin-bottom: 5px;
-
 }
 
 
