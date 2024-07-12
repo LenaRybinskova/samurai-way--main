@@ -1,7 +1,6 @@
 
 .formControl .error input,
 .formControl .error textarea {
-
     border: 2px solid red;
 }
 .formControl.error span {
@@ -28,8 +27,5 @@
 }
 
 .input{
-    width: 100%;
-}
-.fff{
     width: 100%;
 }

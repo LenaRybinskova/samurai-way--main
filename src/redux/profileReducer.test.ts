@@ -10,7 +10,7 @@ import profileReducer, {
 //1 start data
 let state: ProfilePageType = {
     posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 12},
+        {id: 1, message: 'Hi, how are you?', likesCount: 12,},
         {id: 2, message: 'Its my first post', likesCount: 0}
     ] as PostType[],
     newPostText: 'IT-kamasutra',

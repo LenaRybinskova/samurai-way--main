@@ -11,12 +11,20 @@ type PostType = {
 
 
 export const Post: React.FC<PostType> = (props) => {
+    const timestamp=new Date()
+
+    console.log("время", timestamp.getHours())
 
     return (
         <div className={s.item}>
             <img className={s.itemAvatar} src={props.currentProfilePhoto ? props.currentProfilePhoto : userNull}/>
             <div className={s.itemText}>
-                <span className={s.itemMessage}>{props.message}</span>
+                <div className={s.itemMessageWrapper}>
+                    <div className={s.itemMessage}>
+                        <div className={s.itemTextMessage}>{props.message}</div>
+                        <div className={s.itemTextMessageTime}>13:00</div>
+                    </div>
+                </div>
                 <div className={s.itemLikes}>
                     <img src={like} className={s.likeImg}/>
                     {props.likesCount}

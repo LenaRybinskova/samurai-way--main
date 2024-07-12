@@ -4,7 +4,6 @@
     justify-content: flex-start;
     align-items: center;
     max-width: 746px;
-    color: lightgreen;
     border: 1px solid var(--theme-default-text-color-header);
     border-radius: var(--border-radius);
     margin-bottom: 8px;
@@ -25,25 +24,43 @@
 .itemText {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: end;
-    color:var(--theme-default-text-color-header);
+    color: var(--theme-default-text-color-header);
 
 }
-.itemMessage{
+
+.itemMessageWrapper {
+
 }
 
-.itemLikes{
+.itemMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.itemTextMessage {
+display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.itemTextMessageTime {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    column-gap: 3px;
-    font-size:var(--font-size-small)
+    justify-content: flex-end;
+    font-size: var(--font-size-small);
 }
 
-.likeImg{
-    box-shadow:none;
+.itemLikes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 3px;
+}
+
+.likeImg {
+    box-shadow: none;
     width: 10px;
     height: 10px;
 }

@@ -40,8 +40,8 @@ export const profileReducer = (state: initialStateType = initialState, action: P
 // стартовый стейт
 let initialState: ProfilePageType = {
     posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 12},
-        {id: 2, message: 'Its my first post', likesCount: 0}
+        {id: 1, message: 'Hi, how are you?', likesCount: 12,time:""},
+        {id: 2, message: 'Its my first post', likesCount: 0, time:""}
     ] as PostType[],
     newPostText: 'IT-kamasutra',
     profileStatus: '',
@@ -86,6 +86,7 @@ export type PostType = {
     id: number
     message: string
     likesCount: number
+    time?:string
 }
 export type ProfilePageType = {
     posts: PostType[]
