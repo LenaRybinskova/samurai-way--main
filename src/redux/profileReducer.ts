@@ -5,6 +5,7 @@ import {AppRootSTateType, AppThunk} from '../redux/reduxStore';
 import {ThunkDispatch} from 'redux-thunk';
 import {stopSubmit} from 'redux-form';
 import {setUserAvatar} from '../redux/auth-reducer';
+import moment from 'moment/moment';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST'
 const DELETE_POST = 'samurai-network/profile/DELETE-POST'
@@ -17,8 +18,9 @@ const SET_PHOTO_SUCCESS = 'samurai-network/profile/SET_PHOTO_SUCCESS'
 export const profileReducer = (state: initialStateType = initialState, action: ProfileReducerAcTypes): initialStateType => {
     switch (action.type) {
         case ADD_POST:
-            let newPost = {id: 5, message: action.newPostText, likesCount: 0}
-            return {...state, posts: [...state.posts, newPost], newPostText: ''}
+            const timeStamp = moment().format('MMM Do YY')
+            let newPost = {id: 5, message: action.newPostText, likesCount: 0, time: timeStamp}
+            return {...state, posts: [newPost, ...state.posts], newPostText: ''}
         case DELETE_POST:
             return {...state, posts: state.posts.filter(p => p.id !== action.postId)}
         case SET_USER_PROFILE:
@@ -40,8 +42,8 @@ export const profileReducer = (state: initialStateType = initialState, action: P
 // стартовый стейт
 let initialState: ProfilePageType = {
     posts: [
-        {id: 1, message: 'Hi, how are you?', likesCount: 12,time:""},
-        {id: 2, message: 'Its my first post', likesCount: 0, time:""}
+        {id: 1, message: 'Hi, how are you?', likesCount: 12, time: 'May 11th 24'},
+        {id: 2, message: 'Its my first post', likesCount: 0, time: 'Des 25th 23 '}
     ] as PostType[],
     newPostText: 'IT-kamasutra',
     profileStatus: '',
@@ -86,7 +88,7 @@ export type PostType = {
     id: number
     message: string
     likesCount: number
-    time?:string
+    time?: string
 }
 export type ProfilePageType = {
     posts: PostType[]

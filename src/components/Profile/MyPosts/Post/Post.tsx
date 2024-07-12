@@ -7,13 +7,11 @@ type PostType = {
     message?: string
     likesCount: number
     currentProfilePhoto: string
+    time?:string
 }
 
 
 export const Post: React.FC<PostType> = (props) => {
-    const timestamp=new Date()
-
-    console.log("время", timestamp.getHours())
 
     return (
         <div className={s.item}>
@@ -22,7 +20,7 @@ export const Post: React.FC<PostType> = (props) => {
                 <div className={s.itemMessageWrapper}>
                     <div className={s.itemMessage}>
                         <div className={s.itemTextMessage}>{props.message}</div>
-                        <div className={s.itemTextMessageTime}>13:00</div>
+                        <div className={s.itemTextMessageTime}>{props.time}</div>
                     </div>
                 </div>
                 <div className={s.itemLikes}>
