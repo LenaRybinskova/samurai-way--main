@@ -53,4 +53,16 @@ input[type=file] {
     cursor: pointer;
 }
 
+/*profileDataForm*/
+.fullNameForm {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    white-space: nowrap;
+    column-gap: 5px;
+}
 
+.fullNameFormDescription{
+
+}
