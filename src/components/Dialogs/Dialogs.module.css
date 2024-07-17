@@ -53,12 +53,24 @@
     padding: 10px;
 }
 
+.messageContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 2px;
+}
+
 .message {
+    line-height: 0.5;
+}
+
+.chatMessageTimestamp {
+    font-size: var(--font-size-small);
 }
 
 .chat {
     display: flex;
     flex-direction: column;
+    row-gap: 10px;
 }
 
 .me {
@@ -74,7 +86,7 @@
 }
 
 
-.addNewMessageContainer{
+.addNewMessageContainer {
     display: flex;
     flex-direction: column;
 

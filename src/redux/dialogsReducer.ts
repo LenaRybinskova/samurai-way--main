@@ -1,4 +1,5 @@
 import {v1} from 'uuid';
+import moment from 'moment';
 
 const SEND_MESSAGE = 'SEND-MESSAGE'
 
@@ -12,6 +13,7 @@ export type MessageType = {
     id: number
     message: string
     sender: 'me' | 'friend'
+    time:string
 }
 
 let initialState: InitialStateType = {
@@ -26,17 +28,25 @@ let initialState: InitialStateType = {
         {id: 4, name: 'Anna', avatar: 'https://klike.net/uploads/posts/2022-08/1659592333_21.jpg'}
     ] as DialogType[],
     messages: {
-        '31000': [{id: 1, message: 'Hi', sender: 'friend'}, {id: 2, message: 'How are you?', sender: 'friend'}, {
+        '31000': [{id: 1, message: 'Hi', sender: 'friend',
+            time:"17:20"}, {id: 2, message: 'How are you?', sender: 'friend',
+            time:"17:43"}, {
             id: 3,
             message: 'fine',
-            sender: 'me'
+            sender: 'me',
+            time:"18:01"
         }],
-        '30880': [{id: 4, message: 'Hi', sender: 'me'}, {id: 5, message: 'What are you up to today?', sender: 'me'}],
-        '30575': [{id: 6, message: 'Hi', sender: 'friend'}, {
+        '30880': [{id: 4, message: 'Hi', sender: 'me',
+            time:"12:11"}, {id: 5, message: 'What are you up to today?', sender: 'me',
+            time:"12:11"}],
+        '30575': [{id: 6, message: 'Hi', sender: 'friend',
+            time:"13:10"}, {
             id: 7,
             message: 'Hello, she didn’t do anything and rested all day, how are you?',
-            sender: 'friend'
-        }, {id: 8, message: 'Ok', sender: 'me'}]
+            sender: 'friend',
+            time:"13:11"
+        }, {id: 8, message: 'Ok', sender: 'me',
+            time:"15:00"}]
     }
 }
 
@@ -50,6 +60,7 @@ const DialogsReducer = (state: InitialStateType = initialState, action: DialogsR
     switch (action.type) {
         case SEND_MESSAGE:
             const id = Math.floor((Math.random() * 100) + 1);
+            const timeStamp = moment().format('HH:mm')
             return {
                 ...state,
                 messages: {
@@ -57,7 +68,8 @@ const DialogsReducer = (state: InitialStateType = initialState, action: DialogsR
                     [action.userId]: [...state.messages[action.userId], {
                         id: id,
                         message: action.newMessageBody,
-                        sender: 'me'
+                        sender: 'me',
+                        time:timeStamp
                     }]
                 }
             }
