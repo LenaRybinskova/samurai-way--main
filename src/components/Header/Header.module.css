@@ -4,6 +4,7 @@
     align-items: center;
     justify-content: space-between;
     padding-inline: 20px;
+
     background: var(--theme-default-background-color-header);
 
     /*    !*дали псевдонимы *!

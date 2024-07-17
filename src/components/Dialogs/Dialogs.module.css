@@ -25,7 +25,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 15px 15px;
-    background-color: lightgray;
+    background-color: var(--theme-default-background-color-header);
     width: 100%;
     min-height: 412px;
     border-radius: var(--border-radius);
@@ -54,7 +54,6 @@
 }
 
 .message {
-
 }
 
 .chat {
@@ -62,16 +61,21 @@
     flex-direction: column;
 }
 
-
 .me {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-
 }
 
 .friend {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+
+.addNewMessageContainer{
+    display: flex;
+    flex-direction: column;
+
 }

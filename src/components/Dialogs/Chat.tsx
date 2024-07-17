@@ -27,7 +27,7 @@ const Chat = (props: any) => {
                 ? messagesElements.map((m: MessageType) => <Message key={m.id} {...m}/>)
                 : <EmptyWindow/>}
             </div>
-            <div><AddMessageForm onSubmit={addNewMessage}/></div>
+            <AddMessageForm onSubmit={addNewMessage}/>
         </>
     );
 };

@@ -182,9 +182,9 @@ svg * {
     --theme-default-text-color-header: #25292d;
 
     /*    фон header*/
-    --theme-light-background-color-header: #c0c1ba;
+    --theme-light-background-color-header: #d3d3d3;
     --theme-dark-background-color-header: #1b1b1b;
-    --theme-default-background-color-header: #c0c1ba;
+    --theme-default-background-color-header: #d3d3d3;
 
     /*    фон navbar*/
     --theme-light-background-color-navbar: #ffe2d3;
