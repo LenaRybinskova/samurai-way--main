@@ -1,49 +1,77 @@
-/*.content {
-    !*дали псевдонимы *!
-    grid-area: c;
-    background-color: #a6579a
-}*/
 
 .dialogs {
-    /*    display: grid;
-        grid-template-columns: 2fr 10fr;*/
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
 }
 
 .dialogsItems {
-    padding: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: min-content;
+    border: 1px solid var(--theme-default-text-color-header);
+    border-radius: var(--border-radius);
+    margin-right: 5px;
+    font-size: var(--font-size-small);
 }
 
-.dialogsItems .active {
-    color: white;
+
+.chatContainer {
+    flex: 9;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 15px 15px;
+    background-color: lightgray;
+    width: 100%;
+    min-height: 412px;
+    border-radius: var(--border-radius);
+}
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 3px;
+    margin: 7px 5px;
+    color: var(--theme-default-text-color-header);
+    text-decoration: none;
 }
 
 .dialog img {
     width: 50px;
     height: 50px;
-    padding-right: 10px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 .messages {
     padding: 10px;
-
 }
 
 .message {
+
+}
+
+.chat {
     display: flex;
     flex-direction: column;
-    width: 500px;
-    background-color: lightgray;
 }
+
 
 .me {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
+    align-items: flex-end;
+
 }
 
 .friend {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    align-items: flex-start;
 }

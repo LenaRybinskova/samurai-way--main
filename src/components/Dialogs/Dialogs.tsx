@@ -22,10 +22,10 @@ export const Dialogs = (props: DialogsContainerType) => {
 
         return (
             <div className={s.dialogs}>
-                <div>
+                <div className={s.dialogsItems}>
                     {dialogsElements}
                 </div>
-                <Chat sendMessage={props.sendMessage}/>
+                <div className={s.chatContainer}><Chat sendMessage={props.sendMessage}/></div>
             </div>
         );
     }
