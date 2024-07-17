@@ -16,6 +16,8 @@ export const Header = (props: HeaderType) => {
 
     const ownAccountPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
 
+
+    console.log("владелец аккаунта", ownAccountPhoto)
     return (
         <header className={s.header}>
             <NavLink className={s.topHomeLink} to={`/profile`}>
