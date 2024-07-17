@@ -55,7 +55,7 @@ export const getCaptchaUrl = (captchaUrl: string) => {
         captchaUrl
     } as const
 }
-export const setUserAvatar = (smallPhoto: string) => {
+export const setUserAvatar = (smallPhoto: string | null) => {
     return {type: SET_SMALL_PHOTO, smallPhoto} as const
 }
 
@@ -100,6 +100,7 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
     const res = await authAPI.logout()
     if (res.data.resultCode === 0) { // значит все, мы вылогинились
         dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
+        dispatch(setUserAvatar(null)) // затир аву
     }
     /*authAPI.logout().then(res => {
         if (res.data.resultCode === 0) { // значит все, мы вылогинились
