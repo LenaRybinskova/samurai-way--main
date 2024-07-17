@@ -31,7 +31,7 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType, OwnPropsType> & OwnPro
 
                    */}
             <div className={s.loginFormContainer}>
-                {createField('email', 'email', [required], Input)}
+                <div className={s.logininputEmail}>{createField('email', 'email', [required], Input)}</div>
                 {createField('password', 'password', [required], Input, {type: 'password'})}
                 <div className={s.rememberMeContainer}>Remember
                     me:<span>{createField(null, 'rememberMe', [], Input, {type: 'checkbox'}, 'Remember me')}</span>

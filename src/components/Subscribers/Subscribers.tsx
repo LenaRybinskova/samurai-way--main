@@ -15,7 +15,7 @@ const Subscribers = () => {
 
     useEffect(() => {
         dispatch(getSubscribersTC(7, 3, true))
-    }, [dispatch])
+    }, [])
 
     return (
         <div className={s.friendsWrapper}>

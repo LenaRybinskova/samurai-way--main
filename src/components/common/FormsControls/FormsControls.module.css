@@ -5,6 +5,7 @@
 }
 .formControl.error span {
     color: red;
+    font-size: var(--font-size-alternative);
 }
 
 .formControl{
@@ -22,11 +23,21 @@
 }
 
 .textarea{
+    padding: 2px 2px;
     border-radius: var(--border-radius);
     width: 100%;
 }
 
+.textarea::placeholder{
+    padding: 3px 2px;
+}
+
 .input{
+    padding: 2px 2px;
     border-radius: var(--border-radius);
     width: 100%;
+}
+
+.input::placeholder{
+    padding: 3px 2px;
 }

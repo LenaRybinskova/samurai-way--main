@@ -4,6 +4,7 @@
 /*    grid-area: n;*/
     background-color: var(--theme-default-background-color-navbar);
     padding: 20px 60px 20px 20px;
+    height: 210px;
 }
 .item a{
     text-decoration: none;
