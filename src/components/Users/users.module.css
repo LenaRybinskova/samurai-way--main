@@ -10,8 +10,7 @@
 
 .red {
     color: red;
-    font-weight: bold;
-    font-size: 25px;
+    font-size: var(--font-size-alternative);
 }
 
 .usersItemContainer {
@@ -26,6 +25,7 @@
 .userPhoto {
     width: 120px;
     height: 120px;
+    padding: 5px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
 

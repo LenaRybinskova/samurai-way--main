@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import s from './Header.module.css'
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
 import usersNull from '../../assets/images/usersNull.png'
-import {ThemeContext} from '../../context/ThemeProvider';
+
 
 type HeaderType = {
     isAuth: boolean
@@ -15,9 +15,9 @@ type HeaderType = {
 export const Header = (props: HeaderType) => {
 
     const ownAccountPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
+    console.log('Header', props.isAuth)
 
 
-    console.log("владелец аккаунта", ownAccountPhoto)
     return (
         <header className={s.header}>
             <NavLink className={s.topHomeLink} to={`/profile`}>
@@ -25,11 +25,12 @@ export const Header = (props: HeaderType) => {
             <div className={s.loginBlock}>
                 {/*                если залогинен, показать логин пользователя, если нет то ссылку на страницу ЛОГИН*/}
                 {props.isAuth
-                    ? <div >
+                    ? (<div>
                         <span className={s.loginName}>{props.login}</span>
                         <button className={s.loginButton} onClick={props.logoutTC}>Log out</button>
-                    </div>
-                    : <div><NavLink to={'/login'}>Login</NavLink></div>}
+                    </div>)
+                    : (<div><NavLink to={'/login'}>Login</NavLink></div>)
+                }
             </div>
         </header>
     )

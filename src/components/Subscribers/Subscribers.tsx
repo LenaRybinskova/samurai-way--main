@@ -14,7 +14,7 @@ const Subscribers = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getSubscribersTC(7, 3, true))
+        dispatch(getSubscribersTC(5, 3, true))
     }, [])
 
     return (

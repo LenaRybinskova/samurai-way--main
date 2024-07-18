@@ -23,8 +23,9 @@ const Chat = (props: any) => {
 
     return (
         <>
-            <div className={s.chat}>{messagesElements
-                ? messagesElements.map((m: MessageType) => <Message key={m.id} {...m}/>)
+            <div className={s.chat}>{
+                messagesElements
+                ? messagesElements.map((m: MessageType) => <Message key={m.id} {...m}/> )
                 : <EmptyWindow/>}
             </div>
             <AddMessageForm onSubmit={addNewMessage}/>

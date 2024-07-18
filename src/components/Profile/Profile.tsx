@@ -18,10 +18,11 @@ export type ProfileType = {
 
 }
 export const Profile = (props: ProfileType) => {
+
     return (
         <div className={s.profileContainer}>
             <ProfileInfo profile={props.profile} profileStatus={props.profileStatus} updateProfileStatusTC={props.updateProfileStatusTC} isOwner={props.isOwner} savePhoto={props.savePhoto} saveProfile={props.saveProfile}/>
-            <MyPostsContainer/>
+            {props.isOwner && <MyPostsContainer/>}
         </div>
     )
 }

@@ -28,7 +28,9 @@ let initialState: InitialStateType = {
         {id: 4, name: 'Anna', avatar: 'https://klike.net/uploads/posts/2022-08/1659592333_21.jpg'}
     ] as DialogType[],
     messages: {
-        '31000': [{id: 1, message: 'Hi', sender: 'friend',
+        '31003':[],
+        '30571':[],
+        '31301': [{id: 1, message: 'Hi', sender: 'friend',
             time:"17:20"}, {id: 2, message: 'How are you?', sender: 'friend',
             time:"17:43"}, {
             id: 3,
@@ -36,17 +38,20 @@ let initialState: InitialStateType = {
             sender: 'me',
             time:"18:01"
         }],
-        '30880': [{id: 4, message: 'Hi', sender: 'me',
+        '31300': [{id: 4, message: 'Hi', sender: 'me',
             time:"12:11"}, {id: 5, message: 'What are you up to today?', sender: 'me',
             time:"12:11"}],
-        '30575': [{id: 6, message: 'Hi', sender: 'friend',
+        '31287': [{id: 6, message: 'Hi', sender: 'friend',
             time:"13:10"}, {
             id: 7,
             message: 'Hello, she didn’t do anything and rested all day, how are you?',
             sender: 'friend',
             time:"13:11"
         }, {id: 8, message: 'Ok', sender: 'me',
-            time:"15:00"}]
+            time:"15:00"}
+
+
+        ]
     }
 }
 
