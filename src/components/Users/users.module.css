@@ -1,10 +1,55 @@
-.userContainer .userPhoto {
-    width: 100px;
-    height: 100px;
+
+.usersPageContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    row-gap: 15px;
 }
 
-.red{
+.red {
     color: red;
     font-weight: bold;
     font-size: 25px;
 }
+
+.usersItemContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: center;
+
+}
+
+.userPhoto {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+
+}
+
+.userContainer {
+    display: flex;
+    flex-direction: column;
+    row-gap: 7px;
+    justify-content: center;
+    align-items: center;
+    max-width: 150px;
+    border: 1px solid var(--theme-default-text-color-header);
+    border-radius: var(--border-radius);
+}
+
+.followButton {
+    font-size: var(--font-size-small);
+}
+
+.userName {
+    line-height: 1;
+    font-size: var(--font-size-alternative);
+    padding-bottom: 3px;
+}
+
+

@@ -30,7 +30,7 @@ export type locationUserType = {
 // ЗНАЧЕНИЕ стартовый стейт
 const initialState: initialStateType = {
     users: [] as UserType[],
-    pageSize: 5,
+    pageSize: 18,
     totalUsersCount: 20,
     currentPage: 1,
     isFetching: false,
@@ -50,15 +50,9 @@ export type initialStateType = {
 export const usersReducer = (state: initialStateType = initialState, action: UsersReducerAcTypes): initialStateType => {
     switch (action.type) {
         case FOLLOW:
-            return {
-                ...state,
-                users: updateObjectInArray(state.users, action.id, 'id', {followed: true})
-            }
+            return {...state, users: updateObjectInArray(state.users, action.id, 'id', {followed: true})}
         case UNFOLLOW:
-            return {
-                ...state, users:
-                    updateObjectInArray(state.users, action.id, 'id', {followed: false})
-            }
+            return {...state, users: updateObjectInArray(state.users, action.id, 'id', {followed: false})}
         case SET_USERS:
             // копий юзеров не делаем, тк хотим, чтобы при пагинации одна порция юзеров заменяла другую порцию
             return {...state, users: action.users}
@@ -150,7 +144,6 @@ export const requestUsersTC = (currentPage: number, pageSize: number) => async (
     dispatch(setTotalCount(data.totalCount))
     dispatch(toggleIsFetching(false)) //крутилка выкл
 }
-
 const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => any, actionCreator: any) => {
     dispatch(toggleIsFollowingProgress(userId, true))
     const res = await apiMethod(userId)
@@ -159,7 +152,6 @@ const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod:
     }
     dispatch(toggleIsFollowingProgress(userId, false))
 }
-
 export const followTC = (userId: number) => {
     return async (dispatch: Dispatch) => {
         const apiMethod = userAPI.follow.bind(userAPI)

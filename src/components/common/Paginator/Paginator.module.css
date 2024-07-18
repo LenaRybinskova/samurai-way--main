@@ -5,20 +5,33 @@
 .paginationLine{
     display: flex;
     justify-content: center;
+    align-items: center;
     column-gap: 3px;
+
 }
 
 .page {
-    width: 21px;
-    aspect-ratio: 1;
     border: 1px solid silver;
     box-sizing: border-box;
     line-height: 1;
     text-align: center;
+    width: 26px;
+    font-family: "Helvetica Neue";
+    padding: 2px;
+    font-size: var(--font-size-alternative);
+    border-radius: var(--border-radius);
+
 }
 
 .page:hover{
-    background-color: lightpink;
+    background-color: var(--theme-default-background-color-navbar);
     cursor: pointer;
-    transition-duration: 0.5s;
+    transition-duration: 0.2s;
+    font-weight: bolder;
+}
+
+.usersItemContainer{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }

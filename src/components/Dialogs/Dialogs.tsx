@@ -14,10 +14,7 @@ export const Dialogs = (props: DialogsContainerType) => {
 
         const friends = useSelector<AppRootSTateType, UserType[]>(state => state.subscribers.friends)
 
-        const dialogsElements = friends.map(d => <DialogItem key={d.id}
-                                                             name={d.name}
-                                                             id={d.id}
-                                                             avatar={d.photos.small ? d.photos.small : usersNull}/>)
+        const dialogsElements = friends.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.photos.small ? d.photos.small : usersNull}/>)
 
 
         return (
