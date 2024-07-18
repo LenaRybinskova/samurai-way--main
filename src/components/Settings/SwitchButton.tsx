@@ -4,6 +4,11 @@ import {THEME_DARK, THEME_LIGHT, ThemeContext} from '../../context/ThemeProvider
 
 export type SwitchButtonType = {}
 
+const style = {
+    backgroundColor: "grey"
+};
+
+
 export const SwitchButton: FC<SwitchButtonType> = () => {
     const theme = useContext(ThemeContext)
 
@@ -14,6 +19,6 @@ export const SwitchButton: FC<SwitchButtonType> = () => {
     };
 
     return (
-        <Switch defaultChecked onChange={onChange}/>
+        <Switch defaultChecked onChange={onChange} style={style}/>
     )
 }
