@@ -19,8 +19,8 @@ const AddNewPost: React.FC<InjectedFormProps<InputFormType, AddNewPostProps> & A
     const {handleSubmit, reset} = props;
 
     const onSubmitHandle = (value: InputFormType) => {
-        props.onSubmit(value);
-        reset();
+        props.onSubmit(value);// коллбек из родит компоненты
+        reset(); //зачистка поля
     }
 
 

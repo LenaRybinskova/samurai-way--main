@@ -19,8 +19,7 @@ export const ProfileDataForm: React.FC<InjectedFormProps<ObtainedFormType, Profi
                                                                                                                         error,
                                                                                                                         profile,
                                                                                                                     }) => {
-    console.log('ОШИБКА ProfileDataForm', error)
-    console.log('что в profile', profile)
+
     return (
 
         <div className={s.profileInfo}>

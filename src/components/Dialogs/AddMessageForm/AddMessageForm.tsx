@@ -5,13 +5,27 @@ import {maxLengthCreator} from '../../../../src/utils/validators/validators';
 import {Textarea} from '../../../../src/components/common/FormsControls/FormsControls';
 import s from '../Dialogs.module.css'
 
+export type newMessageType={
+    newMessageBody:string
+}
+
+export type AddMessageFormProps = {
+    onSubmit: (newMessage: newMessageType) => void
+}
+
 const maxLength100 = maxLengthCreator(100)
 
-const AddMessageForm = (props: InjectedFormProps) => { // InjectedFormProps  я протипизировала
+const AddMessageForm: React.FC<InjectedFormProps<newMessageType, AddMessageFormProps> & AddMessageFormProps> = (props) => {
+    const {handleSubmit, reset} = props
+
+    const addNewMessageSubmit = (formValue: any) => {
+        props.onSubmit(formValue)
+        reset()
+    }
 
     return (
         <div>
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit(addNewMessageSubmit)}>
                 <div className={s.addNewMessageContainer}>
                     <div>
                         <Field
@@ -30,6 +44,6 @@ const AddMessageForm = (props: InjectedFormProps) => { // InjectedFormProps  я 
 
     )
 }
-export default reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)
-/*export const AddMessageFormRedux = reduxForm({form: 'dialogAddMessageForm'})(AddMessageForm)*/
+export default reduxForm<newMessageType, AddMessageFormProps>({form: 'dialogAddMessageForm'})(AddMessageForm)
+
 

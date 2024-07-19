@@ -1,5 +1,5 @@
 import React from 'react';
-import AddMessageForm from '../Dialogs/AddMessageForm/AddMessageForm';
+import AddMessageForm, {newMessageType} from '../Dialogs/AddMessageForm/AddMessageForm';
 import {useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
@@ -11,13 +11,11 @@ import EmptyWindow from '../Dialogs/EmptyWindow';
 const Chat = (props: any) => {
 
     const {userId} = useParams<{ userId: string }>();
-    console.log('userId', userId)
     const messagesElements = useSelector<AppRootSTateType, MessageType[]>(state => state.dialogsPage.messages[userId])
     const dispatch = useDispatch()
 
-    console.log('messagesElements', messagesElements)
 
-    const addNewMessage = (data: any) => {
+    const addNewMessage = (data: newMessageType) => {
         dispatch(sendMessageAC(userId, data.newMessageBody))
     }
 
