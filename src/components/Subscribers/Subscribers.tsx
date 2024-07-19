@@ -23,7 +23,7 @@ const Subscribers = () => {
                 (<>
                     <h3 className={s.friendTitle}>Friends:</h3>
                     <div className={s.friendsList}>{friends.map(f =>
-                        <div >
+                        <div key={f.id}>
                             <NavLink to={'/profile/' + f.id} className={s.fiendItem} >
                             <Subscriber key={f.id} {...f}/>
                             </NavLink>

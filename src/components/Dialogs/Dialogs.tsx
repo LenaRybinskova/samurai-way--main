@@ -1,5 +1,5 @@
 import React from 'react';
-import s from "./Dialogs.module.css"
+import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogsItem';
 import {DialogsContainerType} from './DialogsContainer';
 import {useSelector} from 'react-redux';
@@ -14,7 +14,8 @@ export const Dialogs = (props: DialogsContainerType) => {
 
         const friends = useSelector<AppRootSTateType, UserType[]>(state => state.subscribers.friends)
 
-        const dialogsElements = friends.map(d => <DialogItem key={d.id} name={d.name} id={d.id} avatar={d.photos.small ? d.photos.small : usersNull}/>)
+        const dialogsElements = friends.map(d => <DialogItem key={d.id} name={d.name} id={d.id}
+                                                             avatar={d.photos.small ? d.photos.small : usersNull}/>)
 
 
         return (

@@ -5,7 +5,6 @@ import {MyPostsContainerPropsType} from './MyPostsContainer';
 import AddNewPost, {InputFormType} from '../AddNewPost/AddNewPost';
 import {useSelector} from 'react-redux';
 import {AppRootSTateType} from '../../../redux/reduxStore';
-import {useParams} from 'react-router-dom';
 
 
 // вариант мемоизации функц компоненты:
@@ -19,11 +18,6 @@ export const MyPosts = React.memo((props: MyPostsContainerPropsType) => {
         currentProfilePhoto={currentProfilePhoto}
         time={p.time}
     />)
-
-
-    const ownAccountId = useSelector<AppRootSTateType, string | null>(state => state.auth.userId)
-    const currentProfileId = useParams<{ userId: string }>()
-    console.log('currentProfileId', currentProfileId)
 
     const addPost = (data: InputFormType) => {
         props.addPost(data.newPostText)

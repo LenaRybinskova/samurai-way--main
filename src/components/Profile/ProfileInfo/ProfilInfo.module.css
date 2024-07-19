@@ -44,7 +44,7 @@ input[type=file] {
     display: block;
     width: 28px;
     height: 28px;
-    background-image: url("./editImg.png");
+    background-image: url("../../../assets/images/editImg.png");
     background-size: cover;
     position: absolute;
     right: 85px;

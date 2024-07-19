@@ -1,5 +1,5 @@
 import React from 'react';
-import {maxLengthCreator, required} from '../../../utils/validators/validators'
+import {maxLengthCreator} from '../../../utils/validators/validators'
 import {Textarea} from '../../../../src/components/common/FormsControls/FormsControls'
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import s from '../MyPosts/MyPosts.module.css'
@@ -33,7 +33,7 @@ const AddNewPost: React.FC<InjectedFormProps<InputFormType, AddNewPostProps> & A
                             component={Textarea}
                             name={'newPostText'}
                             placeholder={'Введи текст нового поста'}
-                            validate={[required, maxLength100]}/>
+                            validate={[maxLength100]}/>
                     </div>
                     <div className={s.addNewPostButtonContainer}>
                         <button className={s.addNewPostButton} type={'submit'}>Add post</button>

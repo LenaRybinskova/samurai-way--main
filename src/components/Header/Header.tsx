@@ -15,8 +15,6 @@ type HeaderType = {
 export const Header = (props: HeaderType) => {
 
     const ownAccountPhoto = useSelector<AppRootSTateType, string | null>(state => state.auth.smallPhoto)
-    console.log('Header', props.isAuth)
-
 
     return (
         <header className={s.header}>
