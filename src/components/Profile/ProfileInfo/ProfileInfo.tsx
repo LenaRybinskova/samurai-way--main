@@ -1,6 +1,6 @@
 import React, {ChangeEvent, FC, useState} from 'react';
 import s from './ProfilInfo.module.css'
-import {ContactsType, ResponseAPIProfileType} from '../../../redux/profileReducer';
+import {ContactsType, ProfileResaponseType} from '../../../redux/profileReducer';
 import Preloader from '../../common/preloader/Preloader';
 import UserPhotoNull from '../../../assets/images/usersNull.png'
 import ProfileStatusWithHooks from '../ProfileInfo/ProfileStatus/ProfileStatusWithHooks';
@@ -8,7 +8,7 @@ import {ReduxProfileDataForm} from '../../Profile/ProfileInfo/ProfileDataForm/Pr
 
 
 export type ProfileInfoType = {
-    profile: ResponseAPIProfileType | null
+    profile: ProfileResaponseType | null
     updateProfileStatusTC: (newStatus: string) => void
     profileStatus: string
     isOwner: boolean
@@ -70,7 +70,7 @@ export const ProfileInfo: FC<ProfileInfoType> = ({
 }
 
 export type ProfileDataType = {
-    profile: ResponseAPIProfileType | null
+    profile: ProfileResaponseType | null
     isOwner: boolean
     toEditMode: () => void
 }

@@ -48,7 +48,7 @@ let initialState: ProfilePageType = {
     newPostText: 'IT-kamasutra',
     profileStatus: '',
     profile: {
-        aboutMe: null,
+        aboutMe:"",
         userId: 30404,
         lookingForAJob: true,
         lookingForAJobDescription: '11',
@@ -67,13 +67,13 @@ let initialState: ProfilePageType = {
             small: '11',
             large: '11'
         }
-    } as ResponseAPIProfileType,
+    } as ProfileResaponseType,
 }
 
 // Types
 export type initialStateType = typeof initialState
-export type ResponseAPIProfileType = {
-    aboutMe: null,
+export type ProfileResaponseType = {
+    aboutMe: string,
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -93,7 +93,7 @@ export type PostType = {
 export type ProfilePageType = {
     posts: PostType[]
     newPostText: string
-    profile: ResponseAPIProfileType | null,
+    profile: ProfileResaponseType | null,
     profileStatus: string
 }
 export type ContactsType = {
@@ -134,7 +134,7 @@ export const deletePostAC = (postId: number) => {
         postId
     } as const
 }
-export const setUserProfile = (profile: ResponseAPIProfileType | null) => {
+export const setUserProfile = (profile: ProfileResaponseType | null) => {
     return {
         type: SET_USER_PROFILE,
         profile

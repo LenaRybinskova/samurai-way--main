@@ -1,14 +1,14 @@
 import React from 'react';
 import s from '../ProfilInfo.module.css'
 import {ObtainedFormType} from '../../../..//components/Profile/ProfileInfo/ProfileInfo';
-import {ContactsType, ResponseAPIProfileType} from '../../../../../src/redux/profileReducer';
+import {ContactsType, ProfileResaponseType} from '../../../../../src/redux/profileReducer';
 import {createField, Input, Textarea} from '../../../common/FormsControls/FormsControls';
 import {required} from '../../../../../src/utils/validators/validators';
 import {InjectedFormProps, reduxForm} from 'redux-form';
 
 
 export type ProfilePropsType = {
-    profile: ResponseAPIProfileType | null
+    profile: ProfileResaponseType | null
     isOwner: boolean
     onSubmit: (formData: ObtainedFormType) => void
 }

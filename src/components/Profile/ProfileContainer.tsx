@@ -4,7 +4,7 @@ import {AppRootSTateType} from '../../redux/reduxStore';
 import {
     getUserProfileTC,
     getUserStatusTC,
-    ResponseAPIProfileType, savePhoto,
+    ProfileResaponseType, savePhoto,
     saveProfile,
     updateProfileStatusTC
 } from '../../redux/profileReducer';
@@ -60,7 +60,7 @@ type MapDispatchToProsType = {
     saveProfile: (formData: ObtainedFormType) => Promise<void>
 }
 type MapStateToPropsType = {
-    profile: ResponseAPIProfileType | null,
+    profile: ProfileResaponseType | null,
     profileStatus: string
     authorizedUserId: string | null
     isAuth: boolean

@@ -3,7 +3,7 @@ import profileReducer, {
     deletePostAC,
     PostType,
     ProfilePageType,
-    ResponseAPIProfileType
+    ProfileResaponseType
 } from '../redux/profileReducer';
 
 
@@ -34,7 +34,7 @@ let state: ProfilePageType = {
             small: '11',
             large: '11'
         }
-    } as ResponseAPIProfileType,
+    } as ProfileResaponseType,
 }
 
 it('new post should be added', () => {

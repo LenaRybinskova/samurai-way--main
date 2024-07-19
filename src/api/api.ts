@@ -1,6 +1,10 @@
 import axios from 'axios';
 import {ObtainedFormType} from '../components/Profile/ProfileInfo/ProfileInfo';
 
+import {UserType} from '../redux/usersReducer';
+import {ProfileResaponseType} from '../redux/profileReducer';
+
+
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
@@ -9,29 +13,28 @@ const instance = axios.create({
     },
 });
 
-//dialogs/{userId}/messages
 
 export const authAPI = {
     authMe() {
-        return instance.get<ResponseType>(`auth/me`) // возвр Id, email, loggin если кука есть
+        return instance.get<ResponseType<AuthMeType>>(`auth/me`) // возвр Id, email, loggin если кука есть
     },
     login(dataLogin: LoginType) {
-        return instance.post(`/auth/login`, dataLogin)
+        return instance.post<ResponseType<{ userId: number, token: string }>>(`/auth/login`, dataLogin)
     },
     logout() {
-        return instance.delete(`/auth/login`)
+        return instance.delete<ResponseType>(`/auth/login`)
     }
 }
 
 export const userAPI = {
     getUsers(currentPage: number, pageSize: number, friend = false) {
-        return instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}&term=${' '}&friend=${friend}`).then(res => res.data)
+        return instance.get<GetUsersResponseType>(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}&term=${' '}&friend=${friend}`).then(res => res.data)
     },
     unfollow(id: number) {
-        return instance.delete(`/follow/${id}`)
+        return instance.delete<ResponseType>(`/follow/${id}`)
     },
     follow(id: number) {
-        return instance.post(`/follow/${id}`)
+        return instance.post<ResponseType>(`/follow/${id}`)
     },
     // сделали аналог backward compatibility
     getProfile(userId: number) {
@@ -43,18 +46,18 @@ export const userAPI = {
 
 export const profileAPI = {
     getProfile(userId: number) {
-        return instance.get(`/profile/${userId}`)
+        return instance.get<ProfileResaponseType>(`/profile/${userId}`)
     },
     getStatus(userId: number) {
-        return instance.get(`/profile/status/${userId}`)
+        return instance.get<string>(`/profile/status/${userId}`)
     },
     updateStatus(status: string) {
-        return instance.put('profile/status', {status: status})
+        return instance.put<ResponseType>('profile/status', {status: status})
     },
     savePhoto(file: string | Blob) {
         const formData = new FormData()
         formData.append('image', file)
-        return instance.put('/profile/photo', formData, {
+        return instance.put<ResponseType<{ photos: { small: string, large: string } }>>('/profile/photo', formData, {
             headers:
                 {'Content-Type': 'multipart/form-data'}
         })
@@ -77,14 +80,20 @@ export type LoginType = {
     rememberMe?: boolean,
     captcha?: string | null
 }
-
-export type ResponseType = {
-
+export type AuthMeType = {
+    id: string | null,
+    email: string,
+    login: string
+}
+export type ResponseType<T = {}> = {
+    data: T,
+    messages: string[],
     resultCode: number,
-    messages: [],
-    data: {
-        id: string | null
-        email: string
-        login: string
-    }
+    fieldsErrors?: []
+}
+
+export type GetUsersResponseType = {
+    items: UserType[],
+    totalCount: number,
+    error: null
 }
