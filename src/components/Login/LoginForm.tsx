@@ -23,31 +23,34 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType, OwnPropsType> & OwnPro
                                                                                                captchaUrl
                                                                                            }) => {
 //конт компон снабдила в пропсах кучей событий, в тч handleSubmit - для сбора всех данных с форм, без принудит перезагрузки, error-объект и тд
+
     return (
-        <form onSubmit={handleSubmit}>
-            {/* input заменили на Field, component какой тег отрисовать,
+        <>
+            <form onSubmit={handleSubmit}>
+                {/* input заменили на Field, component какой тег отрисовать,
                    name будет ключом в JSON оъекта, который пойдет на сервер.
                    В Field уже есть onChange, они к name буду собирать данные
-
                    */}
-            <div className={s.loginFormContainer}>
-                <div className={s.logininputEmail}>{createField('email', 'email', [required], Input)}</div>
-                {createField('password', 'password', [required], Input, {type: 'password'})}
-                <div className={s.rememberMeContainer}>Remember
-                    me:<span>{createField(null, 'rememberMe', [], Input, {type: 'checkbox'}, 'Remember me')}</span>
-                </div>
+                <div className={s.loginFormContainer}>
+                    <div className={s.logininputEmail}>{createField('email', 'email', [required], Input)}</div>
+                    {createField('password', 'password', [required], Input, {type: 'password'})}
+                    <div className={s.rememberMeContainer}>Remember
+                        me:<span>{createField(null, 'rememberMe', [], Input, {type: 'checkbox'}, 'Remember me')}</span>
+                    </div>
 
-                {captchaUrl && <img src={captchaUrl}/>}
-                {captchaUrl && createField('enter symbolr from image', 'captcha', [required], Input)}
+                    {captchaUrl && <img src={captchaUrl}/>}
+                    {captchaUrl && createField('enter symbolr from image', 'captcha', [required], Input)}
 
-                {error && <div className={styles.formSummaryError}>
-                    {error}
-                </div>}
-                <div>
-                    <button type={'submit'}>Login</button>
+                    {error && <div className={styles.formSummaryError}>
+                        {error}
+                    </div>}
+                    <div>
+                        <button type={'submit'}>Login</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </>
+
     );
 };
 

@@ -9,10 +9,15 @@ const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
-        'API-KEY': '2c45728a-68be-4862-8b0c-8cd42989c7e6'
+/*        'API-KEY': '2c45728a-68be-4862-8b0c-8cd42989c7e6'*/
     },
 });
 
+export enum RESULT_CODE {
+    SUCCEEDED = 0,
+    ERROR = 1,
+    CAPTCHA = 10
+}
 
 export const authAPI = {
     authMe() {
@@ -97,3 +102,5 @@ export type GetUsersResponseType = {
     totalCount: number,
     error: null
 }
+
+

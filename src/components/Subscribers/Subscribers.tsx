@@ -8,7 +8,7 @@ import s from './Subscribers.module.css'
 import { NavLink } from 'react-router-dom';
 
 const Subscribers = () => {
-
+    console.log("Subscribers")
     const isAuth = useSelector<AppRootSTateType, boolean>(state => state.auth.isAuth)
     const friends = useSelector<AppRootSTateType, UserType[]>(state => state.subscribers.friends)
     const dispatch = useDispatch()
@@ -22,8 +22,8 @@ const Subscribers = () => {
             {isAuth &&
                 (<>
                     <h3 className={s.friendTitle}>Friends:</h3>
-                    <div className={s.friendsList}>{friends.map(f =>
-                        <div key={f.id}>
+                    <div className={s.friendsList}>
+                        {friends.map(f => <div key={f.id}>
                             <NavLink to={'/profile/' + f.id} className={s.fiendItem} >
                             <Subscriber key={f.id} {...f}/>
                             </NavLink>

@@ -16,6 +16,7 @@ import {WithSuspense} from './hoc/WithSuspense';
 import Subscribers from '../src/components/Subscribers/Subscribers';
 import ThemeProvider from '../src/context/ThemeProvider';
 import Settings from '../src/components/Settings/Settings';
+import GlobalError from '../src/components/GlobalError/GlobalError';
 /*import DialogsContainer from './components/Dialogs/DialogsContainer';*/
 /*import ProfileContainer from './components/Profile/ProfileContainer';*/
 
@@ -29,6 +30,7 @@ class App extends React.Component<CommonType> {
     }
 
 
+
     render() {
         {
             if (!this.props.initialized) {
@@ -37,6 +39,7 @@ class App extends React.Component<CommonType> {
         }
         return (
             <div className="appWrapper">
+                <GlobalError />
                 <HeaderContainer/>
                 <div className={"appMainWrapper"}>
                     <div className={"appWrapperLeftSide"}>

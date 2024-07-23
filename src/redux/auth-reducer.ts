@@ -1,7 +1,8 @@
 import {Dispatch} from 'redux';
-import {authAPI, LoginType, securityAPI} from '../api/api';
+import {authAPI, LoginType, RESULT_CODE, securityAPI} from '../api/api';
 import {AppThunk} from '../redux/reduxStore';
 import {stopSubmit} from 'redux-form';
+import {handleError} from '../../src/utils/handleError';
 
 const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 const GET_CAPTCHA_URL_SUCCESS = 'samurai-network/auth/GET_CAPTCHA_URL'
@@ -33,7 +34,7 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthRed
         case GET_CAPTCHA_URL_SUCCESS:
             return {...state, captchaUrl: action.captchaUrl}
         case SET_SMALL_PHOTO:
-            return {...state,smallPhoto:action.smallPhoto }
+            return {...state, smallPhoto: action.smallPhoto}
         default:
             return state
     }
@@ -61,34 +62,33 @@ export const setUserAvatar = (smallPhoto: string | null) => {
 
 // TC
 export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
+
     const res = await authAPI.authMe() //res то, чем зарезолвится промис
-    if (res.data.resultCode === 0) {
+    if (res.data.resultCode === RESULT_CODE.SUCCEEDED) {
         let {id, login, email} = res.data.data
         dispatch(setAuthUserData(id, email, login, true))
     } else {
         return res // если резКод===1, значит ошибка какая то
     }
-    /*return  authAPI.authMe().then(res => { // доб ретурт чтобы исп промис в initializedAppTC
-         if (res.data.resultCode === 0) {
-             let {id, login, email} = res.data.data
-             dispatch(setAuthUserData(id, email, login, true))
-         }
-     })*/
 }
-
 export const loginTC = (value: LoginType): AppThunk => async (dispatch) => {
-    const res = await authAPI.login(value)
-    if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
-        dispatch(getAuthUserDataTC())
-    } else {
-        if (res.data.resultCode === 10) {
-            dispatch(getCaptchaURL())
+    try {
+        const res = await authAPI.login(value)
+        if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
+            dispatch(getAuthUserDataTC())
+        } else {
+            if (res.data.resultCode === 10) {
+                dispatch(getCaptchaURL())
+            }
+            const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
+            const action = stopSubmit('login', {email: 'email is wrong'}) //email значит валидироваться  будет только поле email
+            dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
         }
-        const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
-        const action = stopSubmit('login', {email: 'email is wrong'}) //email значит валидироваться  будет только поле email
-        dispatch(stopSubmit('login', {_error: message})) // валидируется вся форма _error
+    } catch (e) {
+        handleError(e, dispatch)
     }
 }
+
 
 export const getCaptchaURL = () => async (dispatch: Dispatch) => {
     const res = await securityAPI.getCaptcha()
@@ -102,14 +102,24 @@ export const logoutTC = (): AppThunk => async (dispatch) => {
         dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
         dispatch(setUserAvatar(null)) // затир аву
     }
-    /*authAPI.logout().then(res => {
-        if (res.data.resultCode === 0) { // значит все, мы вылогинились
-            dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
-        }
-    })*/
+
 }
 
 
 export default authReducer;
 
+//getAuthUserDataTC
+/*return  authAPI.authMe().then(res => { // доб ретурт чтобы исп промис в initializedAppTC
+     if (res.data.resultCode === 0) {
+         let {id, login, email} = res.data.data
+         dispatch(setAuthUserData(id, email, login, true))
+     }
+ })*/
+
+// logoutTC
+/*authAPI.logout().then(res => {
+       if (res.data.resultCode === 0) { // значит все, мы вылогинились
+           dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
+       }
+   })*/
 
