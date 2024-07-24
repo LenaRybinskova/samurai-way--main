@@ -38,10 +38,10 @@ let initialState: InitialStateType = {
             sender: 'me',
             time:"18:01"
         }],
-        '31300': [{id: 4, message: 'Hi', sender: 'me',
+        '31314': [{id: 4, message: 'Hi', sender: 'me',
             time:"12:11"}, {id: 5, message: 'What are you up to today?', sender: 'me',
             time:"12:11"}],
-        '31287': [{id: 6, message: 'Hi', sender: 'friend',
+        '31312': [{id: 6, message: 'Hi', sender: 'friend',
             time:"13:10"}, {
             id: 7,
             message: 'Hello, she didn’t do anything and rested all day, how are you?',

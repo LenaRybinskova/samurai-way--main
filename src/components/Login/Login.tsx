@@ -29,7 +29,13 @@ const Login = (props: LoginProps) => {
     return (
         <div className={s.loginContainer}>
             <h1 className={s.loginContainerTitle}>LOGIN</h1>
-            <ReduxLoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/>
+            <div className={s.loginBlock}>
+                <div className={s.loginBlockForm}><ReduxLoginForm onSubmit={onSubmit} captchaUrl={props.captchaUrl}/></div>
+                <div className={s.info}>
+                    <div>lenarybinskova@gmail.com</div>
+                    <div>lenarybinskova</div>
+                </div>
+            </div>
         </div>
     );
 };

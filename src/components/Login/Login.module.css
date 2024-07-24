@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     row-gap: 5px;
-    width: 30%;
+/*    width: 30%;*/
 }
 
 .loginContainerTitle {
@@ -25,4 +25,22 @@
 .rememberMeContainer {
     display: flex;
     flex-direction: row;
+}
+
+.loginBlockForm {
+    width:100% ;
+}
+
+.loginBlock {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    padding-top: 4px;
+    color: var(--theme-default-background-color-header);
 }
