@@ -73,6 +73,7 @@ type mapStateToPropsType = {
 type CommonType = mapDispatchToPropsType & mapStateToPropsType
 const mapStateToProps = (state: AppRootSTateType): mapStateToPropsType => {
     return {
+
         initialized: state.app.initialized,
     }
 }
