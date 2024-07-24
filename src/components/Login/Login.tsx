@@ -5,16 +5,16 @@ import {connect} from 'react-redux';
 import {LoginType} from '../../api/api';
 import {Redirect} from 'react-router-dom';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import s from "../Login/Login.module.css"
+import s from '../Login/Login.module.css'
 
 type LoginProps = {
     loginTC: (value: LoginType) => void
     isAuth: boolean
-    captchaUrl:string|null
+    captchaUrl: string | null
 }
 type MstpType = {
     isAuth: boolean
-    captchaUrl:string|null
+    captchaUrl: string | null
 }
 
 const Login = (props: LoginProps) => {
@@ -35,7 +35,7 @@ const Login = (props: LoginProps) => {
 };
 const mstp = (state: AppRootSTateType): MstpType => ({
     isAuth: state.auth.isAuth,
-    captchaUrl:state.auth.captchaUrl
+    captchaUrl: state.auth.captchaUrl
 })
 
 export default connect(mstp, {loginTC})(Login)

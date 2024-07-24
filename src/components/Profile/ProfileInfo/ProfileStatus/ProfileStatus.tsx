@@ -5,6 +5,7 @@ export type ProfileStatusType = {
     status: string
     updateProfileStatusTC: (newStatus: string) => void
 }
+
 class ProfileStatus extends React.Component<ProfileStatusType> {
 
     state = {
@@ -27,20 +28,20 @@ class ProfileStatus extends React.Component<ProfileStatusType> {
         this.setState({status: e.currentTarget.value})
     }
 
-    componentDidUpdate(prevProps:any,prevState:any) {
-        let a=prevProps
-        let b=prevState
-        let c=this.state //текущий state
-        let d=this.props //текущие пропсы
+    componentDidUpdate(prevProps: any, prevState: any) {
+        let a = prevProps
+        let b = prevState
+        let c = this.state //текущий state
+        let d = this.props //текущие пропсы
 
         //нельзя внутри componentDidUpdate вызывать setState, будет зацикленность, прогр сломается
         // если необх исп setState, то только внутри какого условия иф-элс
-/*        this.setState({
-            status:this.props.status
-        })*/
-        if(prevProps.status !==this.props.status){
+        /*        this.setState({
+                    status:this.props.status
+                })*/
+        if (prevProps.status !== this.props.status) {
             this.setState({
-                status:this.props.status
+                status: this.props.status
             })
         }
         console.log('componentDidUpdate')

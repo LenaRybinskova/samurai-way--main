@@ -60,6 +60,3 @@ export const ReduxLoginForm = reduxForm<FormDataType, OwnPropsType>({
 // пишем уникальное название формы
     form: 'login'
 })(LoginForm)
-
-
-// ()=> ''

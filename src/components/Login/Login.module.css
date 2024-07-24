@@ -12,7 +12,6 @@
     line-height: 0.7;
 }
 
-
 .loginFormContainer {
     display: flex;
     flex-direction: column;
@@ -22,7 +21,6 @@
 .logininputEmail {
 
 }
-
 
 .rememberMeContainer {
     display: flex;

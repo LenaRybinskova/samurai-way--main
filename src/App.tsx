@@ -37,10 +37,10 @@ class App extends React.Component<CommonType> {
         }
         return (
             <div className="appWrapper">
-                <GlobalError />
+                <GlobalError/>
                 <HeaderContainer/>
-                <div className={"appMainWrapper"}>
-                    <div className={"appWrapperLeftSide"}>
+                <div className={'appMainWrapper'}>
+                    <div className={'appWrapperLeftSide'}>
                         <nav><Navbar/></nav>
                         <Subscribers/>
                     </div>

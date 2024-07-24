@@ -3,9 +3,7 @@ import s from './Header.module.css'
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
-import usersNull from '../../assets/images/usersNull.png'
-import GlobalError from '../GlobalError/GlobalError';
-
+import logo from '../../assets/icons/logo.png'
 
 type HeaderType = {
     isAuth: boolean
@@ -20,7 +18,7 @@ export const Header = (props: HeaderType) => {
     return (
         <header className={s.header}>
             <NavLink className={s.topHomeLink} to={`/profile`}>
-                <img src={ownAccountPhoto ? ownAccountPhoto : usersNull} alt="logo"/></NavLink>
+                <img src={ownAccountPhoto ? ownAccountPhoto : logo} alt="logo"/></NavLink>
             <div className={s.loginBlock}>
                 {/*                если залогинен, показать логин пользователя, если нет то ссылку на страницу ЛОГИН*/}
                 {props.isAuth

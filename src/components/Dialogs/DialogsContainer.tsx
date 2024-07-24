@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {AppRootSTateType} from '../../redux/reduxStore';
 import {compose, Dispatch} from 'redux';
 import {WithAuthRedirect} from '../../hoc/WithAuthRedirect';
-import {Dialogs} from "../Dialogs/Dialogs"
+import {Dialogs} from '../Dialogs/Dialogs'
 
 type MapStateToPropsType = {
     dialogsPage: InitialStateType
@@ -12,7 +12,7 @@ type MapStateToPropsType = {
 }
 type MapDispatchToPropsType = {
 
-    sendMessage: (userId:string,newMessageBody: string) => void
+    sendMessage: (userId: string, newMessageBody: string) => void
 }
 export type DialogsContainerType = MapStateToPropsType & MapDispatchToPropsType
 // СВОЙСТВА
@@ -24,8 +24,8 @@ let mapStateToProps = (state: AppRootSTateType): MapStateToPropsType => {
 // КОЛЛЛБЕКИ
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
-        sendMessage: (userId:string, newMessageBody: string) => {
-            dispatch(sendMessageAC(userId,newMessageBody))
+        sendMessage: (userId: string, newMessageBody: string) => {
+            dispatch(sendMessageAC(userId, newMessageBody))
         }
     }
 }

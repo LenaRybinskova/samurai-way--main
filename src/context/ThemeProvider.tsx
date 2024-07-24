@@ -17,6 +17,7 @@ export type ThemeProviderType = {
 export const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined)
 
 export const ThemeProvider: FC<ThemeProviderType> = ({children, ...props}) => {
+
     const [theme, setTheme] = useState<ThemesType>('light')
 
     const change = (name: ThemesType) => {

@@ -1,30 +1,29 @@
 import React from 'react';
-import s from "./Navbar.module.css"
+import s from './Navbar.module.css'
 import {NavLink} from 'react-router-dom';
-import Subscribers from '../Subscribers/Subscribers';
 
 
-export type NavbarType={
-/*    state: SideBarType*/
+export type NavbarType = {
+    /*    state: SideBarType*/
 }
 
-export const Navbar = (props:NavbarType) => {
+export const Navbar = (props: NavbarType) => {
     return (
         <nav className={s.nav}>
             <div className={s.item}>
-                <NavLink to={"/profile"} activeClassName={s.activeLink}>Profile</NavLink>
-            </div >
+                <NavLink to={'/profile'} activeClassName={s.activeLink}>Profile</NavLink>
+            </div>
             <div className={`${s.item} ${s.activeLink}`}>
-                <NavLink to={"/dialogs"} activeClassName={s.activeLink}>Messages</NavLink>
+                <NavLink to={'/dialogs'} activeClassName={s.activeLink}>Messages</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to={"/news"} activeClassName={s.activeLink}>News</NavLink>
+                <NavLink to={'/news'} activeClassName={s.activeLink}>News</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to={"/settings"} activeClassName={s.activeLink}>Settings</NavLink>
+                <NavLink to={'/settings'} activeClassName={s.activeLink}>Settings</NavLink>
             </div>
             <div className={s.item}>
-                <NavLink to={"/users"} activeClassName={s.activeLink}>Users</NavLink>
+                <NavLink to={'/users'} activeClassName={s.activeLink}>Users</NavLink>
             </div>
 
         </nav>

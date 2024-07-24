@@ -163,19 +163,11 @@ export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch, g
     } catch (e) {
         handleError(e, dispatch)
     }
-
-
-    /*    userAPI.getProfile(userId).then(response => {
-            dispatch(setUserProfile(response.data))
-        })*/
 }
 export const getUserStatusTC = (userId: number) => async (dispatch: Dispatch) => {
     try {
         const res = await profileAPI.getStatus(userId)
         dispatch(setProfileStatus(res.data))
-        /*    profileAPI.getStatus(userId).then(res => {
-                dispatch(setProfileStatus(res.data))
-            })*/
     } catch (e) {
         handleError(e, dispatch)
     }

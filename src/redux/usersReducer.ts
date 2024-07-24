@@ -17,17 +17,13 @@ export type UserType = {
     followed: boolean,
     name: string,
     status: string | null,
-/*    location: locationUserType*/
     uniqueUrlName:string | null,
 }
 export type UserPhotoType = {
     small: string | null,
     large: string | null
 }
-/*export type locationUserType = {
-    city: string,
-    country: string
-}*/
+
 
 // ЗНАЧЕНИЕ стартовый стейт
 const initialState: initialStateType = {

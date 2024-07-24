@@ -8,14 +8,13 @@ import s from './Subscribers.module.css'
 import { NavLink } from 'react-router-dom';
 
 const Subscribers = () => {
-    console.log("Subscribers")
     const isAuth = useSelector<AppRootSTateType, boolean>(state => state.auth.isAuth)
     const friends = useSelector<AppRootSTateType, UserType[]>(state => state.subscribers.friends)
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getSubscribersTC(5, 3, true))
-    }, [])
+    }, [isAuth])
 
     return (
         <div className={s.friendsWrapper}>

@@ -7,7 +7,7 @@ type PostType = {
     message?: string
     likesCount: number
     currentProfilePhoto: string
-    time?:string
+    time?: string
 }
 
 

@@ -2,6 +2,7 @@
     font-weight: bold;
     cursor: pointer;
 }
+
 .paginationLine{
     display: flex;
     justify-content: center;

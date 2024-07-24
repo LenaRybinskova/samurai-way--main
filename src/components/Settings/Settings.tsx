@@ -4,7 +4,6 @@ import s from "../Settings/settings.module.css"
 
 const Settings = () => {
 
-
     return (
         <div className={s.settingsContainer}>
             <div>Сменить тему:  <SwitchButton/></div>

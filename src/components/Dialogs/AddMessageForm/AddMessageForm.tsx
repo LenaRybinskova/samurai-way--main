@@ -5,8 +5,8 @@ import {maxLengthCreator} from '../../../../src/utils/validators/validators';
 import {Textarea} from '../../../../src/components/common/FormsControls/FormsControls';
 import s from '../Dialogs.module.css'
 
-export type newMessageType={
-    newMessageBody:string
+export type newMessageType = {
+    newMessageBody: string
 }
 
 export type AddMessageFormProps = {

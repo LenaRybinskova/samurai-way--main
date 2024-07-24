@@ -19,6 +19,6 @@ export const SwitchButton: FC<SwitchButtonType> = () => {
     };
 
     return (
-        <Switch defaultChecked onChange={onChange} style={style}/>
+        <Switch defaultChecked={theme?.theme===THEME_LIGHT && true} onChange={onChange} style={style}/>
     )
 }
