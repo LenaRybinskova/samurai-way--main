@@ -74,10 +74,10 @@ export const getAuthUserDataTC = () => async (dispatch: Dispatch) => {
 export const loginTC = (value: LoginType): AppThunk => async (dispatch) => {
     try {
         const res = await authAPI.login(value)
-        if (res.data.resultCode === 0) { //значи есть кука, значит залогинены
+        if (res.data.resultCode ===RESULT_CODE.SUCCEEDED) { //значи есть кука, значит залогинены
             dispatch(getAuthUserDataTC())
         } else {
-            if (res.data.resultCode === 10) {
+            if (res.data.resultCode === RESULT_CODE.CAPTCHA) {
                 dispatch(getCaptchaURL())
             }
             const message = res.data.messages.length > 0 ? res.data.messages[0] : 'some error'
@@ -91,18 +91,26 @@ export const loginTC = (value: LoginType): AppThunk => async (dispatch) => {
 
 
 export const getCaptchaURL = () => async (dispatch: Dispatch) => {
-    const res = await securityAPI.getCaptcha()
-    const captchURL = res.data.url
-    dispatch(getCaptchaUrl(captchURL))
+    try {
+        const res = await securityAPI.getCaptcha()
+        const captchURL = res.data.url
+        dispatch(getCaptchaUrl(captchURL))
+    } catch (e) {
+        handleError(e, dispatch)
+    }
 }
 
 export const logoutTC = (): AppThunk => async (dispatch) => {
-    const res = await authAPI.logout()
-    if (res.data.resultCode === 0) { // значит все, мы вылогинились
-        dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
-        dispatch(setUserAvatar(null)) // затир аву
+    try {
+        const res = await authAPI.logout()
+        if (res.data.resultCode === RESULT_CODE.SUCCEEDED) { // значит все, мы вылогинились
+            dispatch(setAuthUserData(null, null, null, false)) // устанавливаем данные юзера в стор
+            dispatch(setUserAvatar(null)) // затир аву
+        }
     }
-
+    catch(e){
+        handleError(e, dispatch)
+    }
 }
 
 

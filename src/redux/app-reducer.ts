@@ -1,8 +1,9 @@
 import {getAuthUserDataTC} from '../redux/auth-reducer';
 import {AppThunk} from '../redux/reduxStore';
+import {handleError} from '../utils/handleError';
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
-const SET_APP_ERROR="SET_APP_ERROR"
+const SET_APP_ERROR = 'SET_APP_ERROR'
 const initialState = {
     initialized: false,
     error: null,
@@ -28,7 +29,7 @@ export const appReducer = (state: AppReducerType = initialState, action: AppACTy
 export const initializedSuccessAC = () => {
     return {type: INITIALIZED_SUCCESS} as const
 }
-export const setAppError=(message:string | null)=>{
+export const setAppError = (message: string | null) => {
     return {type: SET_APP_ERROR, message} as const
 }
 
@@ -41,8 +42,11 @@ export const setAppError=(message:string | null)=>{
 }*/
 // я переписала
 export const initializedAppTC = (): AppThunk => (dispatch) => {
-    dispatch(getAuthUserDataTC()).then(res => { // если ответ серв 200
-        dispatch(initializedSuccessAC()) // инициал =ТРУ
+    dispatch(getAuthUserDataTC())
+        .then(res => { // если ответ серв 200
+            dispatch(initializedSuccessAC()) // инициал =ТРУ
+        }).catch((e) => {
+        handleError(e, dispatch)
     })
 }
 

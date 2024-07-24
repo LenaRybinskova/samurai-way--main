@@ -29,8 +29,6 @@ class App extends React.Component<CommonType> {
         this.props.initializedAppTC()
     }
 
-
-
     render() {
         {
             if (!this.props.initialized) {

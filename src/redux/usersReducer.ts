@@ -1,6 +1,7 @@
 import {userAPI} from '../api/api';
 import {Dispatch} from 'redux';
 import {updateObjectInArray} from '../utils/object-helher';
+import {handleError} from '../utils/handleError';
 
 const FOLLOW = 'samurai-network/users/FOLLOW'
 const UNFOLLOW = 'samurai-network/users/UNFOLLOW'
@@ -147,21 +148,35 @@ export const requestUsersTC = (currentPage: number, pageSize: number) => async (
 }
 const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => any, actionCreator: any) => {
     dispatch(toggleIsFollowingProgress(userId, true))
-    const res = await apiMethod(userId)
-    if (res.data.resultCode === 0) {
-        dispatch(actionCreator(userId))
+    try{
+        const res = await apiMethod(userId)
+        if (res.data.resultCode === 0) {
+            dispatch(actionCreator(userId))
+        }
+        dispatch(toggleIsFollowingProgress(userId, false))
+    }catch (e) {
+        handleError(e, dispatch)
     }
-    dispatch(toggleIsFollowingProgress(userId, false))
+
 }
 export const followTC = (userId: number) => {
     return async (dispatch: Dispatch) => {
-        const apiMethod = userAPI.follow.bind(userAPI)
-        followUnfollowFlow(dispatch, userId, apiMethod, follow)
+        try{
+            const apiMethod = userAPI.follow.bind(userAPI)
+            followUnfollowFlow(dispatch, userId, apiMethod, follow)
+        }
+        catch (e) {
+            handleError(e, dispatch)
+        }
     }
 }
 export const unfollowTC = (userId: number) => async (dispatch: Dispatch) => {
-    const apiMethod = userAPI.unfollow.bind(userAPI)
-    followUnfollowFlow(dispatch, userId, apiMethod, unfollow)
+    try{
+        const apiMethod = userAPI.unfollow.bind(userAPI)
+        followUnfollowFlow(dispatch, userId, apiMethod, unfollow)
+    }catch (e) {
+        handleError(e, dispatch)
+    }
 }
 export default usersReducer;
 

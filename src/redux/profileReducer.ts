@@ -6,6 +6,7 @@ import {ThunkDispatch} from 'redux-thunk';
 import {stopSubmit} from 'redux-form';
 import {setUserAvatar} from '../redux/auth-reducer';
 import moment from 'moment/moment';
+import {handleError} from '../utils/handleError';
 
 const ADD_POST = 'samurai-network/profile/ADD-POST'
 const DELETE_POST = 'samurai-network/profile/DELETE-POST'
@@ -48,7 +49,7 @@ let initialState: ProfilePageType = {
     newPostText: 'IT-kamasutra',
     profileStatus: '',
     profile: {
-        aboutMe:"",
+        aboutMe: '',
         userId: 30404,
         lookingForAJob: true,
         lookingForAJobDescription: '11',
@@ -149,26 +150,36 @@ export const savePhotoSuccess = (photo: { small: string, large: string }) => {
 
 // TC
 export const getUserProfileTC = (userId: number) => async (dispatch: Dispatch, getState: () => AppRootSTateType) => {
-    const response = await userAPI.getProfile(userId)
-    dispatch(setUserProfile(response.data))
+    try {
+        const response = await userAPI.getProfile(userId)
+        dispatch(setUserProfile(response.data))
 
-    const hasSmallPhoto = getState().auth.smallPhoto
-    const isAuth = getState().auth.isAuth
+        const hasSmallPhoto = getState().auth.smallPhoto
+        const isAuth = getState().auth.isAuth
 
-    if (!hasSmallPhoto && isAuth) {
-        dispatch(setUserAvatar(response.data.photos.small))
+        if (!hasSmallPhoto && isAuth) {
+            dispatch(setUserAvatar(response.data.photos.small))
+        }
+    } catch (e) {
+        handleError(e, dispatch)
     }
+
 
     /*    userAPI.getProfile(userId).then(response => {
             dispatch(setUserProfile(response.data))
         })*/
 }
 export const getUserStatusTC = (userId: number) => async (dispatch: Dispatch) => {
-    const res = await profileAPI.getStatus(userId)
-    dispatch(setProfileStatus(res.data))
-    /*    profileAPI.getStatus(userId).then(res => {
-            dispatch(setProfileStatus(res.data))
-        })*/
+    try {
+        const res = await profileAPI.getStatus(userId)
+        dispatch(setProfileStatus(res.data))
+        /*    profileAPI.getStatus(userId).then(res => {
+                dispatch(setProfileStatus(res.data))
+            })*/
+    } catch (e) {
+        handleError(e, dispatch)
+    }
+
 }
 export const updateProfileStatusTC = (newStatus: string) => async (dispatch: Dispatch) => {
     try {
@@ -176,31 +187,39 @@ export const updateProfileStatusTC = (newStatus: string) => async (dispatch: Dis
         if (res.data.resultCode === 0) {
             dispatch(setProfileStatus(newStatus))
         }
-    } catch (error) {
-        console.log('updateProfileStatusTC error', error)
+    } catch (e) {
+        handleError(e, dispatch)
     }
 }
 
 export const savePhoto = (file: string) => async (dispatch: Dispatch) => {
-    const res = await profileAPI.savePhoto(file)
-    if (res.data.resultCode === 0) {
-        dispatch(savePhotoSuccess(res.data.data.photos))
+    try {
+        const res = await profileAPI.savePhoto(file)
+        if (res.data.resultCode === 0) {
+            dispatch(savePhotoSuccess(res.data.data.photos))
+        }
+    } catch (e) {
+        handleError(e, dispatch)
     }
 }
 
 export const saveProfile = (profile: ObtainedFormType): AppThunk =>
     async (dispatch: ThunkDispatch<AppRootSTateType, unknown, AnyAction>, getState: () => AppRootSTateType) => {
-        const userId = getState().auth.userId;
-        const res = await profileAPI.saveProfile(profile);
-        if (res.data.resultCode === 0) {
-            dispatch(getUserProfileTC(Number(userId)))
-        } else {
-            /*dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]})) //сохр текст ошибки для всей формы*/ /*Invalid url format (Contacts->Facebook)*/
-            console.log('общая ошибка:', res.data.messages[0])
-            const separatorSymbol = res.data.messages[0].indexOf('>')
-            const contactName = res.data.messages[0].slice([separatorSymbol + 1]).slice(0, -1).toLowerCase() //вытаск из текста ош название поля с ошибкой и задаем его динамически
-            dispatch(stopSubmit('edit-profile', {'contacts': {[contactName]: res.data.messages[0]}})) //сохр текст этой ошибки
-            return Promise.reject(res.data.messages[0])
+        try {
+            const userId = getState().auth.userId;
+            const res = await profileAPI.saveProfile(profile);
+            if (res.data.resultCode === 0) {
+                dispatch(getUserProfileTC(Number(userId)))
+            } else {
+                /*dispatch(stopSubmit('edit-profile', {_error: res.data.messages[0]})) //сохр текст ошибки для всей формы*/ /*Invalid url format (Contacts->Facebook)*/
+                console.log('общая ошибка:', res.data.messages[0])
+                const separatorSymbol = res.data.messages[0].indexOf('>')
+                const contactName = res.data.messages[0].slice([separatorSymbol + 1]).slice(0, -1).toLowerCase() //вытаск из текста ош название поля с ошибкой и задаем его динамически
+                dispatch(stopSubmit('edit-profile', {'contacts': {[contactName]: res.data.messages[0]}})) //сохр текст этой ошибки
+                return Promise.reject(res.data.messages[0])
+            }
+        } catch (e) {
+            handleError(e, dispatch)
         }
     };
 

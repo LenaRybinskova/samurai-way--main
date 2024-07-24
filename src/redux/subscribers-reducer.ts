@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {UserType} from '../redux/usersReducer';
 import {userAPI} from '../../src/api/api';
+import {handleError} from '../utils/handleError';
 
 
 const SET_FRIENDS = 'samurai-network/profile/SET_FRIENDS'
@@ -32,8 +33,12 @@ export const setFriends = (friends: UserType[]) => {
 
 // TC
 export const getSubscribersTC = (currentPage: number, pageSize: number, friend: boolean) => async (dispatch: Dispatch) => {
-    const res = await userAPI.getUsers(currentPage, pageSize, friend)
-    dispatch(setFriends(res.items))
+    try {
+        const res = await userAPI.getUsers(currentPage, pageSize, friend)
+        dispatch(setFriends(res.items))
+    } catch (e) {
+        handleError(e, dispatch)
+    }
 }
 export default subscribersReducer;
 
